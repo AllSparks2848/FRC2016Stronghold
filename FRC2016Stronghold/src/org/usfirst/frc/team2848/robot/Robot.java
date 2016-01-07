@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2848.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -15,8 +16,10 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	
+	RobotDrive drivetrain;
     public void robotInit() {
-
+    	drivetrain = new RobotDrive(0,1);
     }
 
     /**
