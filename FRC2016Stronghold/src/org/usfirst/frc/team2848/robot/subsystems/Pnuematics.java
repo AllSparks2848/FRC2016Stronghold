@@ -1,6 +1,7 @@
-package org.usfirst.frc.team2848.robot;
+package org.usfirst.frc.team2848.robot.subsystems;
+import org.usfirst.frc.team2848.robot.Robot;
 
-public class SparkyPnuematics {
+public class Pnuematics {
 
 	private static boolean shifterstate= false;
 	private static boolean wasrightbutton = false;
@@ -20,4 +21,5 @@ public class SparkyPnuematics {
 		Robot.shifter1.set(shifterstate);
 		
 	}
+	
 }
