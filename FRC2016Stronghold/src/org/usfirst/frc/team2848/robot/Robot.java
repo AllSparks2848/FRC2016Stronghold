@@ -33,9 +33,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	bottomLeft = new Talon(0);
     	topRight = new Talon(1);
-    	drivetrain = new RobotDrive(0,1);
-    	shifter1 = new Solenoid(0,1);
-    	compressor1 = new Compressor();
+    	drivetrain = new RobotDrive(new Talon(0),new Talon(1));
+    	shifter1 = new Solenoid(5,0);
+    	compressor1 = new Compressor(6);
     	pdp = new PowerDistributionPanel();
     	//gearratio = (2/1); //get real gear ratio from mechanical subteam when they knows it
     	/*
