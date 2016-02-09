@@ -4,16 +4,13 @@ import org.usfirst.frc.team2848.robot.Robot;
 
 public class Shooter {
 	private static boolean shifterstate= false;
-	private static boolean wasrightshoulder = false;
 	
 	private static boolean firing = false;
 	private static double start;
 	
 	public static void fire(){
-		wasrightshoulder = false;
 		if (firing){
-			if (Robot.xbox1.getRawAxis(3) > 0.75 && !wasrightshoulder) {
-				wasrightshoulder = true;
+			if (Robot.xbox1.getRawAxis(3) > 0.75 && !shifterstate) {
 				shifterstate = true;
 				start = System.currentTimeMillis();
 			}
@@ -21,7 +18,7 @@ public class Shooter {
 				firing = false;
 				shifterstate = false;
 			}
-			Robot.shifter1.set(shifterstate);
+			Robot.shootertrigger.set(shifterstate);
 		}
 	}
 	public static void isFiring(){
@@ -38,7 +35,7 @@ public class Shooter {
 			Robot.shooterpidleft.setTarget(0);
 			Robot.shooterpidright.setTarget(0);
 		}
-		Robot.motorleft.set(Robot.shooterpidleft.compute(Robot.encoderleft.getRate()));
-		Robot.motorright.set(Robot.shooterpidright.compute(Robot.encoderright.getRate()));
+		Robot.shooterleftmotor.set(Robot.shooterpidleft.compute(Robot.shooterleftenc.getRate()));
+		Robot.shooterrightmotor.set(Robot.shooterpidright.compute(Robot.shooterrightenc.getRate()));
 	}
 }

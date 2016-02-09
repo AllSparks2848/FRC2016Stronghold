@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,20 +23,25 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 public class Robot extends IterativeRobot {
 public static Joystick xbox1;
     
-    public static Talon motorleft;
-    public static Talon motorright;
+    public static Talon shooterleftmotor;
+    public static Talon shooterrightmotor;
+    public static Talon intakewheel;
     
-    public static Encoder encoderleft;
-    public static Encoder encoderright;
+    public static Encoder shooterleftenc;
+    public static Encoder shooterrightenc;
     
     public static PID shooterpidleft;
     public static PID shooterpidright;
 
+    double shootergearratio;
     
+    public static Solenoid shootertrigger;
     
-    double gearratio;
+    public static Solenoid leftintakesolenoid;
+    public static Solenoid rightintakesolenoid;
+    public static Solenoid leftintakepancake;
+    public static Solenoid rightintakepancake;
     
-    public static Solenoid shifter1;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -44,24 +50,35 @@ public static Joystick xbox1;
     public void robotInit() {
     	xbox1 = new Joystick(0);
         
-        motorleft = new Talon(2);
-        motorright = new Talon(3);
+        shooterleftmotor = new Talon(2);
+        shooterrightmotor = new Talon(3);
+        intakewheel = new Talon(7);
+        shooterrightmotor.setInverted(false);
+        shooterleftmotor.setInverted(true);
+        intakewheel.setInverted(false);
         
-        gearratio = (22.0/16.0);
+        shootergearratio = (1/3.0);
         
-        encoderleft = new Encoder(4, 5, false, EncodingType.k4X);
-        encoderright = new Encoder(6, 7, false, EncodingType.k4X);
-        encoderleft.setDistancePerPulse((1/1024.0)*gearratio*60);
-        encoderright.setDistancePerPulse((1/1024.0)*gearratio*60);
+        shooterleftenc = new Encoder(4, 5, false, EncodingType.k4X);
+        shooterrightenc = new Encoder(6, 7, true, EncodingType.k4X);
+        shooterleftenc.setDistancePerPulse((1/1024.0)*shootergearratio*60);
+        shooterrightenc.setDistancePerPulse((1/1024.0)*shootergearratio*60);
         
-        shooterpidleft = new PID(0, 0, 0, 0, encoderleft.getRate());
-        shooterpidright = new PID(0, 0, 0, 0, encoderright.getRate());
+        
+        shooterpidleft = new PID(0.0023, 0.0008, 0, 0, shooterleftenc.getRate());
+        shooterpidright = new PID(0.0023, 0.0008, 0, 0, shooterleftenc.getRate());
         
         shooterpidleft.setBounds(-1, 1);
         shooterpidright.setBounds(-1, 1);
         shooterpidleft.setITermBounds(-1, 1);
         shooterpidleft.setITermBounds(-1, 1);
         
+        shootertrigger = new Solenoid(1);
+        
+        leftintakesolenoid = new Solenoid(4);
+        rightintakesolenoid = new Solenoid(5);
+        leftintakepancake = new Solenoid(6);
+        rightintakepancake = new Solenoid(7);
         
     }
 
