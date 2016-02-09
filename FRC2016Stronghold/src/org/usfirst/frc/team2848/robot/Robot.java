@@ -15,8 +15,12 @@ public static Joystick xbox1;
 public static Solenoid shifter1;
 public static RobotDrive drivetrain;
 public static Compressor compressor;
+public static Talon bottomleft;
+public static Talon bottomright;
     public void robotInit() {
-    	drivetrain = new RobotDrive(new Talon(0), new Talon(1));
+    	bottomleft = new Talon(0);
+    	bottomright = new Talon(1);
+    	drivetrain = new RobotDrive(bottomleft, bottomright);
     	xbox1 = new Joystick(0);
     	shifter1 = new Solenoid(5,0);
     	compressor = new Compressor(5);

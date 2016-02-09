@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.RobotDrive;
 public class DriveHelper {
 
 public static void arcadeDrive(Joystick xbox, RobotDrive drive){
-		
-		drive.arcadeDrive(-xbox.getRawAxis(1), -xbox.getRawAxis(4)); 
+	
+		drive.arcadeDrive(xbox.getRawAxis(1), -xbox.getRawAxis(4)); 
         	
         
 	}
