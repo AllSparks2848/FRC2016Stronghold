@@ -2,9 +2,12 @@
 package org.usfirst.frc.team2848.robot;
 import org.usfirst.frc.team2848.robot.subsystems.DriveHelper;
 import org.usfirst.frc.team2848.robot.subsystems.Pnuematics;
+import org.usfirst.frc.team2848.robot.subsystems.autoShifter;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
@@ -17,7 +20,9 @@ public static RobotDrive drivetrain;
 public static Compressor compressor;
 public static Talon bottomleft;
 public static Talon bottomright;
+
     public void robotInit() {
+    	
     	bottomleft = new Talon(0);
     	bottomright = new Talon(1);
     	drivetrain = new RobotDrive(bottomleft, bottomright);
@@ -34,6 +39,7 @@ public static Talon bottomright;
     	compressor.setClosedLoopControl(true);
         DriveHelper.arcadeDrive(xbox1, drivetrain);
         Pnuematics.pneumaticToggle();
+        autoShifter.downShift();
         Timer.delay(.01);
     }
     
