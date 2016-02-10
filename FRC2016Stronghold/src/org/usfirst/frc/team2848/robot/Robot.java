@@ -65,7 +65,6 @@ public static Joystick xbox1;
         shooterleftenc.setDistancePerPulse((1/1024.0)*shootergearratio*60);
         shooterrightenc.setDistancePerPulse((1/1024.0)*shootergearratio*60);
         
-        
         shooterpidleft = new PID(0.0023, 0.0008, 0, 0, shooterleftenc.getRate());
         shooterpidright = new PID(0.0023, 0.0008, 0, 0, shooterleftenc.getRate());
         
