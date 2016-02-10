@@ -12,15 +12,10 @@ public class autoShifter{
 		long start = System.nanoTime();
 		long end = System.nanoTime() + 500;
 		double voltage = pdp.getVoltage();
-			while(voltage < 9.0 && start < end)
+			if(voltage < 9.0 && start < end)
 			{
 				state = true;
 				voltage = pdp.getVoltage();
-				if(voltage > 9.0)
-				{
-					state = false;
-					break;
-				}
 			}
 			if(state)
 			{
