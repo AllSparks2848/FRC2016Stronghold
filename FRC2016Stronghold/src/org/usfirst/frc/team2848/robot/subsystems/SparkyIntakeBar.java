@@ -3,7 +3,8 @@ package org.usfirst.frc.team2848.robot.subsystems;
 import org.usfirst.frc.team2848.robot.Robot;
 
 public class SparkyIntakeBar {
-	private static boolean loading;
+	private static boolean loading = false;
+	public static boolean loaded = false;
 	public static void startingPosition(){
 		Robot.leftintakepancake.set(false);
 		Robot.rightintakepancake.set(false);
@@ -22,10 +23,20 @@ public class SparkyIntakeBar {
 		Robot.leftintakesolenoid.set(true);
 		Robot.rightintakesolenoid.set(true);
 	}
+	public static void load(){
+		Robot.intakewheel.set(0.5);
+		loaded = true;
+	}
 	public static void isLoading(){
 		if (Robot.xbox1.getRawButton(2)){
 			loading = true;
 		}
 	}
-	
+	public static void loadingRoutine(){
+		if (loading){
+			middlePosition();
+			load();
+			loading = false;
+		}
+	}
 }

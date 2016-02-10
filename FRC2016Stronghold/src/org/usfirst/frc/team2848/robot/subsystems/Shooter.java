@@ -13,6 +13,7 @@ public class Shooter {
 			if (Robot.xbox1.getRawAxis(3) > 0.75 && !shifterstate) {
 				shifterstate = true;
 				start = System.currentTimeMillis();
+				SparkyIntakeBar.loaded = false;
 			}
 			if (shifterstate && (System.currentTimeMillis() > start + 250)) {
 				firing = false;
@@ -22,7 +23,7 @@ public class Shooter {
 		}
 	}
 	public static void isFiring(){
-		if (Robot.xbox1.getRawButton(1)){
+		if (Robot.xbox1.getRawButton(1) && SparkyIntakeBar.loaded){
 			firing = true;
 		}
 	}
@@ -37,5 +38,10 @@ public class Shooter {
 		}
 		Robot.shooterleftmotor.set(Robot.shooterpidleft.compute(Robot.shooterleftenc.getRate()));
 		Robot.shooterrightmotor.set(Robot.shooterpidright.compute(Robot.shooterrightenc.getRate()));
+	}
+	public static void firingRoutine(){
+		isFiring();
+        fire();
+        spinUp(3000);
 	}
 }

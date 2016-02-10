@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2848.robot;
 
 import org.usfirst.frc.team2848.robot.subsystems.Shooter;
+import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
 import org.usfirst.frc.team2848.util.PID;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -93,9 +94,9 @@ public static Joystick xbox1;
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	Shooter.isFiring();
-        Shooter.fire();
-        Shooter.spinUp(5000);
+    	SparkyIntakeBar.loadingRoutine();
+    	Shooter.firingRoutine();
+    	
     }
     
     /**
