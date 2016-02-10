@@ -22,7 +22,7 @@ public class Shooter {
 		}
 	}
 	public static void isFiring(){
-		if (!firing && Robot.xbox1.getRawButton(1)){
+		if (Robot.xbox1.getRawButton(1)){
 			firing = true;
 		}
 	}
