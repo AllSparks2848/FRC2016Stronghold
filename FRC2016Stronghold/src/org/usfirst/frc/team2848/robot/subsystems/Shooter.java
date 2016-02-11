@@ -10,7 +10,7 @@ public class Shooter {
 	
 	public static void fire(){
 		if (firing){
-			if (Robot.xbox1.getRawAxis(3) > 0.75 && !shifterstate) {
+			if (Robot.xbox1.getRawButton(2) && !shifterstate) {
 				shifterstate = true;
 				start = System.currentTimeMillis();
 				SparkyIntakeBar.loaded = false;
@@ -42,6 +42,6 @@ public class Shooter {
 	public static void firingRoutine(){
 		isFiring();
         fire();
-        spinUp(3000);
+        spinUp(1500);
 	}
 }

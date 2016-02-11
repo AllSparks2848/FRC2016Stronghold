@@ -5,7 +5,7 @@ import org.usfirst.frc.team2848.robot.Robot;
 public class SparkyIntakeBar {
 	private static boolean loading = false;
 	private static double start;
-	public static boolean loaded = false;
+	public static boolean loaded = true;
 	public static void startingPosition(){
 		Robot.leftintakepancake.set(false);
 		Robot.rightintakepancake.set(false);
@@ -34,9 +34,14 @@ public class SparkyIntakeBar {
 		}
 	}
 	public static void loadingRoutine(){
-		if (loading){
+		if (Robot.xbox1.getRawButton(3)){
 			startingPosition();
-			
+		}
+		if (Robot.xbox1.getRawButton(4)){
+			middlePosition();
+		}
+		if (Robot.xbox1.getRawButton(5)){
+			bottomPosition();
 		}
 	}
 }

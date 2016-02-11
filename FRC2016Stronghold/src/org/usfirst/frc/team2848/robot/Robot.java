@@ -51,8 +51,8 @@ public static Joystick xbox1;
     public void robotInit() {
     	xbox1 = new Joystick(0);
         
-        shooterleftmotor = new Talon(2);
-        shooterrightmotor = new Talon(3);
+        shooterleftmotor = new Talon(0);
+        shooterrightmotor = new Talon(1);
         intakewheel = new Talon(7);
         shooterrightmotor.setInverted(false);
         shooterleftmotor.setInverted(true);
@@ -60,10 +60,10 @@ public static Joystick xbox1;
         
         shootergearratio = (1/3.0);
         
-        shooterleftenc = new Encoder(4, 5, false, EncodingType.k4X);
-        shooterrightenc = new Encoder(6, 7, true, EncodingType.k4X);
-        shooterleftenc.setDistancePerPulse((1/1024.0)*shootergearratio*60);
-        shooterrightenc.setDistancePerPulse((1/1024.0)*shootergearratio*60);
+        shooterleftenc = new Encoder(0, 1, false, EncodingType.k4X);
+        shooterrightenc = new Encoder(2, 3, true, EncodingType.k4X);
+        shooterleftenc.setDistancePerPulse((1/3.0)*shootergearratio*60);
+        shooterrightenc.setDistancePerPulse((1/3.0)*shootergearratio*60);
         
         shooterpidleft = new PID(0.0023, 0.0008, 0, 0, shooterleftenc.getRate());
         shooterpidright = new PID(0.0023, 0.0008, 0, 0, shooterleftenc.getRate());
@@ -73,7 +73,7 @@ public static Joystick xbox1;
         shooterpidleft.setITermBounds(-1, 1);
         shooterpidleft.setITermBounds(-1, 1);
         
-        shootertrigger = new Solenoid(1);
+        shootertrigger = new Solenoid(0);
         
         leftintakesolenoid = new Solenoid(4);
         rightintakesolenoid = new Solenoid(5);
@@ -93,8 +93,8 @@ public static Joystick xbox1;
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	SparkyIntakeBar.loadingRoutine();
     	Shooter.firingRoutine();
+    	;
     	
     }
     
