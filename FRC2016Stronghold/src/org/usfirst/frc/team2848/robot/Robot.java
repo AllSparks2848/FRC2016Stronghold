@@ -93,8 +93,7 @@ public static Joystick xbox1;
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	Shooter.firingRoutine();
-    	;
+    	Shooter.firingRoutine(1500);
     	
     }
     
