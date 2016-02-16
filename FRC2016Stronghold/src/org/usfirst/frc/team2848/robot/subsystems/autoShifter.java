@@ -24,7 +24,7 @@ public class autoShifter{
 		pdp = new PowerDistributionPanel();
 		double voltage = pdp.getVoltage();
 	
-		if(!Robot.shifter1.get())
+		if(!Robot.driveshifter.get())
 		{
 			if(voltage <= 9.0) //&& start < end)
 			{
@@ -56,10 +56,7 @@ public class autoShifter{
 	else {
 		danger = false;
 	}
-		
-		
-			
-		
+
 	}
 	
 }
