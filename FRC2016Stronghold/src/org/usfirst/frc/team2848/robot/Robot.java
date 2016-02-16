@@ -36,11 +36,11 @@ public static Joystick xbox1;
 
     double shootergearratio;
     
-    public static Solenoid shootertrigger;
+    public static DoubleSolenoid shootertrigger;
     
-    public static Solenoid leftintakesolenoid;
-    public static Solenoid rightintakesolenoid;
-    public static Solenoid intakepancake;
+    public static DoubleSolenoid leftintakesolenoid;
+    public static DoubleSolenoid rightintakesolenoid;
+    public static DoubleSolenoid intakepancake;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -72,11 +72,11 @@ public static Joystick xbox1;
         shooterpidleft.setITermBounds(-1, 1);
         shooterpidleft.setITermBounds(-1, 1);
         
-        shootertrigger = new Solenoid(2);
+        shootertrigger = new DoubleSolenoid(0, 4, 5);
         
-        leftintakesolenoid = new Solenoid(5);
-        rightintakesolenoid = new Solenoid(6);
-        intakepancake = new Solenoid(7);
+        leftintakesolenoid = new DoubleSolenoid(1, 0, 1);
+        rightintakesolenoid = new DoubleSolenoid(1, 2, 3);
+        intakepancake = new DoubleSolenoid(1, 4, 5);
         
     }
 
