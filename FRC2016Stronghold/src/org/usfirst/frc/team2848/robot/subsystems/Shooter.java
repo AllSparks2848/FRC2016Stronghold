@@ -8,11 +8,11 @@ public class Shooter {
 	private static double start;
 	public static void firingRoutine(double speed){
 		if (Robot.xbox1.getRawButton(1)){
-			if (Robot.xbox1.getRawButton(2) && Robot.shootertrigger.get() == Value.kReverse) {
+			if (Robot.xbox1.getRawButton(2) && Robot.shootertrigger.get() != Value.kForward) {
 				Robot.shootertrigger.set(Value.kForward);
 				start = System.currentTimeMillis();
 			}
-			if (Robot.shootertrigger.get() == Value.kForward && (System.currentTimeMillis() > start + 250)) {
+			if (Robot.shootertrigger.get() != Value.kReverse && (System.currentTimeMillis() > start + 250)) {
 				Robot.shootertrigger.set(Value.kReverse);
 			}
 			Robot.shooterpidleft.setTarget(speed);
