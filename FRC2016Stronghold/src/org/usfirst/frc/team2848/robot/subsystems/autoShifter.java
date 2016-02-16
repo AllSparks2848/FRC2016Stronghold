@@ -5,12 +5,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class autoShifter{
-	public static PowerDistributionPanel pdp;
 	private static long start;
 	private static boolean danger;
 	public static boolean state = true;
 	public static int SHIFTTIME = 500;
-	public static void downShift() {	
+	
+	public static void shift() {	
+		double voltage = Robot.pdp.getVoltage();
 		if (Robot.xbox1.getRawAxis(3) > 0.75) { //for drive train
 				
 			state = true;
@@ -19,14 +20,9 @@ public class autoShifter{
 				
 			state = false;
 		}
-		
-		
-		pdp = new PowerDistributionPanel();
-		double voltage = pdp.getVoltage();
-	
-		if(!Robot.driveshifter.get())
+		if(Robot.driveshifter.get() != Value.kForward)
 		{
-			if(voltage <= 9.0) //&& start < end)
+			if(voltage <= 9.0)
 			{
 				if(!danger) {
 					danger = true;
@@ -36,7 +32,7 @@ public class autoShifter{
 				{
 					if(voltage <=8.0)
 					{
-						state = true; //low gear instant
+						state = true;
 						danger = false;
 						System.out.println("below 8 V");
 					}
@@ -52,10 +48,11 @@ public class autoShifter{
 				danger = false;
 			}
 			
-	}
-	else {
-		danger = false;
-	}
+		}
+		else {
+			danger = false;
+		}
+		Robot.driveshifter.set(state ? Value.kForward : Value.kReverse);
 
 	}
 	
