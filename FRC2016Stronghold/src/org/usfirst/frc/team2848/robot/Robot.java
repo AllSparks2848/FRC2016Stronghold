@@ -40,8 +40,7 @@ public static Joystick xbox1;
     
     public static Solenoid leftintakesolenoid;
     public static Solenoid rightintakesolenoid;
-    public static Solenoid leftintakepancake;
-    public static Solenoid rightintakepancake;
+    public static Solenoid intakepancake;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -51,9 +50,9 @@ public static Joystick xbox1;
     public void robotInit() {
     	xbox1 = new Joystick(0);
         
-        shooterleftmotor = new Talon(0);
-        shooterrightmotor = new Talon(1);
-        intakewheel = new Talon(7);
+        shooterleftmotor = new Talon(1);
+        shooterrightmotor = new Talon(2);
+        intakewheel = new Talon(6);
         shooterrightmotor.setInverted(false);
         shooterleftmotor.setInverted(true);
         intakewheel.setInverted(false);
@@ -73,12 +72,11 @@ public static Joystick xbox1;
         shooterpidleft.setITermBounds(-1, 1);
         shooterpidleft.setITermBounds(-1, 1);
         
-        shootertrigger = new Solenoid(0);
+        shootertrigger = new Solenoid(2);
         
-        leftintakesolenoid = new Solenoid(4);
-        rightintakesolenoid = new Solenoid(5);
-        leftintakepancake = new Solenoid(6);
-        rightintakepancake = new Solenoid(7);
+        leftintakesolenoid = new Solenoid(5);
+        rightintakesolenoid = new Solenoid(6);
+        intakepancake = new Solenoid(7);
         
     }
 

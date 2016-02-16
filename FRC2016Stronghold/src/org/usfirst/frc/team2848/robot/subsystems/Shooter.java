@@ -4,7 +4,6 @@ import org.usfirst.frc.team2848.robot.Robot;
 
 public class Shooter {
 	private static double start;
-	
 	public static void firingRoutine(double speed){
 		if (Robot.xbox1.getRawButton(1)){
 			if (Robot.xbox1.getRawButton(2) && !Robot.shootertrigger.get()) {
