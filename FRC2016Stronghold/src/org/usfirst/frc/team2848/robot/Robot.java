@@ -38,8 +38,7 @@ public static Joystick xbox2;
     
     public static DoubleSolenoid shootertrigger;
     
-    public static DoubleSolenoid leftintakesolenoid;
-    public static DoubleSolenoid rightintakesolenoid;
+    public static DoubleSolenoid intakesolenoid;
     public static DoubleSolenoid intakepancake;
     
     /**
@@ -74,8 +73,7 @@ public static Joystick xbox2;
         
         shootertrigger = new DoubleSolenoid(0, 4, 5);
         
-        leftintakesolenoid = new DoubleSolenoid(1, 0, 1);
-        rightintakesolenoid = new DoubleSolenoid(1, 2, 3);
+        intakesolenoid = new DoubleSolenoid(1, 0, 1);
         intakepancake = new DoubleSolenoid(1, 4, 5);
         
     }
