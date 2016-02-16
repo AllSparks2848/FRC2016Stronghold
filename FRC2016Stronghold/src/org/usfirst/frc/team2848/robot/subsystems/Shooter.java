@@ -1,28 +1,28 @@
 package org.usfirst.frc.team2848.robot.subsystems;
 
-import org.usfirst.frc.team2848.robot.Robot;
+import org.usfirst.frc.team2848.robot.Definitions;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Shooter {
 	private static double start;
 	public static void firingRoutine(double speed){
-		if (Robot.xbox2.getRawButton(1)){
-			if (Robot.xbox2.getRawButton(2) && Robot.shootertrigger.get() != Value.kForward) {
-				Robot.shootertrigger.set(Value.kForward);
+		if (Definitions.xbox2.getRawButton(1)){
+			if (Definitions.xbox2.getRawButton(2) && Definitions.shootertrigger.get() != Value.kForward) {
+				Definitions.shootertrigger.set(Value.kForward);
 				start = System.currentTimeMillis();
 			}
-			if (Robot.shootertrigger.get() != Value.kReverse && (System.currentTimeMillis() > start + 250)) {
-				Robot.shootertrigger.set(Value.kReverse);
+			if (Definitions.shootertrigger.get() != Value.kReverse && (System.currentTimeMillis() > start + 250)) {
+				Definitions.shootertrigger.set(Value.kReverse);
 			}
-			Robot.shooterpidleft.setTarget(speed);
-			Robot.shooterpidright.setTarget(speed);
+			Definitions.leftshooterpid.setTarget(speed);
+			Definitions.rightshooterpid.setTarget(speed);
 		}
 		else {
-			Robot.shooterpidleft.setTarget(0);
-			Robot.shooterpidright.setTarget(0);
+			Definitions.leftshooterpid.setTarget(0);
+			Definitions.leftshooterpid.setTarget(0);
 		}
-		Robot.shooterleftmotor.set(Robot.shooterpidleft.compute(Robot.shooterleftenc.getRate()));
-		Robot.shooterrightmotor.set(Robot.shooterpidright.compute(Robot.shooterrightenc.getRate()));
+		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate()));
+		Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate()));
 	}
 }
