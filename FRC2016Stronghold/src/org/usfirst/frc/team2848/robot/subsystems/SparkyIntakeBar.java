@@ -2,27 +2,23 @@ package org.usfirst.frc.team2848.robot.subsystems;
 
 import org.usfirst.frc.team2848.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 public class SparkyIntakeBar {
 	private static boolean loading = false;
 	private static double start;
 	public static boolean loaded = true;
 	public static void startingPosition(){
-		Robot.leftintakepancake.set(false);
-		Robot.rightintakepancake.set(false);
-		Robot.leftintakesolenoid.set(false);
-		Robot.rightintakesolenoid.set(false);
+		Robot.intakepancake.set(DoubleSolenoid.Value.kReverse);
+		Robot.intakesolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 	public static void middlePosition(){
-		Robot.leftintakepancake.set(true);
-		Robot.rightintakepancake.set(true);
-		Robot.leftintakesolenoid.set(true);
-		Robot.rightintakesolenoid.set(true);
+		Robot.intakepancake.set(DoubleSolenoid.Value.kForward);
+		Robot.intakesolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 	public static void bottomPosition(){
-		Robot.leftintakepancake.set(false);
-		Robot.rightintakepancake.set(false);
-		Robot.leftintakesolenoid.set(true);
-		Robot.rightintakesolenoid.set(true);
+		Robot.intakepancake.set(DoubleSolenoid.Value.kReverse);
+		Robot.intakesolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 	public static void load(){
 		Robot.intakewheel.set(0.5);

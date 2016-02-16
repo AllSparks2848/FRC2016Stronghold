@@ -75,34 +75,6 @@ public class autoShifter{
 	else {
 		danger = false;
 	}
-		
-		if(!raiseIntake)
-		{
-			//lower intake bar
-			Robot.raiseArm.set(Value.kReverse);
-		}
-		else
-		{
-			//raise intake bar
-			Robot.raiseArm.set(Value.kForward);
-		}
-		
-			if(!extendIntake)
-			{
-				//suck in intake bar
-				Robot.extendArm.set(Value.kReverse);
-			}
-			else
-			{
-				//extend intake bar
-				Robot.extendArm.set(Value.kForward);
-			}
-		
-		//double solenoid shifter
-			
-		Robot.shifterArm.set(stateArm ? Value.kForward : Value.kReverse);
-		Robot.shifter1.set(state);
-			System.out.println(stateArm);
 			
 		
 	}
