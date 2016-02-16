@@ -9,9 +9,6 @@ public class autoShifter{
 	private static long start;
 	private static boolean danger;
 	public static boolean state = true;
-	public static boolean stateArm = true;
-	public static boolean raiseIntake = false;
-	public static boolean extendIntake = false;
 	public static int SHIFTTIME = 500;
 	public static void downShift() {	
 		if (Robot.xbox1.getRawAxis(3) > 0.75) { //for drive train
@@ -21,22 +18,6 @@ public class autoShifter{
 		if (Robot.xbox1.getRawButton(6)){ //for drive train 
 				
 			state = false;
-		}
-		if(Robot.xbox1.getRawButton(1)) // a = 1 b = 2 //for gear box 
-		{
-			stateArm = true;
-		}
-		if(Robot.xbox1.getRawButton(2)) // a = 1 b = 2 //for gear box
-		{
-			stateArm = false;
-		}
-		if(Robot.xbox1.getRawButton(5)) // a = 1 b = 2 //for raise intake arm
-		{
-			raiseIntake = true;
-		}
-		if(Robot.xbox1.getRawAxis(2) > 0.75) // a = 1 b = 2 //Extend intake bar
-		{
-			extendIntake = true;
 		}
 		
 		
@@ -76,33 +57,7 @@ public class autoShifter{
 		danger = false;
 	}
 		
-		if(!raiseIntake)
-		{
-			//lower intake bar
-			Robot.raiseArm.set(Value.kReverse);
-		}
-		else
-		{
-			//raise intake bar
-			Robot.raiseArm.set(Value.kForward);
-		}
 		
-			if(!extendIntake)
-			{
-				//suck in intake bar
-				Robot.extendArm.set(Value.kReverse);
-			}
-			else
-			{
-				//extend intake bar
-				Robot.extendArm.set(Value.kForward);
-			}
-		
-		//double solenoid shifter
-			
-		Robot.shifterArm.set(stateArm ? Value.kForward : Value.kReverse);
-		Robot.shifter1.set(state);
-			System.out.println(stateArm);
 			
 		
 	}
