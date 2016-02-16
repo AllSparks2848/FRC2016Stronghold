@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Shooter {
 	private static double start;
 	public static void firingRoutine(double speed){
-		if (Robot.xbox1.getRawButton(1)){
-			if (Robot.xbox1.getRawButton(2) && Robot.shootertrigger.get() != Value.kForward) {
+		if (Robot.xbox2.getRawButton(1)){
+			if (Robot.xbox2.getRawButton(2) && Robot.shootertrigger.get() != Value.kForward) {
 				Robot.shootertrigger.set(Value.kForward);
 				start = System.currentTimeMillis();
 			}

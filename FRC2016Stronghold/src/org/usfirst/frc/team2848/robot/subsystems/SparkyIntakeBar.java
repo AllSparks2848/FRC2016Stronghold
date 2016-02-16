@@ -21,13 +21,13 @@ public class SparkyIntakeBar {
 		Robot.rightintakesolenoid.set(Value.kForward);
 	}
 	public static void loadingRoutine(){
-		if (Robot.xbox1.getRawButton(3)){
+		if (Robot.xbox2.getRawButton(3)){
 			startingPosition();
 		}
-		if (Robot.xbox1.getRawButton(4)){
+		if (Robot.xbox2.getRawButton(4)){
 			middlePosition();
 		}
-		if (Robot.xbox1.getRawButton(5)){
+		if (Robot.xbox2.getRawButton(5)){
 			bottomPosition();
 		}
 	}

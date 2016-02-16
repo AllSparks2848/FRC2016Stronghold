@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  * directory.
  */
 public class Robot extends IterativeRobot {
-public static Joystick xbox1;
+public static Joystick xbox2;
     
     public static Talon shooterleftmotor;
     public static Talon shooterrightmotor;
@@ -48,7 +48,7 @@ public static Joystick xbox1;
      */
 	
     public void robotInit() {
-    	xbox1 = new Joystick(0);
+    	xbox2 = new Joystick(1);
         
         shooterleftmotor = new Talon(1);
         shooterrightmotor = new Talon(2);
