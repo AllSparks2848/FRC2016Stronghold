@@ -3,6 +3,7 @@ package org.usfirst.frc.team2848.robot;
 import org.usfirst.frc.team2848.util.PID;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -110,7 +111,8 @@ public class Definitions {
 	
 	public static AnalogInput pressuretrans;
 	
-	public static DigitalInput armphotogate;
+	public static Counter armphotogate;
+	
 	public static DigitalInput upperarmlimit;
 	public static DigitalInput lowerarmlimit;
 	
@@ -144,6 +146,14 @@ public class Definitions {
 		turret = new Spark(TURRET_PORT);
 		intakewheel = new Spark(INTAKE_WHEEL_PORT);
 		
+		leftdrive.setInverted(false);
+		rightdrive.setInverted(false);
+		leftshooter.setInverted(false);
+		rightshooter.setInverted(false);
+		ptomotor.setInverted(false);
+		turret.setInverted(false);
+		intakewheel.setInverted(false);
+		
 		drivetrain = new RobotDrive(leftdrive, rightdrive);
 		
 		ballholder = new Servo(BALL_HOLDER_PORT);
@@ -156,7 +166,7 @@ public class Definitions {
 		
 		pressuretrans = new AnalogInput(PRESSURE_TRANSDUCER_PORT);
 		
-		armphotogate = new DigitalInput(ARM_PHOTOGATE_PORT);
+		armphotogate = new Counter(ARM_PHOTOGATE_PORT);
 		upperarmlimit = new DigitalInput(UPPER_ARM_LIMIT_PORT);
 		lowerarmlimit = new DigitalInput(LOWER_ARM_LIMIT_PORT);
 		
