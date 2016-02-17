@@ -10,9 +10,6 @@ public class DriveShifter {
 	private static long start;
 	private static boolean danger;
 	private static boolean state = true;
-	private static boolean stateArm = true;
-	private static boolean raiseIntake = false;
-	private static boolean extendIntake = false;
 	private static int SHIFTTIME = 500;
 	
 	public static void checkGearShift() {	
@@ -60,7 +57,7 @@ public class DriveShifter {
 		danger = false;
 	}
 			
-		
+		Definitions.driveshifter.set(state ? Value.kForward : Value.kReverse);
 	}
 	
 }
