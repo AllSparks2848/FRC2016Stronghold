@@ -34,7 +34,8 @@ public class PID {
 		this.target = target;
 	}
 	
-	public double compute(double input) {
+	public double compute(double input, boolean enabled) {
+		if(!enabled) return 0;
 		double error = target-input; //calculate error of the system	
 		double p = pterm*error; //get proportional term of error
 		
