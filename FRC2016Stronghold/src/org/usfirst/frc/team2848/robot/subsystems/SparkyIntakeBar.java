@@ -1,42 +1,57 @@
 package org.usfirst.frc.team2848.robot.subsystems;
 
-import org.usfirst.frc.team2848.robot.Robot;
+import org.usfirst.frc.team2848.robot.Definitions;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class SparkyIntakeBar {
-	private static boolean loading = false;
+	
+	private static final int MIDDLEDELAY = 500;
+	
+	private static int laststate = 0;
 	private static double start;
-	public static boolean loaded = true;
+	private static boolean middle = false;
+	
+	
 	public static void startingPosition(){
-		Robot.intakepancake.set(DoubleSolenoid.Value.kReverse);
-		Robot.intakesolenoid.set(DoubleSolenoid.Value.kReverse);
+		Definitions.intakepancake.set(Value.kReverse);
+		Definitions.intakesolenoid.set(Value.kReverse);
+		middle = false;
+		laststate = 0;
 	}
 	public static void middlePosition(){
-		Robot.intakepancake.set(DoubleSolenoid.Value.kForward);
-		Robot.intakesolenoid.set(DoubleSolenoid.Value.kForward);
+		if(laststate == 2) {
+			if (!middle) {
+				Definitions.intakesolenoid.set(Value.kReverse);
+				Definitions.intakepancake.set(Value.kForward);
+				start = System.currentTimeMillis();
+				middle = true;
+				if (System.currentTimeMillis() - start > MIDDLEDELAY){
+					Definitions.intakesolenoid.set(Value.kForward);
+					laststate = 1;
+				}
+			}
+		}
+		else {
+			Definitions.intakesolenoid.set(Value.kForward);
+			Definitions.intakesolenoid.set(Value.kForward);
+			laststate = 1;
+		}
 	}
 	public static void bottomPosition(){
-		Robot.intakepancake.set(DoubleSolenoid.Value.kReverse);
-		Robot.intakesolenoid.set(DoubleSolenoid.Value.kForward);
-	}
-	public static void load(){
-		Robot.intakewheel.set(0.5);
-		loaded = true;
-	}
-	public static void isLoading(){
-		if (Robot.xbox1.getRawButton(2)){
-			loading = true;
-		}
+		Definitions.intakepancake.set(Value.kReverse);
+		Definitions.intakesolenoid.set(Value.kForward);
+		middle = false;
+		laststate = 2;
 	}
 	public static void loadingRoutine(){
-		if (Robot.xbox1.getRawButton(3)){
+		if (Definitions.xbox2.getRawButton(3)){
 			startingPosition();
 		}
-		if (Robot.xbox1.getRawButton(4)){
+		if (Definitions.xbox2.getRawButton(2) || middle){
 			middlePosition();
 		}
-		if (Robot.xbox1.getRawButton(5)){
+		if (Definitions.xbox2.getRawButton(1)){
 			bottomPosition();
 		}
 	}

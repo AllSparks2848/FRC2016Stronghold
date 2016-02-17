@@ -1,31 +1,35 @@
 package org.usfirst.frc.team2848.robot.subsystems;
 
-import org.usfirst.frc.team2848.robot.Robot;
+import org.usfirst.frc.team2848.robot.Definitions;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Shooter {
 	private static double start;
-	
+	private static boolean lastb = false;
 	public static void firingRoutine(double speed){
-		boolean enablepid = false;
-		if (Robot.xbox1.getRawButton(4)){
-			
-			if (Robot.xbox1.getRawButton(6) && !Robot.shootertrigger.get()) {
-				Robot.shootertrigger.set(true);
+		if (Definitions.xbox2.getRawButton(1)){
+			if (Definitions.xbox2.getRawButton(2) && !lastb) {
+				lastb = true;
+				Definitions.shootertrigger.set(Value.kForward);
 				start = System.currentTimeMillis();
 			}
-			if (Robot.shootertrigger.get() && (System.currentTimeMillis() > start + 250)) {
-				Robot.shootertrigger.set(false);
+			if (!Definitions.xbox2.getRawButton(2)){
+				lastb = false;
 			}
-			Robot.leftpid.setTarget(speed);
-			Robot.rightpid.setTarget(speed);
-			enablepid = true;
+			if (Definitions.shootertrigger.get() != Value.kReverse && (System.currentTimeMillis() > start + 250)) {
+				Definitions.shootertrigger.set(Value.kReverse);
+			}
+			Definitions.leftshooterpid.setTarget(speed);
+			Definitions.rightshooterpid.setTarget(speed);
+			Definitions.leftshooterpid.setEnabled(true, Definitions.leftshooterenc.getRate());
+			Definitions.rightshooterpid.setEnabled(true, Definitions.rightshooterenc.getRate());
 		}
 		else {
-			enablepid = false;
+			Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
+			Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
 		}
-		Robot.shooterleftmotor.set(Robot.leftpid.compute(Robot.leftencoder.getRate(), enablepid));
-		Robot.shooterrightmotor.set(Robot.rightpid.compute(Robot.rightencoder.getRate(), enablepid));
+		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
+		Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));
 	}
 }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team2848.robot;
 import org.usfirst.frc.team2848.util.PID;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
@@ -102,6 +104,8 @@ public class Definitions {
 	
 	public static Servo ballholder;
 	
+	public static Compressor compressor;
+	
 	//sensors
 	public static Encoder leftdriveenc;
 	public static Encoder rightdriveenc;
@@ -119,6 +123,8 @@ public class Definitions {
 	public static I2C lidar;
 	public static I2C autoselect;
 	public static I2C arduino;
+	
+	public static PowerDistributionPanel pdp;
 	
 	//utility
 	public static PID leftshooterpid;
@@ -158,6 +164,8 @@ public class Definitions {
 		
 		ballholder = new Servo(BALL_HOLDER_PORT);
 		
+		compressor = new Compressor();
+		
 		leftdriveenc = new Encoder(LEFT_DRIVE_ENC_A, LEFT_DRIVE_ENC_B, false, EncodingType.k4X);
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, false, EncodingType.k4X);
@@ -173,6 +181,8 @@ public class Definitions {
 		lidar = new I2C(Port.kMXP, LIDAR_ADDRESS);
 		autoselect = new I2C(Port.kMXP, AUTO_SELECT_ADDRESS);
 		arduino = new I2C(Port.kOnboard, ARDUINO_ADDRESS);
+		
+		pdp = new PowerDistributionPanel();
 		
 		leftshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, leftshooterenc.getRate());
 		rightshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, rightshooterenc.getRate());
