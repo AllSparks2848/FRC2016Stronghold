@@ -6,11 +6,16 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Shooter {
 	private static double start;
+	private static boolean lastb = false;
 	public static void firingRoutine(double speed){
 		if (Definitions.xbox2.getRawButton(1)){
-			if (Definitions.xbox2.getRawButton(2) && Definitions.shootertrigger.get() != Value.kForward) {
+			if (Definitions.xbox2.getRawButton(2) && !lastb) {
+				lastb = true;
 				Definitions.shootertrigger.set(Value.kForward);
 				start = System.currentTimeMillis();
+			}
+			if (!Definitions.xbox2.getRawButton(2)){
+				lastb = false;
 			}
 			if (Definitions.shootertrigger.get() != Value.kReverse && (System.currentTimeMillis() > start + 250)) {
 				Definitions.shootertrigger.set(Value.kReverse);
