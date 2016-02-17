@@ -8,22 +8,24 @@ public class Shooter {
 	private static double start;
 	
 	public static void firingRoutine(double speed){
-		if (Robot.xbox1.getRawButton(1)){
-			if (Robot.xbox1.getRawButton(2) && Robot.shootertrigger.get() == DoubleSolenoid.Value.kReverse) {
-				Robot.shootertrigger.set(DoubleSolenoid.Value.kForward);
+		boolean enablepid = false;
+		if (Robot.xbox1.getRawButton(4)){
+			
+			if (Robot.xbox1.getRawButton(6) && !Robot.shootertrigger.get()) {
+				Robot.shootertrigger.set(true);
 				start = System.currentTimeMillis();
 			}
-			if (Robot.shootertrigger.get() == DoubleSolenoid.Value.kForward && (System.currentTimeMillis() > start + 250)) {
-				Robot.shootertrigger.set(DoubleSolenoid.Value.kReverse);
+			if (Robot.shootertrigger.get() && (System.currentTimeMillis() > start + 250)) {
+				Robot.shootertrigger.set(false);
 			}
-			Robot.shooterpidleft.setTarget(speed);
-			Robot.shooterpidright.setTarget(speed);
+			Robot.leftpid.setTarget(speed);
+			Robot.rightpid.setTarget(speed);
+			enablepid = true;
 		}
 		else {
-			Robot.shooterpidleft.setTarget(0);
-			Robot.shooterpidright.setTarget(0);
+			enablepid = false;
 		}
-		Robot.shooterleftmotor.set(Robot.shooterpidleft.compute(Robot.shooterleftenc.getRate()));
-		Robot.shooterrightmotor.set(Robot.shooterpidright.compute(Robot.shooterrightenc.getRate()));
+		Robot.shooterleftmotor.set(Robot.leftpid.compute(Robot.leftencoder.getRate(), enablepid));
+		Robot.shooterrightmotor.set(Robot.rightpid.compute(Robot.rightencoder.getRate(), enablepid));
 	}
 }
