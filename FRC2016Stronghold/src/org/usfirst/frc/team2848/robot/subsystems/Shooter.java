@@ -37,5 +37,6 @@ public class Shooter {
 		}
 		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
 		Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));
+		System.out.println(Definitions.ballholder.getAngle());
 	}
 }
