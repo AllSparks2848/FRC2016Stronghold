@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Shooter {
 	private static double start;
 	public static void firingRoutine(double speed){
+		boolean enablepid = false;
 		if (Definitions.xbox2.getRawButton(1)){
 			if (Definitions.xbox2.getRawButton(2) && Definitions.shootertrigger.get() != Value.kForward) {
 				Definitions.shootertrigger.set(Value.kForward);
@@ -17,12 +18,12 @@ public class Shooter {
 			}
 			Definitions.leftshooterpid.setTarget(speed);
 			Definitions.rightshooterpid.setTarget(speed);
+			enablepid = true;
 		}
 		else {
-			Definitions.leftshooterpid.setTarget(0);
-			Definitions.leftshooterpid.setTarget(0);
+			enablepid = false;
 		}
-		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate()));
-		Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate()));
+		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), enablepid));
+		Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), enablepid));
 	}
 }
