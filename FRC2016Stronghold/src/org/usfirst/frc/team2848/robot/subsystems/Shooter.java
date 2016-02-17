@@ -25,6 +25,12 @@ public class Shooter {
 			Definitions.leftshooterpid.setEnabled(true, Definitions.leftshooterenc.getRate());
 			Definitions.rightshooterpid.setEnabled(true, Definitions.rightshooterenc.getRate());
 		}
+		else if (Definitions.xbox2.getRawAxis(2) > 0.75){
+			Definitions.leftshooterpid.setTarget(-1000);
+			Definitions.rightshooterpid.setTarget(-1000);
+			Definitions.leftshooterpid.setEnabled(true, Definitions.leftshooterenc.getRate());
+			Definitions.rightshooterpid.setEnabled(true, Definitions.rightshooterenc.getRate());
+		}
 		else {
 			Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
 			Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
