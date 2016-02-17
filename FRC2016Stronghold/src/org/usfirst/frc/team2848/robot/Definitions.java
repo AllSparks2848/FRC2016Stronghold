@@ -72,12 +72,14 @@ public class Definitions {
 	public static final double DRIVE_P = 0;
 	public static final double DRIVE_I = 0;
 	public static final double DRIVE_D = 0;
-	public static final double SHOOTER_P = 0;
-	public static final double SHOOTER_I = 0;
+	public static final double SHOOTER_P = 0.0023;
+	public static final double SHOOTER_I = 0.0008;
 	public static final double SHOOTER_D = 0;
 	public static final double TURRET_P = 0;
 	public static final double TURRET_I = 0;
 	public static final double TURRET_D = 0;
+	
+	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
 	//control
     public static Joystick xbox1;
@@ -133,6 +135,7 @@ public class Definitions {
 	public static PID leftdrivepid;
 	public static PID rightdrivepid;
 	
+	
 	public static void initPeripherals() {
 		xbox1 = new Joystick(XBOX1_PORT);
 		xbox2 = new Joystick(XBOX2_PORT);
@@ -183,6 +186,9 @@ public class Definitions {
 		arduino = new I2C(Port.kOnboard, ARDUINO_ADDRESS);
 		
 		pdp = new PowerDistributionPanel();
+		
+        leftshooterenc.setDistancePerPulse((1/3.0)*SHOOTER_GEAR_RATIO*60);
+        rightshooterenc.setDistancePerPulse((1/3.0)*SHOOTER_GEAR_RATIO*60);
 		
 		leftshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, leftshooterenc.getRate());
 		rightshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, rightshooterenc.getRate());
