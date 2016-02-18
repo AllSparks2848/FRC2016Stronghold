@@ -14,7 +14,7 @@ public class Shooter {
 				Definitions.shootertrigger.set(Value.kForward);
 				start = System.currentTimeMillis();
 			}
-			if (Definitions.xbox2.getRawAxis(6) <= 0.75){
+			if (Definitions.xbox2.getRawAxis(2) <= 0.75){
 				lastb = false;
 			}
 			
