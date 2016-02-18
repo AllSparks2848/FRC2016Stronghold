@@ -1,26 +1,25 @@
 package org.usfirst.frc.team2848.robot.subsystems;
+import org.usfirst.frc.team2848.robot.Definitions;
 import org.usfirst.frc.team2848.robot.Robot;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class autoShifter{
-	private static long start; //you guys are giving me to much crap...  maybe i deserve it though....
+	private static long start; 
 	private static boolean danger;
 	public static boolean state = true;
 	public static int SHIFTTIME = 500;
 	
 	public static void shift() {	
 		double voltage = Robot.pdp.getVoltage();
-		if (Robot.xbox1.getRawAxis(3) > 0.75) { //for drive train
+		if (Definitions.xbox1.getRawAxis(3) > 0.75) { //for drive train
 				
 			state = true;
 		}
-		if (Robot.xbox1.getRawButton(6)){ //for drive train 
+		if (Definitions.xbox1.getRawButton(6)){ //for drive train 
 				
 			state = false;
 		}
-		if(Robot.driveshifter.get() != Value.kForward)
+		if(Definitions.driveshifter.get() != Value.kForward)
 		{
 			if(voltage <= 9.0)
 			{
@@ -52,7 +51,7 @@ public class autoShifter{
 		else {
 			danger = false;
 		}
-		Robot.driveshifter.set(state ? Value.kForward : Value.kReverse);
+		Definitions.driveshifter.set(state ? Value.kForward : Value.kReverse);
 //Its not that bad guys...
 	}
 	

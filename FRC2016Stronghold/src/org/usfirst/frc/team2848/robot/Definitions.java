@@ -3,6 +3,7 @@ package org.usfirst.frc.team2848.robot;
 import org.usfirst.frc.team2848.util.PID;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -125,6 +126,9 @@ public class Definitions {
 	public static PID leftdrivepid;
 	public static PID rightdrivepid;
 	
+	//others
+	public static Compressor compressor;
+	
 	public static void initPeripherals() {
 		xbox1 = new Joystick(XBOX1_PORT);
 		xbox2 = new Joystick(XBOX2_PORT);
@@ -170,5 +174,6 @@ public class Definitions {
 		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
 		
+		compressor = new Compressor();
 	}
 }
