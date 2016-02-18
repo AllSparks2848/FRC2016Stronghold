@@ -79,7 +79,7 @@ public class Definitions {
 	public static final double TURRET_I = 0;
 	public static final double TURRET_D = 0;
 	
-	public static final double SHOOTER_GEAR_RATIO = (b);
+	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
 	//control
     public static Joystick xbox1;
