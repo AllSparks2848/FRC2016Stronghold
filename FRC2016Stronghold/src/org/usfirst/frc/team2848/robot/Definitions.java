@@ -25,18 +25,18 @@ public class Definitions {
 	public static final int PCM_0 = 0;
 	public static final int PCM_1 = 1;
 	
-	public static final int INTAKE_SOLENOID_A = 0;
-	public static final int INTAKE_SOLENOID_B = 3;
-	public static final int INTAKE_PANCAKE_A = 2;
-	public static final int INTAKE_PANCAKE_B = 1;
+	public static final int INTAKE_SOLENOID_A = 3;
+	public static final int INTAKE_SOLENOID_B = 0;
+	public static final int INTAKE_PANCAKE_A = 1;
+	public static final int INTAKE_PANCAKE_B = 2;
 	public static final int DRIVE_SHIFTER_A = 0;
-	public static final int DRIVE_SHIFTER_B = 0;
-	public static final int PTO_SHIFTER_A = 0;
-	public static final int PTO_SHIFTER_B = 0;
-	public static final int SHOOTER_TRIGGER_A = 0;
-	public static final int SHOOTER_TRIGGER_B = 0;
-	public static final int ARM_BRAKE_A = 0;
-	public static final int ARM_BRAKE_B = 0;
+	public static final int DRIVE_SHIFTER_B = 7;
+	public static final int PTO_SHIFTER_A = 6;
+	public static final int PTO_SHIFTER_B = 1;
+	public static final int SHOOTER_TRIGGER_A = 4;
+	public static final int SHOOTER_TRIGGER_B = 3;
+	public static final int ARM_BRAKE_A = 2;
+	public static final int ARM_BRAKE_B = 5;
 	
 	public static final int LEFT_DRIVE_PORT = 0;
 	public static final int RIGHT_DRIVE_PORT = 1;
@@ -79,7 +79,7 @@ public class Definitions {
 	public static final double TURRET_I = 0;
 	public static final double TURRET_D = 0;
 	
-	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
+	public static final double SHOOTER_GEAR_RATIO = (b);
 	
 	//control
     public static Joystick xbox1;
