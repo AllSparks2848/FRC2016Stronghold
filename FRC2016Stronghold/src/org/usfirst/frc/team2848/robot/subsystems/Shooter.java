@@ -24,7 +24,7 @@ public class Shooter {
 			Definitions.rightshooterpid.setEnabled(true, Definitions.rightshooterenc.getRate());
 		}
 		
-		else if (Definitions.xbox2.getRawAxis(2) > 0.75){
+		else if (Definitions.xbox2.getRawAxis(3) > 0.75){
 			Definitions.leftshooterpid.setTarget(-1000);
 			Definitions.rightshooterpid.setTarget(-1000);
 			Definitions.leftshooterpid.setEnabled(true, Definitions.leftshooterenc.getRate());
