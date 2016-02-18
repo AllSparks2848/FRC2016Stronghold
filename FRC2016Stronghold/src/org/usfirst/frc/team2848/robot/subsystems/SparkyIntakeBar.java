@@ -74,5 +74,11 @@ public class SparkyIntakeBar {
 		else if (!Definitions.xbox2.getRawButton(2)){
 			lastb = false;
 		}
+		if (Definitions.xbox2.getRawButton(6)){
+			Definitions.intakewheel.set(0.5);
+		}
+		else if (Definitions.xbox2.getRawButton(4)){
+			Definitions.intakewheel.set(-0.5);
+		}
 	}
 }
