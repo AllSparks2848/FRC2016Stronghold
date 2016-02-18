@@ -160,7 +160,7 @@ public class Definitions {
 		leftshooter.setInverted(true);
 		rightshooter.setInverted(false);
 		ptomotor.setInverted(false);
-		turret.setInverted(false);
+		turret.setInverted(true);
 		intakewheel.setInverted(false);
 		
 		drivetrain = new RobotDrive(leftdrive, rightdrive);
