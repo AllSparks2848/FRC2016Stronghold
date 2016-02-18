@@ -29,6 +29,7 @@ public class SparkyIntakeBar {
 				if (System.currentTimeMillis() - start > MIDDLEDELAY){
 					Definitions.intakesolenoid.set(Value.kForward);
 					laststate = 1;
+					middle = false;
 				}
 			}
 		}
@@ -36,6 +37,7 @@ public class SparkyIntakeBar {
 			Definitions.intakesolenoid.set(Value.kForward);
 			Definitions.intakesolenoid.set(Value.kForward);
 			laststate = 1;
+			middle = false;
 		}
 	}
 	public static void bottomPosition(){
@@ -48,11 +50,13 @@ public class SparkyIntakeBar {
 		if (Definitions.xbox2.getRawButton(3)){
 			startingPosition();
 		}
-		if (Definitions.xbox2.getRawButton(2) || middle){
-			middlePosition();
-		}
+
 		if (Definitions.xbox2.getRawButton(1)){
 			bottomPosition();
+		}
+		
+		if (Definitions.xbox2.getRawButton(2) || middle){
+			middlePosition();
 		}
 	}
 }

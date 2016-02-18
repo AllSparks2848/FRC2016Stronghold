@@ -18,6 +18,7 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
     	Definitions.initPeripherals();
+    	SparkyIntakeBar.startingPosition();
     }
     
     public void autonomousPeriodic() {

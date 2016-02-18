@@ -25,10 +25,10 @@ public class Definitions {
 	public static final int PCM_0 = 0;
 	public static final int PCM_1 = 1;
 	
-	public static final int INTAKE_SOLENOID_A = 3;
-	public static final int INTAKE_SOLENOID_B = 0;
-	public static final int INTAKE_PANCAKE_A = 1;
-	public static final int INTAKE_PANCAKE_B = 2;
+	public static final int INTAKE_SOLENOID_A = 0;
+	public static final int INTAKE_SOLENOID_B = 3;
+	public static final int INTAKE_PANCAKE_A = 2;
+	public static final int INTAKE_PANCAKE_B = 1;
 	public static final int DRIVE_SHIFTER_A = 0;
 	public static final int DRIVE_SHIFTER_B = 7;
 	public static final int PTO_SHIFTER_A = 6;
@@ -155,9 +155,9 @@ public class Definitions {
 		turret = new Spark(TURRET_PORT);
 		intakewheel = new Spark(INTAKE_WHEEL_PORT);
 		
-		leftdrive.setInverted(false);
-		rightdrive.setInverted(false);
-		leftshooter.setInverted(false);
+		leftdrive.setInverted(true);
+		rightdrive.setInverted(true);
+		leftshooter.setInverted(true);
 		rightshooter.setInverted(false);
 		ptomotor.setInverted(false);
 		turret.setInverted(false);
@@ -169,10 +169,10 @@ public class Definitions {
 		
 		compressor = new Compressor();
 		
-		leftdriveenc = new Encoder(LEFT_DRIVE_ENC_A, LEFT_DRIVE_ENC_B, false, EncodingType.k4X);
+		leftdriveenc = new Encoder(LEFT_DRIVE_ENC_A, LEFT_DRIVE_ENC_B, true, EncodingType.k4X);
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, false, EncodingType.k4X);
-		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
+		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, true, EncodingType.k4X);
 		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
 		
 		pressuretrans = new AnalogInput(PRESSURE_TRANSDUCER_PORT);
