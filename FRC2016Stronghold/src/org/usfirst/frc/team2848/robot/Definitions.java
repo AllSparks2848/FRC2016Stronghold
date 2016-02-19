@@ -40,8 +40,8 @@ public class Definitions {
 	
 	public static final int LEFT_DRIVE_PORT = 0;
 	public static final int RIGHT_DRIVE_PORT = 1;
-	public static final int LEFT_SHOOTER_PORT = 2;
-	public static final int RIGHT_SHOOTER_PORT = 3;
+	public static final int LEFT_SHOOTER_PORT = 3;
+	public static final int RIGHT_SHOOTER_PORT = 2;
 	public static final int PTO_MOTOR_PORT = 4;
 	public static final int TURRET_PORT = 5;
 	public static final int INTAKE_WHEEL_PORT = 6;
@@ -157,8 +157,8 @@ public class Definitions {
 		
 		leftdrive.setInverted(true);
 		rightdrive.setInverted(true);
-		leftshooter.setInverted(true);
-		rightshooter.setInverted(false);
+		leftshooter.setInverted(false);
+		rightshooter.setInverted(true);
 		ptomotor.setInverted(false);
 		turret.setInverted(true);
 		intakewheel.setInverted(false);
@@ -171,8 +171,8 @@ public class Definitions {
 		
 		leftdriveenc = new Encoder(LEFT_DRIVE_ENC_A, LEFT_DRIVE_ENC_B, true, EncodingType.k4X);
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
-		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, false, EncodingType.k4X);
-		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, true, EncodingType.k4X);
+		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, true, EncodingType.k4X);
+		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
 		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
 		
 		pressuretrans = new AnalogInput(PRESSURE_TRANSDUCER_PORT);
@@ -191,7 +191,11 @@ public class Definitions {
         rightshooterenc.setDistancePerPulse((1/3.0)*SHOOTER_GEAR_RATIO*60);
 		
 		leftshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, leftshooterenc.getRate());
+		leftshooterpid.setBounds(-1, 1);
+		leftshooterpid.setITermBounds(-1, 1);
 		rightshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, rightshooterenc.getRate());
+		rightshooterpid.setBounds(-1, 1);
+		rightshooterpid.setITermBounds(-1, 1);
 		turretpid = new PID(TURRET_P, TURRET_I, TURRET_D, 0, turretenc.getDistance());
 		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);

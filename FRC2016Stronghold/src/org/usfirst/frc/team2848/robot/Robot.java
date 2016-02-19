@@ -18,7 +18,7 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
     	Definitions.initPeripherals();
-    	SparkyIntakeBar.startingPosition();
+    	
     }
     
     public void autonomousPeriodic() {
@@ -32,6 +32,7 @@ public class Robot extends IterativeRobot {
     	Shooter.firingRoutine(4000);
     	Arm.armRoutine();
     	Turret.turretRoutine();
+    	System.out.println(Definitions.leftshooterenc.getRate() + "  " + Definitions.rightshooterenc.getRate());
     }
     
     public void testPeriodic() {

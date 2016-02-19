@@ -65,6 +65,7 @@ public class PID {
 			values[1] = i;
 			values[2] = d;
 			values[3] = error;
+			values[4] = output;
 		}
 		
 		return output;

@@ -50,10 +50,10 @@ public class SparkyIntakeBar {
 //	}
 	public static void loadingRoutine(){
 		if (Definitions.xbox2.getRawButton(1) && !lasta){
-			if (Definitions.intakesolenoid.get() == Value.kForward){
+			if (Definitions.intakesolenoid.get() != Value.kReverse){
 				Definitions.intakesolenoid.set(Value.kReverse);
 			}
-			else if (Definitions.intakesolenoid.get() == Value.kReverse){
+			else if (Definitions.intakesolenoid.get() != Value.kForward){
 				Definitions.intakesolenoid.set(Value.kForward);
 			}
 			lasta = true;
@@ -63,10 +63,10 @@ public class SparkyIntakeBar {
 		}
 		
 		if (Definitions.xbox2.getRawButton(2) && !lastb){
-			if (Definitions.intakepancake.get() == Value.kForward){
+			if (Definitions.intakepancake.get() != Value.kReverse){
 				Definitions.intakepancake.set(Value.kReverse);
 			}
-			else if (Definitions.intakepancake.get() == Value.kReverse){
+			else if (Definitions.intakepancake.get() != Value.kForward){
 				Definitions.intakepancake.set(Value.kForward);
 			}
 			lastb = true;
@@ -75,10 +75,13 @@ public class SparkyIntakeBar {
 			lastb = false;
 		}
 		if (Definitions.xbox2.getRawButton(6)){
-			Definitions.intakewheel.set(0.5);
+			Definitions.intakewheel.set(0.75);
 		}
 		else if (Definitions.xbox2.getRawButton(4)){
-			Definitions.intakewheel.set(-0.5);
+			Definitions.intakewheel.set(-0.75);
+		}
+		else {
+			Definitions.intakewheel.set(0);
 		}
 	}
 }
