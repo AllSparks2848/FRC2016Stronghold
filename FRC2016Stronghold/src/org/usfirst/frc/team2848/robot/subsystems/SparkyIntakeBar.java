@@ -12,7 +12,7 @@ public class SparkyIntakeBar {
 	private static boolean middlestarted = false;
 	private static boolean lastbutton5 = false;
 	private static boolean lastaxis2 = false;
-	private static int lastintakeposition = 0;
+	private static int lastintakeposition;
 	
 	public static void loadingRoutine(){
 		if (Definitions.xbox1.getRawButton(5)){

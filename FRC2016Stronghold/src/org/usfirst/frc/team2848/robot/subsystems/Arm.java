@@ -40,13 +40,14 @@ public class Arm {
 //    	}
     	
         if (!movingup && !movingdown){
-        	if (Definitions.lowerarmlimit.get() || Definitions.upperarmlimit.get()){
+        	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){
     			Definitions.armbrake.set(Value.kForward);
     			Definitions.ptomotor.set(0);
         	}
         	else {
     			Definitions.armbrake.set(Value.kReverse);
     			Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1));
+    			Definitions.ptoshifter.set(Value.kForward);
         	}
         }
     }

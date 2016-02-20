@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2848.robot;
 
+import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
 import org.usfirst.frc.team2848.util.PID;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -200,6 +201,6 @@ public class Definitions {
 		turretpid = new PID(TURRET_P, TURRET_I, TURRET_D, 0, turretenc.getDistance());
 		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
-		
+		SparkyIntakeBar.intakeInit();
 	}
 }
