@@ -6,7 +6,9 @@ public class Turret {
 	public static void turretRoutine() {
 		if(Definitions.lowerarmlimit.get())
 		{
-			Definitions.turret.set(Definitions.xbox2.getRawAxis(4)*0.4);
+			if (!Definitions.xbox2.getRawButton(4)){
+				Definitions.turret.set(Definitions.xbox2.getRawAxis(4)*0.4);
+			}
 		}
 		else
 		{
