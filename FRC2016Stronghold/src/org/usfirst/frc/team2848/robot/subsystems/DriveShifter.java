@@ -1,10 +1,10 @@
 package org.usfirst.frc.team2848.robot.subsystems;
 import org.usfirst.frc.team2848.robot.Definitions;
-import org.usfirst.frc.team2848.robot.Robot;
+
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+
 
 public class DriveShifter {
 	private static long start;
@@ -24,7 +24,7 @@ public class DriveShifter {
 		
 		double voltage = Definitions.pdp.getVoltage();
 	
-		if(Definitions.driveshifter.get() == DoubleSolenoid.Value.kReverse)
+		if(Definitions.driveshifter.get())
 		{
 			if(voltage <= 9.0) //&& start < end)
 			{
@@ -57,7 +57,7 @@ public class DriveShifter {
 		danger = false;
 	}
 			
-		Definitions.driveshifter.set(state ? Value.kForward : Value.kReverse);
+		Definitions.driveshifter.set(!state);
 	}
 	
 }

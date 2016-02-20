@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 
 public class Definitions {
@@ -25,16 +26,16 @@ public class Definitions {
 	public static final int PCM_0 = 0;
 	public static final int PCM_1 = 1;
 	
-	public static final int INTAKE_SOLENOID_A = 0;
-	public static final int INTAKE_SOLENOID_B = 3;
+	public static final int INTAKE_SOLENOID_A = 3;
+	public static final int INTAKE_SOLENOID_B = 0;
 	public static final int INTAKE_PANCAKE_A = 2;
 	public static final int INTAKE_PANCAKE_B = 1;
-	public static final int DRIVE_SHIFTER_A = 0;
-	public static final int DRIVE_SHIFTER_B = 7;
+//	public static final int DRIVE_SHIFTER_A = 0;
+	public static final int DRIVE_SHIFTER = 7;
 	public static final int PTO_SHIFTER_A = 6;
 	public static final int PTO_SHIFTER_B = 1;
-	public static final int SHOOTER_TRIGGER_A = 4;
-	public static final int SHOOTER_TRIGGER_B = 3;
+	public static final int SHOOTER_TRIGGER = 4;
+//	public static final int SHOOTER_TRIGGER_B = 3;
 	public static final int ARM_BRAKE_A = 2;
 	public static final int ARM_BRAKE_B = 5;
 	
@@ -88,9 +89,9 @@ public class Definitions {
     //actuators
     public static DoubleSolenoid intakesolenoid;
 	public static DoubleSolenoid intakepancake;	
-	public static DoubleSolenoid driveshifter;
+	public static Solenoid driveshifter;
 	public static DoubleSolenoid ptoshifter;	
-	public static DoubleSolenoid shootertrigger;
+	public static Solenoid shootertrigger;
 	public static DoubleSolenoid armbrake;
 	
 	
@@ -142,9 +143,9 @@ public class Definitions {
 		
 		intakesolenoid = new DoubleSolenoid(PCM_1, INTAKE_SOLENOID_A, INTAKE_SOLENOID_B);
 		intakepancake = new DoubleSolenoid(PCM_1, INTAKE_PANCAKE_A, INTAKE_PANCAKE_B);
-		driveshifter = new DoubleSolenoid(PCM_0, DRIVE_SHIFTER_A, DRIVE_SHIFTER_B);
+		driveshifter = new Solenoid(PCM_0, DRIVE_SHIFTER);
 		ptoshifter = new DoubleSolenoid(PCM_0, PTO_SHIFTER_A, PTO_SHIFTER_B);
-		shootertrigger = new DoubleSolenoid(PCM_0, SHOOTER_TRIGGER_A, SHOOTER_TRIGGER_B);
+		shootertrigger = new Solenoid(PCM_0, SHOOTER_TRIGGER);
 		armbrake = new DoubleSolenoid(PCM_0, ARM_BRAKE_A, ARM_BRAKE_B);
 		
 		leftdrive = new Spark(LEFT_DRIVE_PORT);
