@@ -6,6 +6,7 @@ import org.usfirst.frc.team2848.robot.subsystems.Shooter;
 import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
 import org.usfirst.frc.team2848.robot.subsystems.Turret;
 
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
@@ -18,6 +19,7 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
     	Definitions.initPeripherals();
+    	SparkyIntakeBar.intakeInit();
     	
     }
     
@@ -32,7 +34,9 @@ public class Robot extends IterativeRobot {
     	Shooter.firingRoutine(4000);
     	Arm.armRoutine();
     	Turret.turretRoutine();
-    	System.out.println(Definitions.leftshooterenc.getRate() + "  " + Definitions.rightshooterenc.getRate());
+    	System.out.println(Definitions.turretenc.get() + "  " + Definitions.upperarmlimit.get());
+    	
+    
     }
     
     public void testPeriodic() {

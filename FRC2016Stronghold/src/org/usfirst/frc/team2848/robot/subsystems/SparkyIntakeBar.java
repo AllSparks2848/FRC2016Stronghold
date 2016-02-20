@@ -12,7 +12,7 @@ public class SparkyIntakeBar {
 	private static boolean middlestarted = false;
 	private static boolean lastbutton5 = false;
 	private static boolean lastaxis2 = false;
-	public static int lastintakeposition = 0;
+	private static int lastintakeposition = 0;
 	
 	public static void loadingRoutine(){
 		if (Definitions.xbox1.getRawButton(5)){
@@ -66,9 +66,18 @@ public class SparkyIntakeBar {
 		if (Definitions.xbox2.getRawAxis(2) <= 0.75){
 			lastaxis2 = false;
 		}
-		System.out.println(Definitions.intakesolenoid.get());
 	}
 	public static void intakeInit(){
-		
+		if (Definitions.intakesolenoid.get() == Value.kReverse) {
+			lastintakeposition = 0;
+		}
+		else {
+			if (Definitions.intakepancake.get() == Value.kForward){
+				lastintakeposition = 1;
+			}
+			else {
+				lastintakeposition = 2;
+			}
+		}
 	}
 }
