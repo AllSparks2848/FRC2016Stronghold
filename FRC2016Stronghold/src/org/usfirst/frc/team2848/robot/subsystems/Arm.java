@@ -38,16 +38,28 @@ public class Arm {
 //    			movingdown = false;
 //    		}
 //    	}
-    	
-        if (!movingup && !movingdown){
+    	Definitions.ptoshifter.set(Value.kReverse);
+        if (!movingup && !movingdown && SparkyIntakeBar.position != 0 && !Definitions.xbox2.getRawButton(3) && !Definitions.xbox2.getRawButton(1)){
         	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){
     			Definitions.armbrake.set(Value.kForward);
     			Definitions.ptomotor.set(0);
         	}
         	else {
     			Definitions.armbrake.set(Value.kReverse);
-    			Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1));
-    			Definitions.ptoshifter.set(Value.kForward);
+//    			if (Definitions.lowerarmlimit.get()){
+//    				if (Definitions.xbox2.getRawAxis(1) < -0.25){
+//    					Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1) * 0.5);
+//    				}
+//    			}
+//    			else if (Definitions.upperarmlimit.get()){
+//    				if (Definitions.xbox2.getRawAxis(1) > 0.25){
+//    					Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1) * 0.5);
+//    				}
+//    			}
+//    			else {
+    				Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1) * 0.5);
+    			
+    			
         	}
         }
     }

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2848.robot;
 
+import org.usfirst.frc.team2848.robot.navigation.ImageProcessing;
 import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
 import org.usfirst.frc.team2848.util.PID;
 
@@ -77,9 +78,9 @@ public class Definitions {
 	public static final double SHOOTER_P = 0.0023;
 	public static final double SHOOTER_I = 0.0008;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRET_P = 0;
-	public static final double TURRET_I = 0;
-	public static final double TURRET_D = 0;
+	public static final double TURRET_P = 0.003;
+	public static final double TURRET_I = 0.05;
+	public static final double TURRET_D = 0.001;
 	
 	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
@@ -137,6 +138,7 @@ public class Definitions {
 	public static PID leftdrivepid;
 	public static PID rightdrivepid;
 	
+	public static ImageProcessing processing;
 	
 	public static void initPeripherals() {
 		xbox1 = new Joystick(XBOX1_PORT);
@@ -198,9 +200,14 @@ public class Definitions {
 		rightshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, rightshooterenc.getRate());
 		rightshooterpid.setBounds(-1, 1);
 		rightshooterpid.setITermBounds(-1, 1);
-		turretpid = new PID(TURRET_P, TURRET_I, TURRET_D, 0, turretenc.getDistance());
+		turretpid = new PID(TURRET_P, TURRET_I, TURRET_D, turretenc.getDistance(), turretenc.getDistance());
+		turretpid.setBounds(-0.23, 0.23);
+		turretpid.setITermBounds(-0.1, 0.1);
 		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
 		SparkyIntakeBar.intakeInit();
+		
+		processing = new ImageProcessing();
+		processing.start();
 	}
 }

@@ -18,8 +18,9 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
+    	System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
     	Definitions.initPeripherals();
-    	SparkyIntakeBar.intakeInit();
+    	
     	
     }
     
@@ -33,8 +34,8 @@ public class Robot extends IterativeRobot {
     	SparkyIntakeBar.loadingRoutine();
     	Shooter.firingRoutine(4000);
     	Arm.armRoutine();
-    	Turret.turretRoutine();
-    	System.out.println(Definitions.turretenc.get() + "  " + Definitions.upperarmlimit.get());
+    	Turret.turretRoutine(Definitions.xbox2.getRawButton(4)/* && !Definitions.lowerarmlimit.get()*/);
+    	System.out.println(Definitions.lowerarmlimit.get() + "  " + Definitions.upperarmlimit.get());
     	
     
     }
