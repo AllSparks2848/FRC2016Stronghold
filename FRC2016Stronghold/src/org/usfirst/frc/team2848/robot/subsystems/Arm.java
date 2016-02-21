@@ -38,7 +38,7 @@ public class Arm {
 //    			movingdown = false;
 //    		}
 //    	}
-    	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){ {
+    	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){ 
     		Definitions.armbrake.set(Value.kForward);
     	}
     	Definitions.ptoshifter.set(Value.kReverse);
