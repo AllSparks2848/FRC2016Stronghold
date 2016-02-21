@@ -34,8 +34,8 @@ public class Robot extends IterativeRobot {
     	SparkyIntakeBar.loadingRoutine();
     	Shooter.firingRoutine(4000);
     	Arm.armRoutine();
-    	Turret.turretRoutine(Definitions.xbox2.getRawButton(4)/* && !Definitions.lowerarmlimit.get()*/);
-    	System.out.println(Definitions.lowerarmlimit.get() + "  " + Definitions.upperarmlimit.get());
+    	Turret.turretRoutine(Definitions.xbox2.getRawButton(4));
+    	System.out.println(Definitions.turretenc.getDistance());
     	
     
     }

@@ -11,39 +11,29 @@ public class Shooter {
 	private static boolean lastb = false;
 	private static boolean started = false;
 	public static void firingRoutine(double speed){
-		if (Definitions.xbox2.getRawButton(6) && !lastbutton6){
+		if (Definitions.xbox2.getRawButton(6)){
 			Definitions.leftshooterpid.setTarget(speed);
 			Definitions.rightshooterpid.setTarget(speed);
 			
-			if (!Definitions.leftshooterpid.getEnabled()) {
+			if (!Definitions.leftshooterpid.getEnabled() && !lastbutton6) {
 				Definitions.leftshooterpid.setEnabled(true, Definitions.leftshooterenc.getRate());
 				Definitions.rightshooterpid.setEnabled(true, Definitions.rightshooterenc.getRate());
 				started = true;
 			}
 			
-			else if (Definitions.leftshooterpid.getEnabled() && started){
-				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-				started = false;
-			}
 			lastbutton6 = true;
 			
 		}
-		if (Definitions.xbox2.getRawButton(2) && !lastb){
+		if (Definitions.xbox2.getRawButton(2)){
 			Definitions.leftshooterpid.setTarget(-1000);
 			Definitions.rightshooterpid.setTarget(-1000);
 			
-			if (!Definitions.leftshooterpid.getEnabled()) {
+			if (!Definitions.leftshooterpid.getEnabled() && !lastb) {
 				Definitions.leftshooterpid.setEnabled(true, Definitions.leftshooterenc.getRate());
 				Definitions.rightshooterpid.setEnabled(true, Definitions.rightshooterenc.getRate());
 				started = true;
 			}
 			
-			else if (Definitions.leftshooterpid.getEnabled() && started){
-				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-				started = false;
-			}
 			lastb = true;
 			
 		}
@@ -58,8 +48,6 @@ public class Shooter {
 		}
 		if (Definitions.shootertrigger.get() && (System.currentTimeMillis() > start + 250)){
 			Definitions.shootertrigger.set(false);
-			Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-			Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
 		}
 		if (!Definitions.xbox2.getRawButton(6))
 		{
@@ -67,6 +55,10 @@ public class Shooter {
 		}
 		if (!Definitions.xbox2.getRawButton(2)){
 			lastb = false;
+		}
+		if (!Definitions.xbox2.getRawButton(2) && !Definitions.xbox2.getRawButton(6)){
+			Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
+			Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
 		}
 		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
 		Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));

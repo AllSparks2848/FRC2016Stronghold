@@ -38,7 +38,11 @@ public class Arm {
 //    			movingdown = false;
 //    		}
 //    	}
+    	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){ {
+    		Definitions.armbrake.set(Value.kForward);
+    	}
     	Definitions.ptoshifter.set(Value.kReverse);
+    	
         if (!movingup && !movingdown && SparkyIntakeBar.position != 0 && !Definitions.xbox2.getRawButton(3) && !Definitions.xbox2.getRawButton(1)){
         	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){
     			Definitions.armbrake.set(Value.kForward);
@@ -60,6 +64,9 @@ public class Arm {
     				Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1) * 0.5);
     			
     			
+        	}
+        	if (Definitions.xbox2.getRawButton(8)){
+        		Definitions.armbrake.set(Value.kReverse);
         	}
         }
     }
