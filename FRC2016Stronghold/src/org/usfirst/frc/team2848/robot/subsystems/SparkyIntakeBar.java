@@ -77,7 +77,25 @@ public class SparkyIntakeBar {
 			Definitions.rightshooter.set(0.4);	
 			Definitions.intakewheel.set(0.75);
 		}
-		else if (!Definitions.xbox2.getRawButton(5) && Definitions.xbox2.getRawAxis(2) <= 0.75){
+		else if (Definitions.xbox1.getRawButton(3)){
+			if (Definitions.leftshooterpid.getEnabled()){
+				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
+				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
+			}
+			Definitions.leftshooter.set(-0.4);
+			Definitions.rightshooter.set(-0.4);	
+			Definitions.intakewheel.set(-0.75);
+		}
+		else if (Definitions.xbox1.getRawButton(1)){
+			if (Definitions.leftshooterpid.getEnabled()){
+				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
+				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
+			}
+			Definitions.leftshooter.set(0.4);
+			Definitions.rightshooter.set(0.4);	
+			Definitions.intakewheel.set(0.75);
+		}
+		if (!Definitions.xbox2.getRawButton(5) && Definitions.xbox2.getRawAxis(2) <= 0.75){
 			Definitions.intakewheel.set(0);
 		}
 
