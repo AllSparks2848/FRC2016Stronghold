@@ -78,9 +78,12 @@ public class Definitions {
 	public static final double SHOOTER_P = 0.0023;
 	public static final double SHOOTER_I = 0.0008;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRET_P = 0.003;
-	public static final double TURRET_I = 0.05;
-	public static final double TURRET_D = 0.001;
+	public static final double TURRETAIM_P = 0.0035;
+	public static final double TURRETAIM_I = 0.15;
+	public static final double TURRETAIM_D = 0.001;
+	public static final double TURRETCENTER_P = 0.002;
+	public static final double TURRETCENTER_I = 0.0005;
+	public static final double TURRETCENTER_D = 0;
 	
 	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
@@ -134,7 +137,8 @@ public class Definitions {
 	//utility
 	public static PID leftshooterpid;
 	public static PID rightshooterpid;
-	public static PID turretpid;
+	public static PID turretaimpid;
+	public static PID turretcenterpid;
 	public static PID leftdrivepid;
 	public static PID rightdrivepid;
 	
@@ -179,6 +183,12 @@ public class Definitions {
 		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
 		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
 		
+		leftdriveenc.reset();
+		rightdriveenc.reset();
+		leftshooterenc.reset();
+		rightshooterenc.reset();
+		turretenc.reset();
+		
 		pressuretrans = new AnalogInput(PRESSURE_TRANSDUCER_PORT);
 		
 		armphotogate = new Counter(ARM_PHOTOGATE_PORT);
@@ -200,12 +210,14 @@ public class Definitions {
 		rightshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, rightshooterenc.getRate());
 		rightshooterpid.setBounds(-1, 1);
 		rightshooterpid.setITermBounds(-1, 1);
-		turretpid = new PID(TURRET_P, TURRET_I, TURRET_D, turretenc.getDistance(), turretenc.getDistance());
-		turretpid.setBounds(-0.23, 0.23);
-		turretpid.setITermBounds(-0.1, 0.1);
+		turretaimpid = new PID(TURRETAIM_P, TURRETAIM_I, TURRETAIM_D, turretenc.getDistance(), turretenc.getDistance());
+		turretaimpid.setBounds(-0.27, 0.27);
+		turretaimpid.setITermBounds(-0.15, 0.15);
 		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
-		SparkyIntakeBar.intakeInit();
+		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 0, turretenc.getDistance());
+		turretcenterpid.setBounds(-0.4, 0.4);
+		turretcenterpid.setITermBounds(-0.15, 0.15);
 		
 		processing = new ImageProcessing();
 		processing.start();

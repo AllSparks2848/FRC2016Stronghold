@@ -46,7 +46,7 @@ public class Shooter {
 		else if (Definitions.xbox2.getRawAxis(3) <= 0.75){
 			lastaxis3 = false;
 		}
-		if (Definitions.shootertrigger.get() && (System.currentTimeMillis() > start + 250)){
+		if (Definitions.shootertrigger.get() && (System.currentTimeMillis() > start + 500)){
 			Definitions.shootertrigger.set(false);
 		}
 		if (!Definitions.xbox2.getRawButton(6))

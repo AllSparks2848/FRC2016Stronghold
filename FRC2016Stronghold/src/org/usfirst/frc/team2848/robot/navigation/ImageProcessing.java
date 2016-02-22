@@ -63,7 +63,8 @@ public class ImageProcessing extends Thread {
 	private void compute() {
 		Mat image = new Mat();
 		frame.getImage(image);
-		Highgui.imwrite("/home/lvuser/imagefilter.png", image);
+		if(image.empty()) return;
+		//Highgui.imwrite("/home/lvuser/imagefilter.png", image);
     	long time = System.currentTimeMillis();
     	Mat hsv = new Mat();
     	Imgproc.cvtColor(image, hsv, Imgproc.COLOR_BGR2HSV);
@@ -79,13 +80,13 @@ public class ImageProcessing extends Thread {
    		Mat satmin = new Mat();
    		Mat satmax = new Mat();
    		Mat sat = new Mat();
-   		Imgproc.threshold(channels.get(0), huemin, 55, 255, Imgproc.THRESH_BINARY);
-   		Imgproc.threshold(channels.get(0), huemax, 65, 255, Imgproc.THRESH_BINARY_INV);
+   		Imgproc.threshold(channels.get(0), huemin, 50, 255, Imgproc.THRESH_BINARY);
+   		Imgproc.threshold(channels.get(0), huemax, 70, 255, Imgproc.THRESH_BINARY_INV);
    		Core.min(huemin, huemax, hue);
    		huemin.release();
    		huemax.release();
-    	Imgproc.threshold(channels.get(2), valuemin, 1, 255, Imgproc.THRESH_BINARY);
-    	Imgproc.threshold(channels.get(2), valuemax, 60, 255, Imgproc.THRESH_BINARY_INV);
+    	Imgproc.threshold(channels.get(2), valuemin, 10, 255, Imgproc.THRESH_BINARY);
+    	Imgproc.threshold(channels.get(2), valuemax, 70, 255, Imgproc.THRESH_BINARY_INV);
     	Core.min(valuemin, valuemax, value);
     	valuemin.release();
     	valuemax.release();

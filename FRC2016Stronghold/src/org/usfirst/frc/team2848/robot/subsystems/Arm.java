@@ -38,17 +38,15 @@ public class Arm {
 //    			movingdown = false;
 //    		}
 //    	}
-    	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){ 
-    		Definitions.armbrake.set(Value.kForward);
+    	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){
+    		if(Definitions.xbox2.getRawButton(8)) Definitions.armbrake.set(Value.kReverse);
+    		else Definitions.armbrake.set(Value.kForward);
+    		Definitions.ptomotor.set(0);
     	}
     	Definitions.ptoshifter.set(Value.kReverse);
     	
         if (!movingup && !movingdown && SparkyIntakeBar.position != 0 && !Definitions.xbox2.getRawButton(3) && !Definitions.xbox2.getRawButton(1)){
-        	if (Math.abs(Definitions.xbox2.getRawAxis(1)) <= 0.25){
-    			Definitions.armbrake.set(Value.kForward);
-    			Definitions.ptomotor.set(0);
-        	}
-        	else {
+        	if (Math.abs(Definitions.xbox2.getRawAxis(1)) > 0.25){       	
     			Definitions.armbrake.set(Value.kReverse);
 //    			if (Definitions.lowerarmlimit.get()){
 //    				if (Definitions.xbox2.getRawAxis(1) < -0.25){
@@ -61,12 +59,9 @@ public class Arm {
 //    				}
 //    			}
 //    			else {
-    				Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1) * 0.5);
+    			Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1) * 0.5);
     			
     			
-        	}
-        	if (Definitions.xbox2.getRawButton(8)){
-        		Definitions.armbrake.set(Value.kReverse);
         	}
         }
     }

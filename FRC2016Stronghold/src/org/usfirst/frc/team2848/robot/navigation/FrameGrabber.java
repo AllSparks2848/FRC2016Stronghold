@@ -20,7 +20,16 @@ public class FrameGrabber extends Thread {
 	
 	public void run() {
 		video = new VideoCapture();
-		video.open("rtsp://10.28.49.40/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp");
+		boolean opened = false;
+		while(!opened) {
+		try {
+			Thread.sleep(25);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		opened = video.open("rtsp://10.28.49.40/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp");
+		}
 		System.out.println("Capturing");
 		while(true) {
 			try {
@@ -29,6 +38,7 @@ public class FrameGrabber extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			if(video.isOpened()) {
 			long time = 0;
 			do {
 			long prevtime = System.currentTimeMillis();
@@ -36,6 +46,11 @@ public class FrameGrabber extends Thread {
 			time = System.currentTimeMillis()-prevtime;
 			//System.out.println(time);
 			} while(time < 10);
+			}
+			else {
+				video.release();
+				video.open("rtsp://10.28.49.40/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp");
+			}
 			
 		}
 	    

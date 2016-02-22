@@ -9,8 +9,9 @@ import org.usfirst.frc.team2848.robot.Definitions;
 
 public class Turret {
 	public static final double TICKS_PER_PIXEL = 2;
-	public static void turretRoutine(boolean shouldcenter) {
-        if(shouldcenter) {
+	public static void turretRoutine(int mode) {
+        if(mode == 1) {
+        	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0)Definitions.processing.queue.add(true);
         	MatOfPoint2f points = new MatOfPoint2f();
         	MatOfPoint2f bounding = new MatOfPoint2f();
@@ -23,17 +24,25 @@ public class Turret {
 	        	Point pos = new Point((leftbound.x+rightbound.x)/2.0, (leftbound.y+rightbound.y)/2.0);
 	        	double xpos = pos.x;
 	        	System.out.println(xpos);
-	        	double tickdifferential = (180-xpos)*TICKS_PER_PIXEL;
+	        	double tickdifferential = (185-xpos)*TICKS_PER_PIXEL;
 	        	//System.out.println(pos.x + " " + tickdifferential);
-	        	Definitions.turretpid.setTarget(Definitions.turretenc.getDistance() - tickdifferential);
+	        	Definitions.turretaimpid.setTarget(Definitions.turretenc.getDistance() - tickdifferential);
 	        	//turretencoder.reset();
         	}
-        	if(!Definitions.turretpid.getEnabled()) Definitions.turretpid.setEnabled(true, Definitions.turretenc.getDistance());
-        	double output = Definitions.turretpid.compute(Definitions.turretenc.getDistance(), null);
+        	if(!Definitions.turretaimpid.getEnabled()) Definitions.turretaimpid.setEnabled(true, Definitions.turretenc.getDistance());
+        	double output = Definitions.turretaimpid.compute(Definitions.turretenc.getDistance(), null);
         	//System.out.println(output + " " + turretencoder.getDistance() + " " + target);
         	Definitions.turret.set(output);
         }
+        else if(mode == 2) {
+        	Definitions.turretaimpid.setEnabled(false, 0);
+        	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
+        	if(!Definitions.turretcenterpid.getEnabled()) Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.getDistance());
+        	Definitions.turret.set(Definitions.turretcenterpid.compute(-Definitions.turretenc.getDistance(), null));
+        }
         else {
+        	Definitions.turretaimpid.setEnabled(false, 0);
+        	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
         	Definitions.turret.set(Definitions.xbox2.getRawAxis(4)*0.4);
         }

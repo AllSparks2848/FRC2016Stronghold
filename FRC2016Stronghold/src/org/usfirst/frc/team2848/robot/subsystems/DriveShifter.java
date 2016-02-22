@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class DriveShifter {
 	private static long start;
 	private static boolean danger;
-	private static boolean state = true;
+	private static boolean state = false;
 	private static int SHIFTTIME = 500;
 	
 	public static void checkGearShift() {	

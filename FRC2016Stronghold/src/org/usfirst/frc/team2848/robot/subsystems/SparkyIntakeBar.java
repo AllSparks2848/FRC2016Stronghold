@@ -8,11 +8,11 @@ public class SparkyIntakeBar {
 	
 	private static final int MIDDLEDELAY = 1500;
 	private static double start;
-	public static int position;
+	public static int position = 17;
 	private static boolean middlestarted = false;
 	private static boolean lastbutton5 = false;
 	private static boolean lastaxis2 = false;
-	public static int lastintakeposition;
+	public static int lastintakeposition = 17;
 	
 	public static void loadingRoutine(){
 		if (Definitions.xbox2.getRawAxis(1) > 0.25 && position == 0){
@@ -39,7 +39,7 @@ public class SparkyIntakeBar {
 			middlestarted = true;
 			start = System.currentTimeMillis();
 		}
-		else if ((position == 1 && System.currentTimeMillis() >= start + MIDDLEDELAY) || lastintakeposition == 0){
+		else if (position == 1 && ((System.currentTimeMillis() >= start + MIDDLEDELAY) || lastintakeposition == 0)){
 			Definitions.intakesolenoid.set(Value.kForward);
 			Definitions.intakepancake.set(Value.kForward);
 			middlestarted = false;
@@ -69,19 +69,6 @@ public class SparkyIntakeBar {
 		}
 		if (Definitions.xbox2.getRawAxis(2) <= 0.75){
 			lastaxis2 = false;
-		}
-	}
-	public static void intakeInit(){
-		if (Definitions.intakesolenoid.get() == Value.kReverse) {
-			lastintakeposition = 0;
-		}
-		else {
-			if (Definitions.intakepancake.get() == Value.kForward){
-				lastintakeposition = 1;
-			}
-			else {
-				lastintakeposition = 2;
-			}
 		}
 	}
 }
