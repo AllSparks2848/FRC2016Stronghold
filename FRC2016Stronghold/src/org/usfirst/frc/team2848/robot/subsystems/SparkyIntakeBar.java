@@ -45,6 +45,7 @@ public class SparkyIntakeBar {
 		else if (position == 2 && !bottomstarted && lastintakeposition != 0 && lastintakeposition != 2 ){
 			Definitions.intakesolenoid.set(Value.kReverse);
 			Definitions.intakepancake.set(Value.kReverse);
+			bottomstart = System.currentTimeMillis();
 			bottomstarted = true;
 		}
 		else if (position == 2 && (System.currentTimeMillis() >= bottomstart + BOTTOMDELAY || lastintakeposition == 0)){
@@ -68,36 +69,36 @@ public class SparkyIntakeBar {
 			Definitions.rightshooter.set(-0.4);	
 			Definitions.intakewheel.set(-0.75);
 		}
-		else if (Definitions.xbox2.getRawAxis(2) > 0.75){
-			if (Definitions.leftshooterpid.getEnabled()){
-				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-			}
-			Definitions.leftshooter.set(0.4);
-			Definitions.rightshooter.set(0.4);	
-			Definitions.intakewheel.set(0.75);
-		}
-		else if (Definitions.xbox1.getRawButton(3)){
-			if (Definitions.leftshooterpid.getEnabled()){
-				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-			}
-			Definitions.leftshooter.set(-0.4);
-			Definitions.rightshooter.set(-0.4);	
-			Definitions.intakewheel.set(-0.75);
-		}
-		else if (Definitions.xbox1.getRawButton(1)){
-			if (Definitions.leftshooterpid.getEnabled()){
-				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-			}
-			Definitions.leftshooter.set(0.4);
-			Definitions.rightshooter.set(0.4);	
-			Definitions.intakewheel.set(0.75);
-		}
-		if (!Definitions.xbox2.getRawButton(5) && Definitions.xbox2.getRawAxis(2) <= 0.75){
-			Definitions.intakewheel.set(0);
-		}
+//		else if (Definitions.xbox2.getRawAxis(2) > 0.75){
+//			if (Definitions.leftshooterpid.getEnabled()){
+//				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
+//				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
+//			}
+//			Definitions.leftshooter.set(0.4);
+//			Definitions.rightshooter.set(0.4);	
+//			Definitions.intakewheel.set(0.75);
+//		}
+//		else if (Definitions.xbox1.getRawButton(3)){
+//			if (Definitions.leftshooterpid.getEnabled()){
+//				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
+//				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
+//			}
+//			Definitions.leftshooter.set(-0.4);
+//			Definitions.rightshooter.set(-0.4);	
+//			Definitions.intakewheel.set(-0.75);
+//		}
+//		else if (Definitions.xbox1.getRawButton(1)){
+//			if (Definitions.leftshooterpid.getEnabled()){
+//				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
+//				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
+//			}
+//			Definitions.leftshooter.set(0.4);
+//			Definitions.rightshooter.set(0.4);	
+//			Definitions.intakewheel.set(0.75);
+//		}
+//		if (!Definitions.xbox2.getRawButton(5) && Definitions.xbox2.getRawAxis(2) <= 0.75 && !Definitions.xbox1.getRawButton(1) && !Definitions.xbox1.getRawButton(3)){
+//			Definitions.intakewheel.set(0);
+//		}
 
 	}
 	public static void intakeInit(){

@@ -40,7 +40,7 @@ public class Shooter {
 			Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
 		}
 		if (Definitions.xbox2.getRawButton(7)){
-			ballposition += 0.5;
+			ballposition += 1;
 		}
 		Definitions.ballholder.setAngle(ballposition);
 		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
