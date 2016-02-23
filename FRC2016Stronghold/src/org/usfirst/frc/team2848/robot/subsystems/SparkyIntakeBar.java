@@ -95,7 +95,7 @@ public class SparkyIntakeBar {
 			Definitions.rightshooter.set(0.4);	
 			Definitions.intakewheel.set(0.75);
 		}
-		if (!Definitions.xbox2.getRawButton(5) && Definitions.xbox2.getRawAxis(2) <= 0.75){
+		if (!Definitions.xbox2.getRawButton(5) && Definitions.xbox2.getRawAxis(2) <= 0.75 && !Definitions.xbox1.getRawButton(1) && !Definitions.xbox1.getRawButton(3)){
 			Definitions.intakewheel.set(0);
 		}
 
