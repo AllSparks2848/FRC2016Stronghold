@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class SparkyIntakeBar {
 	
-	private static final int MIDDLEDELAY = 750;
+	private static final int MIDDLEDELAY = 500;
 	private static final int BOTTOMDELAY = 250;
 	private static double start;
 	private static double bottomstart;
