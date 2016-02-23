@@ -43,7 +43,9 @@ public class Shooter {
 			ballposition += 1;
 		}
 		Definitions.ballholder.setAngle(ballposition);
-		Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
-		Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));
+		if (Definitions.leftshooterpid.getEnabled()){
+			Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
+			Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));
+		}
 	}
 }
