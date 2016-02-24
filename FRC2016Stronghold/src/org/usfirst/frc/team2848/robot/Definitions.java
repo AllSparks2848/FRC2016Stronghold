@@ -63,8 +63,8 @@ public class Definitions {
 	public static final int TURRET_ENC_B = 9;
 	
 	public static final int ARM_PHOTOGATE_PORT = 10;
-	public static final int UPPER_ARM_LIMIT_PORT = 11;
-	public static final int LOWER_ARM_LIMIT_PORT = 12;
+	public static final int UPPER_ARM_LIMIT_PORT = 21;
+	public static final int LOWER_ARM_LIMIT_PORT = 22;
 	
 	public static final int PRESSURE_TRANSDUCER_PORT = 0;
 	
