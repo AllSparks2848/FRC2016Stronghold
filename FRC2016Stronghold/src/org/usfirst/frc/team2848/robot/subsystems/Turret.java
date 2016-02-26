@@ -32,7 +32,7 @@ public class Turret {
         	if(!Definitions.turretaimpid.getEnabled()) Definitions.turretaimpid.setEnabled(true, Definitions.turretenc.getDistance());
         	double output = Definitions.turretaimpid.compute(Definitions.turretenc.getDistance(), null);
         	//System.out.println(output + " " + turretencoder.getDistance() + " " + target);
-        	Definitions.turret.set(output);
+        	//Definitions.turret.set(output);
         }
         else if(mode == 2) {
         	Definitions.turretaimpid.setEnabled(false, 0);

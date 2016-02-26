@@ -30,26 +30,29 @@ public class Definitions {
 	
 	public static final int INTAKE_SOLENOID_A = 3;
 	public static final int INTAKE_SOLENOID_B = 0;
-	public static final int INTAKE_PANCAKE_A = 2;
-	public static final int INTAKE_PANCAKE_B = 1;
+	public static final int INTAKE_PANCAKE_A = 1;
+	public static final int INTAKE_PANCAKE_B = 2;
 //	public static final int DRIVE_SHIFTER_A = 0;
 	public static final int DRIVE_SHIFTER = 7;
-	public static final int PTO_SHIFTER_A = 6;
-	public static final int PTO_SHIFTER_B = 1;
+	public static final int PTO_SHIFTER_A = 1;
+	public static final int PTO_SHIFTER_B = 6;
 	public static final int SHOOTER_TRIGGER = 4;
 //	public static final int SHOOTER_TRIGGER_B = 3;
 	public static final int ARM_BRAKE_A = 2;
 	public static final int ARM_BRAKE_B = 5;
 	
-	public static final int LEFT_DRIVE_PORT = 0;
-	public static final int RIGHT_DRIVE_PORT = 1;
-	public static final int LEFT_SHOOTER_PORT = 3;
-	public static final int RIGHT_SHOOTER_PORT = 2;
-	public static final int PTO_MOTOR_PORT = 4;
-	public static final int TURRET_PORT = 5;
-	public static final int INTAKE_WHEEL_PORT = 6;
+	public static final int LEFT_DRIVE_PORT_1 = 0;
+	public static final int LEFT_DRIVE_PORT_2 = 1;
+	public static final int RIGHT_DRIVE_PORT_1 = 2;
+	public static final int RIGHT_DRIVE_PORT_2 = 3;
+	public static final int LEFT_SHOOTER_PORT = 6;
+	public static final int RIGHT_SHOOTER_PORT = 7;
+	public static final int PTO_MOTOR_PORT_1 = 4;
+	public static final int PTO_MOTOR_PORT_2 = 5;
+	public static final int TURRET_PORT = 8;
+	public static final int INTAKE_WHEEL_PORT = 17;
 	
-	public static final int BALL_HOLDER_PORT = 7;
+	public static final int BALL_HOLDER_PORT = 9;
 	
 	public static final int LEFT_DRIVE_ENC_A = 0;
 	public static final int LEFT_DRIVE_ENC_B = 1;
@@ -61,10 +64,11 @@ public class Definitions {
 	public static final int RIGHT_SHOOTER_ENC_B = 7;
 	public static final int TURRET_ENC_A = 8;
 	public static final int TURRET_ENC_B = 9;
-	
-	public static final int ARM_PHOTOGATE_PORT = 10;
-	public static final int UPPER_ARM_LIMIT_PORT = 21;
-	public static final int LOWER_ARM_LIMIT_PORT = 22;
+	public static final int PTO_ENC_A = 12;
+	public static final int PTO_ENC_B = 13;
+	public static final int ARM_PHOTOGATE_PORT = 14;
+	public static final int UPPER_ARM_LIMIT_PORT = 11;
+	public static final int LOWER_ARM_LIMIT_PORT = 10;
 	
 	public static final int PRESSURE_TRANSDUCER_PORT = 0;
 	
@@ -100,11 +104,14 @@ public class Definitions {
 	public static DoubleSolenoid armbrake;
 	
 	
-	public static Spark leftdrive;
-	public static Spark rightdrive;
+	public static Spark leftdrive1;
+	public static Spark leftdrive2;
+	public static Spark rightdrive1;
+	public static Spark rightdrive2;
 	public static Spark leftshooter;
 	public static Spark rightshooter;
-	public static Spark ptomotor;
+	public static Spark ptomotor1;
+	public static Spark ptomotor2;
 	public static Spark turret;
 	public static Spark intakewheel;
 	
@@ -155,23 +162,29 @@ public class Definitions {
 		shootertrigger = new Solenoid(PCM_0, SHOOTER_TRIGGER);
 		armbrake = new DoubleSolenoid(PCM_0, ARM_BRAKE_A, ARM_BRAKE_B);
 		
-		leftdrive = new Spark(LEFT_DRIVE_PORT);
-		rightdrive = new Spark(RIGHT_DRIVE_PORT);
+		leftdrive1 = new Spark(LEFT_DRIVE_PORT_1);
+		leftdrive2 = new Spark(LEFT_DRIVE_PORT_2);
+		rightdrive1 = new Spark(RIGHT_DRIVE_PORT_1);
+		rightdrive2 = new Spark(RIGHT_DRIVE_PORT_2);
 		leftshooter = new Spark(LEFT_SHOOTER_PORT);
 		rightshooter = new Spark(RIGHT_SHOOTER_PORT);
-		ptomotor = new Spark(PTO_MOTOR_PORT);
+		ptomotor1 = new Spark(PTO_MOTOR_PORT_1);
+		ptomotor2 = new Spark(PTO_MOTOR_PORT_2);
 		turret = new Spark(TURRET_PORT);
 		intakewheel = new Spark(INTAKE_WHEEL_PORT);
 		
-		leftdrive.setInverted(true);
-		rightdrive.setInverted(true);
+		leftdrive1.setInverted(true);
+		leftdrive2.setInverted(true);
+		rightdrive1.setInverted(true);
+		rightdrive2.setInverted(true);
 		leftshooter.setInverted(false);
-		rightshooter.setInverted(true);
-		ptomotor.setInverted(false);
+		rightshooter.setInverted(false);
+		ptomotor1.setInverted(false);
+		ptomotor2.setInverted(false);
 		turret.setInverted(true);
 		intakewheel.setInverted(false);
 		
-		drivetrain = new RobotDrive(leftdrive, rightdrive);
+		drivetrain = new RobotDrive(leftdrive1, leftdrive2, rightdrive1, rightdrive2);
 		
 		ballholder = new Servo(BALL_HOLDER_PORT);
 		
@@ -181,7 +194,7 @@ public class Definitions {
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, true, EncodingType.k4X);
 		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
-		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
+		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, true, EncodingType.k4X);
 		
 		leftdriveenc.reset();
 		rightdriveenc.reset();

@@ -12,6 +12,7 @@ public class Shooter {
 	private static boolean startposition = true;
 	private static boolean lastbutton7 = false;
 	private static int ballposition = 77;
+	private static int position = 0;
 	public static void firingRoutine(double speed){
 		if (Definitions.xbox2.getRawButton(6)){
 			Definitions.leftshooterpid.setTarget(speed);
@@ -51,7 +52,15 @@ public class Shooter {
 		if (!Definitions.xbox2.getRawButton(7)){
 			lastbutton7 = false;
 		}
-		Definitions.ballholder.setAngle(startposition ? 77 : 116);
+		if (!Definitions.xbox2.getRawButton(7)){
+			lastbutton7 = false;
+		}
+		if (Definitions.xbox2.getRawButton(7)){
+			position += 1;
+		}
+		Definitions.ballholder.setAngle(position);
+		System.out.println(position);
+		//Definitions.ballholder.setAngle(startposition ? 77 : 116);
 		if (Definitions.leftshooterpid.getEnabled()){
 			Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
 			Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));

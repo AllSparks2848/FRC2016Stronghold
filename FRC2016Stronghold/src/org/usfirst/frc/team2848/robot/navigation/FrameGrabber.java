@@ -28,7 +28,7 @@ public class FrameGrabber extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		opened = video.open("rtsp://10.28.49.40/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp");
+		opened = video.open("rtsp://10.28.48.40/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp");
 		}
 		System.out.println("Capturing");
 		while(true) {

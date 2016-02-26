@@ -11,6 +11,7 @@ public class Arm {
     private static boolean lasta = false;
     private static int armstate = 0; /*0 off, 1 moving down, 2 moving up*/
     public static void armRoutine(){
+    	Definitions.ptoshifter.set(Value.kReverse);
     	if (Definitions.xbox2.getRawButton(3) && !lastx){
     		if(armstate == 0) armstate  = 2;
     		else armstate = 0;
@@ -22,28 +23,33 @@ public class Arm {
     	if (armstate == 2){
     		if (Definitions.upperarmlimit.get()){
     			Definitions.armbrake.set(Value.kReverse);
-    			Definitions.ptomotor.set(-0.35);
+    			Definitions.ptomotor1.set(-0.35);
+    			Definitions.ptomotor2.set(-0.35);
     		}
     		else {
     			Definitions.armbrake.set(Value.kForward);
-    			Definitions.ptomotor.set(0);
+    			Definitions.ptomotor1.set(0);
+    			Definitions.ptomotor2.set(0);
     			armstate = 0;
     		}
     	}
     	else if (armstate == 1){
     		if (Definitions.lowerarmlimit.get()){
     			Definitions.armbrake.set(Value.kReverse);
-    			Definitions.ptomotor.set(0.45);
+    			Definitions.ptomotor1.set(0.45);
+    			Definitions.ptomotor2.set(0.45);
     		}
     		else {
     			Definitions.armbrake.set(Value.kForward);
-    			Definitions.ptomotor.set(0);
+    			Definitions.ptomotor1.set(0);
+    			Definitions.ptomotor2.set(0);
     			armstate = 0;
     		}
     	}
     	else {
     		if (Math.abs(Definitions.xbox2.getRawAxis(1)) < 0.25){
-    			Definitions.ptomotor.set(0);
+    			Definitions.ptomotor1.set(0);
+    			Definitions.ptomotor2.set(0);
     			if (Definitions.xbox2.getRawButton(8)){
     				Definitions.armbrake.set(Value.kReverse);
     			}
@@ -52,7 +58,8 @@ public class Arm {
     			}
     		}
     		else {
-    			Definitions.ptomotor.set(Definitions.xbox2.getRawAxis(1));
+    			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5);
+    			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5);
     			Definitions.armbrake.set(Value.kReverse);
     		}
     	}
