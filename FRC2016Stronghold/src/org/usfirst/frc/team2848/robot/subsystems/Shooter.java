@@ -58,12 +58,14 @@ public class Shooter {
 		if (Definitions.xbox2.getRawButton(7)){
 			position += 1;
 		}
-		Definitions.ballholder.setAngle(position);
+		//Definitions.ballholder.setAngle(position);
 		System.out.println(position);
-		//Definitions.ballholder.setAngle(startposition ? 77 : 116);
+		Definitions.ballholder.setAngle(startposition ? 90 : 180);
 		if (Definitions.leftshooterpid.getEnabled()){
+			//double[] leftval = new double[5];
 			Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));
+			//System.out.println(leftval[0] + " " + leftval[1] + " " + leftval[2] + " " + leftval[3] + " " + leftval[4]);
 			Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));
 		}
 	}
-}
+} 

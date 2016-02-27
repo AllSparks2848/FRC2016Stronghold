@@ -194,7 +194,7 @@ public class Definitions {
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, true, EncodingType.k4X);
 		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
-		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, true, EncodingType.k4X);
+		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
 		
 		leftdriveenc.reset();
 		rightdriveenc.reset();

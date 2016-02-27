@@ -29,16 +29,16 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopPeriodic() {
-    	Definitions.drivetrain.arcadeDrive(Definitions.xbox1.getRawAxis(1), Definitions.xbox1.getRawAxis(4));
+    	Definitions.drivetrain.arcadeDrive(Definitions.xbox1.getRawAxis(1), Definitions.xbox1.getRawAxis(4), true);
     	DriveShifter.checkGearShift();
     	SparkyIntakeBar.loadingRoutine();
-    	Shooter.firingRoutine(4500);
+    	Shooter.firingRoutine(4000);
     	Arm.armRoutine();
     	int turretmode = 0;
     	if(Definitions.xbox2.getRawButton(4)) turretmode = 1;
-    	else if(Definitions.xbox2.getRawButton(7)) turretmode = 2;
+    	else if(Definitions.xbox2.getRawButton(2)) turretmode = 2;
     	Turret.turretRoutine(turretmode);
-    	//System.out.println(Definitions.turretenc.getDistance());
+    	//System.out.println(Definitions.leftshooterenc.getRate() + " " + Definitions.rightshooterenc.getRate());
     	
     
     }

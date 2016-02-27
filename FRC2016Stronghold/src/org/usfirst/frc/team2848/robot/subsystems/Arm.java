@@ -58,8 +58,18 @@ public class Arm {
     			}
     		}
     		else {
-    			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5);
-    			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5);
+    			if(!Definitions.upperarmlimit.get()) {
+    				Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5 > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+    				Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5 > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+    			}
+    			else if(!Definitions.lowerarmlimit.get()) {
+        			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5 < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+        			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5 < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+    			}
+    			else {
+        			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5);
+        			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5);
+    			}
     			Definitions.armbrake.set(Value.kReverse);
     		}
     	}
