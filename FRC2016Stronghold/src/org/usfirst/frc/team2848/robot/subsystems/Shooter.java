@@ -59,7 +59,7 @@ public class Shooter {
 			position += 1;
 		}
 		//Definitions.ballholder.setAngle(position);
-		System.out.println(position);
+		//System.out.println(position);
 		Definitions.ballholder.setAngle(startposition ? 90 : 180);
 		if (Definitions.leftshooterpid.getEnabled()){
 			//double[] leftval = new double[5];

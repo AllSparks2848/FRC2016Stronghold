@@ -20,6 +20,7 @@ public class Arm {
     		if(armstate == 0) armstate = 1;
     		else armstate = 0;
     	}
+    	
     	if (armstate == 2){
     		if (Definitions.upperarmlimit.get()){
     			Definitions.armbrake.set(Value.kReverse);
@@ -46,7 +47,7 @@ public class Arm {
     			armstate = 0;
     		}
     	}
-    	else {
+    	else if(armstate == 0){
     		if (Math.abs(Definitions.xbox2.getRawAxis(1)) < 0.25){
     			Definitions.ptomotor1.set(0);
     			Definitions.ptomotor2.set(0);

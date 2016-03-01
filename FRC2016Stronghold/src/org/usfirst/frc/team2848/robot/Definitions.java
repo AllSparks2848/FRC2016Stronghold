@@ -79,10 +79,13 @@ public class Definitions {
 	public static final double DRIVE_P = 0;
 	public static final double DRIVE_I = 0;
 	public static final double DRIVE_D = 0;
-	public static final double SHOOTER_P = 0.0023;
-	public static final double SHOOTER_I = 0.0008;
+	public static final double TURN_P = 0;
+	public static final double TURN_I = 0;
+	public static final double TURN_D = 0;
+	public static final double SHOOTER_P = 0.001;
+	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = 0.0035;
+	public static final double TURRETAIM_P = 0.003;
 	public static final double TURRETAIM_I = 0.15;
 	public static final double TURRETAIM_D = 0.001;
 	public static final double TURRETCENTER_P = 0.002;
@@ -148,6 +151,8 @@ public class Definitions {
 	public static PID turretcenterpid;
 	public static PID leftdrivepid;
 	public static PID rightdrivepid;
+	public static PID leftturnpid;
+	public static PID rightturnpid;
 	
 	public static ImageProcessing processing;
 	
@@ -225,9 +230,11 @@ public class Definitions {
 		rightshooterpid.setITermBounds(-1, 1);
 		turretaimpid = new PID(TURRETAIM_P, TURRETAIM_I, TURRETAIM_D, turretenc.getDistance(), turretenc.getDistance());
 		turretaimpid.setBounds(-0.27, 0.27);
-		turretaimpid.setITermBounds(-0.15, 0.15);
-		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
-		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, 0);
+		turretaimpid.setITermBounds(-0.14, 0.14);
+		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, leftdriveenc.getDistance());
+		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, rightdriveenc.getDistance());
+		leftturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, leftdriveenc.getDistance());
+		rightturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, rightdriveenc.getDistance());
 		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 0, turretenc.getDistance());
 		turretcenterpid.setBounds(-0.4, 0.4);
 		turretcenterpid.setITermBounds(-0.15, 0.15);
