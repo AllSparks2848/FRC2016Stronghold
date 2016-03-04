@@ -1,26 +1,27 @@
 package org.usfirst.frc.team2848.robot.subsystems;
  
 import org.usfirst.frc.team2848.robot.Definitions;
+import org.usfirst.frc.team2848.robot.Robot;
+import org.usfirst.frc.team2848.robot.States;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  
 public class Arm {
-    private static boolean movingup = false;
-    private static boolean movingdown = false;
     private static boolean lastx = false;
     private static boolean lasta = false;
-    private static int armstate = 0; /*0 off, 1 moving down, 2 moving up*/
+    public static int armstate = 0; /*0 off, 1 moving down, 2 moving up*/
     public static void armRoutine(){
     	Definitions.ptoshifter.set(Value.kReverse);
     	if (Definitions.xbox2.getRawButton(3) && !lastx){
-    		if(armstate == 0) armstate  = 2;
+    		if(armstate == 0) {
+    			armstate  = 2;
+    		}
     		else armstate = 0;
     	}
     	else if (Definitions.xbox2.getRawButton(1) && !lasta){
     		if(armstate == 0) armstate = 1;
     		else armstate = 0;
     	}
-    	
     	if (armstate == 2){
     		if (Definitions.upperarmlimit.get()){
     			Definitions.armbrake.set(Value.kReverse);
@@ -47,7 +48,7 @@ public class Arm {
     			armstate = 0;
     		}
     	}
-    	else if(armstate == 0){
+    	else if (States.robotstate.equals("nothing")){
     		if (Math.abs(Definitions.xbox2.getRawAxis(1)) < 0.25){
     			Definitions.ptomotor1.set(0);
     			Definitions.ptomotor2.set(0);
@@ -60,23 +61,25 @@ public class Arm {
     		}
     		else {
     			if(!Definitions.upperarmlimit.get()) {
-    				Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5 > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
-    				Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5 > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+    				Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1) > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+    				Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1) > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+    				Definitions.armbrake.set(Definitions.xbox2.getRawAxis(1) > 0 ? Value.kReverse : Value.kForward);
     			}
     			else if(!Definitions.lowerarmlimit.get()) {
-        			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5 < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
-        			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5 < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+        			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1) < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+        			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1) < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
+        			Definitions.armbrake.set(Definitions.xbox2.getRawAxis(1) < 0 ? Value.kReverse : Value.kForward);
     			}
     			else {
         			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1)*0.5);
         			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1)*0.5);
+        			Definitions.armbrake.set(Value.kReverse);
     			}
-    			Definitions.armbrake.set(Value.kReverse);
+    			
     		}
     	}
     	lastx = Definitions.xbox2.getRawButton(3);
     	lasta = Definitions.xbox2.getRawButton(1);
-    	//System.out.println(Definitions.upperarmlimit.get() + "  " + Definitions.lowerarmlimit.get());
     }
    
 }

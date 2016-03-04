@@ -24,6 +24,7 @@ public class Definitions {
 	//port constants
 	public static final int XBOX1_PORT = 0;
 	public static final int XBOX2_PORT = 1;
+	public static final int BUTTON_BOX_PORT = 2;
 	
 	public static final int PCM_0 = 0;
 	public static final int PCM_1 = 1;
@@ -69,6 +70,7 @@ public class Definitions {
 	public static final int ARM_PHOTOGATE_PORT = 14;
 	public static final int UPPER_ARM_LIMIT_PORT = 11;
 	public static final int LOWER_ARM_LIMIT_PORT = 10;
+	public static final int TURRET_POT_PORT = 2;
 	
 	public static final int PRESSURE_TRANSDUCER_PORT = 0;
 	
@@ -85,18 +87,22 @@ public class Definitions {
 	public static final double SHOOTER_P = 0.001;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = 0.003;
-	public static final double TURRETAIM_I = 0.15;
-	public static final double TURRETAIM_D = 0.001;
+	public static final double TURRETAIM_P = 0.015;
+	public static final double TURRETAIM_I = 0.000;
+	public static final double TURRETAIM_D = 0.010;
 	public static final double TURRETCENTER_P = 0.002;
 	public static final double TURRETCENTER_I = 0.0005;
 	public static final double TURRETCENTER_D = 0;
+	public static final double ARM_P = 0.01;
+	public static final double ARM_I = 0.005;
+	public static final double ARM_D = -0.004;
 	
 	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
 	//control
     public static Joystick xbox1;
     public static Joystick xbox2;
+    public static Joystick buttonbox;
     
     //actuators
     public static DoubleSolenoid intakesolenoid;
@@ -130,8 +136,10 @@ public class Definitions {
 	public static Encoder leftshooterenc;
 	public static Encoder rightshooterenc;
 	public static Encoder turretenc;
+	public static Encoder ptoenc;
 	
 	public static AnalogInput pressuretrans;
+	public static AnalogInput turretpot;
 	
 	public static Counter armphotogate;
 	
@@ -153,13 +161,14 @@ public class Definitions {
 	public static PID rightdrivepid;
 	public static PID leftturnpid;
 	public static PID rightturnpid;
+	public static PID armpid;
 	
 	public static ImageProcessing processing;
 	
 	public static void initPeripherals() {
 		xbox1 = new Joystick(XBOX1_PORT);
 		xbox2 = new Joystick(XBOX2_PORT);
-		
+		buttonbox = new Joystick(BUTTON_BOX_PORT);
 		intakesolenoid = new DoubleSolenoid(PCM_1, INTAKE_SOLENOID_A, INTAKE_SOLENOID_B);
 		intakepancake = new DoubleSolenoid(PCM_1, INTAKE_PANCAKE_A, INTAKE_PANCAKE_B);
 		driveshifter = new Solenoid(PCM_0, DRIVE_SHIFTER);
@@ -200,14 +209,17 @@ public class Definitions {
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, true, EncodingType.k4X);
 		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
 		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
+		ptoenc = new Encoder(PTO_ENC_A, PTO_ENC_B, true, EncodingType.k4X);
 		
 		leftdriveenc.reset();
 		rightdriveenc.reset();
 		leftshooterenc.reset();
 		rightshooterenc.reset();
 		turretenc.reset();
+		ptoenc.reset();
 		
 		pressuretrans = new AnalogInput(PRESSURE_TRANSDUCER_PORT);
+		turretpot = new AnalogInput(TURRET_POT_PORT);
 		
 		armphotogate = new Counter(ARM_PHOTOGATE_PORT);
 		upperarmlimit = new DigitalInput(UPPER_ARM_LIMIT_PORT);
@@ -238,6 +250,9 @@ public class Definitions {
 		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 0, turretenc.getDistance());
 		turretcenterpid.setBounds(-0.4, 0.4);
 		turretcenterpid.setITermBounds(-0.15, 0.15);
+		armpid = new PID(ARM_P, ARM_I, ARM_D, 0, States.ptoposition);
+		armpid.setBounds(-0.5, 0.5);
+		armpid.setITermBounds(-0.2, 0.2);
 		
 		processing = new ImageProcessing();
 		processing.start();

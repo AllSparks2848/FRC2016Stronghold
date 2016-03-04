@@ -1,28 +1,29 @@
 package org.usfirst.frc.team2848.robot.subsystems;
 
 import org.usfirst.frc.team2848.robot.Definitions;
+import org.usfirst.frc.team2848.robot.States;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class SparkyIntakeBar {
 	
-	private static final int MIDDLEDELAY = 500;
-	private static final int BOTTOMDELAY = 250;
+	private static final int MIDDLEDELAY = 750;
+	private static final int BOTTOMDELAY = 500;
 	private static double start;
 	private static double bottomstart;
 	public static int position = 17;
 	private static boolean bottomstarted = false;
 	private static boolean middlestarted = false;
-	private static int lastintakeposition = 17;
+	public static int lastintakeposition = 17;
 	
 	public static void loadingRoutine(){
-		if (Definitions.xbox1.getRawButton(5)){
+		if (Definitions.xbox1.getRawButton(5) && States.robotstate.equals("nothing") && States.ptoposition < 500 ){
 			position = 1;
 		}
-		else if (Definitions.xbox1.getRawAxis(2) > 0.75){
+		else if (Definitions.xbox1.getRawAxis(2) > 0.75 && States.robotstate.equals("nothing")){
 			position = 2;
 		}
-		else if (Definitions.xbox1.getRawButton(2)){
+		else if (Definitions.xbox1.getRawButton(2) && States.robotstate.equals("nothing")){
 			position = 0;
 		}
 		if (position == 0){
@@ -103,17 +104,5 @@ public class SparkyIntakeBar {
 		}
 
 	}
-	public static void intakeInit(){
-		if (Definitions.intakesolenoid.get() == Value.kReverse) {
-			lastintakeposition = 0;
-		}
-		else {
-			if (Definitions.intakepancake.get() == Value.kForward){
-				lastintakeposition = 1;
-			}
-			else {
-				lastintakeposition = 2;
-			}
-		}
-	}
+
 }

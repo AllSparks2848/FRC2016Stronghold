@@ -85,12 +85,12 @@ public class ImageProcessing extends Thread {
    		Core.min(huemin, huemax, hue);
    		huemin.release();
    		huemax.release();
-    	Imgproc.threshold(channels.get(2), valuemin, 100, 255, Imgproc.THRESH_BINARY);
-    	Imgproc.threshold(channels.get(2), valuemax, 256, 255, Imgproc.THRESH_BINARY_INV);
+    	Imgproc.threshold(channels.get(2), valuemin, 50, 255, Imgproc.THRESH_BINARY);
+    	Imgproc.threshold(channels.get(2), valuemax, 220, 255, Imgproc.THRESH_BINARY_INV);
     	Core.min(valuemin, valuemax, value);
     	valuemin.release();
     	valuemax.release();
-    	Imgproc.threshold(channels.get(1), satmin, 180, 255, Imgproc.THRESH_BINARY);
+    	Imgproc.threshold(channels.get(1), satmin, 150, 255, Imgproc.THRESH_BINARY);
     	Imgproc.threshold(channels.get(1), satmax, 256, 255, Imgproc.THRESH_BINARY_INV);
     	Core.min(satmin, satmax, sat);
     	satmin.release();
@@ -104,7 +104,7 @@ public class ImageProcessing extends Thread {
    		hue.release();
    		value.release();
    		sat.release();
-   		Highgui.imwrite("/home/lvuser/imagefilter.png", filtered);
+   		//Highgui.imwrite("/home/lvuser/imagefilter.png", filtered);
    		filtered.convertTo(filtered, CvType.CV_8UC1);
    		ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
    		Mat hierarchy = new Mat();
@@ -255,7 +255,7 @@ public class ImageProcessing extends Thread {
 		   		
 	        	detectedpoints = new MatOfPoint2f(leftmax, leftmin, rightmin, rightmax);
 	        	newpoints.set(true);
-	        	Highgui.imwrite("/home/lvuser/image.png", image);
+	        	//Highgui.imwrite("/home/lvuser/image.png", image);
 	        	nonzeroes.release();
 	
         	}

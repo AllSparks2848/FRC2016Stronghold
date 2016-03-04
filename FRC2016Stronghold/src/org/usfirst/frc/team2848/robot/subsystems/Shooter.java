@@ -13,6 +13,7 @@ public class Shooter {
 	private static boolean lastbutton7 = false;
 	private static int ballposition = 77;
 	private static int position = 0;
+	private static boolean midposition = false;
 	public static void firingRoutine(double speed){
 		if (Definitions.xbox2.getRawButton(6)){
 			Definitions.leftshooterpid.setTarget(speed);
@@ -21,6 +22,7 @@ public class Shooter {
 			if (!Definitions.leftshooterpid.getEnabled() && !lastbutton6) {
 				Definitions.leftshooterpid.setEnabled(true, Definitions.leftshooterenc.getRate());
 				Definitions.rightshooterpid.setEnabled(true, Definitions.rightshooterenc.getRate());
+				
 			}
 			lastbutton6 = true;
 		}
@@ -40,6 +42,7 @@ public class Shooter {
 			lastbutton6 = false;
 			Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
 			Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
+			
 		}
 		if (Definitions.xbox2.getRawButton(7) && !lastbutton7 && startposition){
 			startposition = false;
@@ -49,18 +52,14 @@ public class Shooter {
 			startposition = true;
 			lastbutton7 = true;
 		}
-		if (!Definitions.xbox2.getRawButton(7)){
-			lastbutton7 = false;
-		}
-		if (!Definitions.xbox2.getRawButton(7)){
-			lastbutton7 = false;
-		}
+		lastbutton7 = Definitions.xbox2.getRawButton(7);
+		
 		if (Definitions.xbox2.getRawButton(7)){
-			position += 1;
+			midposition = false;
 		}
-		//Definitions.ballholder.setAngle(position);
-		//System.out.println(position);
-		Definitions.ballholder.setAngle(startposition ? 90 : 180);
+		if (!midposition){
+			Definitions.ballholder.setAngle(startposition ? 90 : 180);
+		}
 		if (Definitions.leftshooterpid.getEnabled()){
 			//double[] leftval = new double[5];
 			Definitions.leftshooter.set(Definitions.leftshooterpid.compute(Definitions.leftshooterenc.getRate(), null));

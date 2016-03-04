@@ -24,7 +24,7 @@ public class Turret {
 	        	Point pos = new Point((leftbound.x+rightbound.x)/2.0, (leftbound.y+rightbound.y)/2.0);
 	        	double xpos = pos.x;
 	        	System.out.println(xpos);
-	        	double tickdifferential = (180-xpos)*TICKS_PER_PIXEL;
+	        	double tickdifferential = (175-xpos)*TICKS_PER_PIXEL;
 	        	//System.out.println(pos.x + " " + tickdifferential);
 	        	Definitions.turretaimpid.setTarget(Definitions.turretenc.getDistance() - tickdifferential);
 	        	//turretencoder.reset();
