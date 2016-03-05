@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.Spark;
 public class Definitions {
 	//port constants
 	public static final int XBOX1_PORT = 0;
-	public static final int XBOX2_PORT = 1;
+	public static final int JOYSTICK_PORT = 1;
 	public static final int BUTTON_BOX_PORT = 2;
 	
 	public static final int PCM_0 = 0;
@@ -87,21 +87,21 @@ public class Definitions {
 	public static final double SHOOTER_P = 0.001;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = 0.015;
+	public static final double TURRETAIM_P = 0.013;
 	public static final double TURRETAIM_I = 0.000;
-	public static final double TURRETAIM_D = 0.010;
-	public static final double TURRETCENTER_P = 90;
-	public static final double TURRETCENTER_I = 30;
+	public static final double TURRETAIM_D = 0.012;
+	public static final double TURRETCENTER_P = 0.002;
+	public static final double TURRETCENTER_I = 0.0005;
 	public static final double TURRETCENTER_D = 0;
-	public static final double ARM_P = 0.01;
+	public static final double ARM_P = 0.008;
 	public static final double ARM_I = 0.005;
-	public static final double ARM_D = -0.004;
+	public static final double ARM_D = -0.006;
 	
 	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
 	//control
     public static Joystick xbox1;
-    public static Joystick xbox2;
+    public static Joystick joystick;
     public static Joystick buttonbox;
     
     //actuators
@@ -167,7 +167,7 @@ public class Definitions {
 	
 	public static void initPeripherals() {
 		xbox1 = new Joystick(XBOX1_PORT);
-		xbox2 = new Joystick(XBOX2_PORT);
+		joystick = new Joystick(JOYSTICK_PORT);
 		buttonbox = new Joystick(BUTTON_BOX_PORT);
 		intakesolenoid = new DoubleSolenoid(PCM_1, INTAKE_SOLENOID_A, INTAKE_SOLENOID_B);
 		intakepancake = new DoubleSolenoid(PCM_1, INTAKE_PANCAKE_A, INTAKE_PANCAKE_B);
@@ -247,7 +247,7 @@ public class Definitions {
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, rightdriveenc.getDistance());
 		leftturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, leftdriveenc.getDistance());
 		rightturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, rightdriveenc.getDistance());
-		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 2.47, turretpot.getVoltage());
+		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 0, turretenc.getDistance());
 		turretcenterpid.setBounds(-0.4, 0.4);
 		turretcenterpid.setITermBounds(-0.15, 0.15);
 		armpid = new PID(ARM_P, ARM_I, ARM_D, 0, States.ptoposition);

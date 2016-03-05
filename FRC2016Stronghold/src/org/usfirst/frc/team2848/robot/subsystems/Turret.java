@@ -38,8 +38,8 @@ public class Turret {
         	Definitions.turretaimpid.setEnabled(false, 0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
         	if(!Definitions.turretcenterpid.getEnabled()) Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.getDistance());
-        	Definitions.turretcenterpid.setTarget(2.47);
-        	Definitions.turret.set(-Definitions.turretcenterpid.compute(Definitions.turretpot.getVoltage(), null));
+        	Definitions.turretcenterpid.setTarget(0);
+        	Definitions.turret.set(-Definitions.turretcenterpid.compute(Definitions.turretenc.getDistance(), null));
 //        	System.out.println(Definitions.turret.get());
         	
         }
@@ -47,7 +47,10 @@ public class Turret {
         	Definitions.turretaimpid.setEnabled(false, 0);
         	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
-        	Definitions.turret.set(Definitions.xbox2.getRawAxis(4)*0.4);
+        	if(Definitions.joystick.getRawButton(6) || Definitions.joystick.getRawButton(7)){
+        		Definitions.turret.set(Definitions.joystick.getRawButton(6) ? -0.4 : 0.4);
+        	}
+        	else Definitions.turret.set(0);
 //        	System.out.println(Definitions.turretpot.getVoltage());
         }
 	}

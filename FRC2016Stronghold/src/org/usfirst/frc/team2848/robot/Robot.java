@@ -46,14 +46,14 @@ public class Robot extends IterativeRobot {
     	Shooter.firingRoutine(4700);
     	Arm.armRoutine();
     	int turretmode = 0;
-    	if(Definitions.xbox2.getRawButton(4)) turretmode = 1;
-    	else if(Definitions.xbox2.getRawButton(2)) turretmode = 2;
+    	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
+    	else if(Definitions.buttonbox.getRawButton(7)) turretmode = 2;
     	Turret.turretRoutine(turretmode);
     	//ArduinoComm.communicate();
-    	System.out.println(States.ptoposition);
     	States.stateRoutine();
     	Timer.delay(0.01);
-    
+    	System.out.println(States.robotstate);
+    	System.out.println(States.ptoposition);
     }
     
     public void testPeriodic() {
