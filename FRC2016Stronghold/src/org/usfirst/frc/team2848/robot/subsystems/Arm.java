@@ -60,12 +60,12 @@ public class Arm {
     			}
     		}
     		else {
-    			if(!Definitions.upperarmlimit.get()) {
+    			if(!Definitions.upperarmlimit.get() || States.ptoposition < -150) {
     				Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1) > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
     				Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1) > 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
     				Definitions.armbrake.set(Definitions.xbox2.getRawAxis(1) > 0 ? Value.kReverse : Value.kForward);
     			}
-    			else if(!Definitions.lowerarmlimit.get()) {
+    			else if(!Definitions.lowerarmlimit.get() || States.ptoposition > 680) {
         			Definitions.ptomotor1.set(Definitions.xbox2.getRawAxis(1) < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
         			Definitions.ptomotor2.set(Definitions.xbox2.getRawAxis(1) < 0 ? Definitions.xbox2.getRawAxis(1)*0.5 : 0);
         			Definitions.armbrake.set(Definitions.xbox2.getRawAxis(1) < 0 ? Value.kReverse : Value.kForward);

@@ -90,8 +90,8 @@ public class Definitions {
 	public static final double TURRETAIM_P = 0.015;
 	public static final double TURRETAIM_I = 0.000;
 	public static final double TURRETAIM_D = 0.010;
-	public static final double TURRETCENTER_P = 0.002;
-	public static final double TURRETCENTER_I = 0.0005;
+	public static final double TURRETCENTER_P = 90;
+	public static final double TURRETCENTER_I = 30;
 	public static final double TURRETCENTER_D = 0;
 	public static final double ARM_P = 0.01;
 	public static final double ARM_I = 0.005;
@@ -247,7 +247,7 @@ public class Definitions {
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, rightdriveenc.getDistance());
 		leftturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, leftdriveenc.getDistance());
 		rightturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, rightdriveenc.getDistance());
-		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 0, turretenc.getDistance());
+		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 2.47, turretpot.getVoltage());
 		turretcenterpid.setBounds(-0.4, 0.4);
 		turretcenterpid.setITermBounds(-0.15, 0.15);
 		armpid = new PID(ARM_P, ARM_I, ARM_D, 0, States.ptoposition);

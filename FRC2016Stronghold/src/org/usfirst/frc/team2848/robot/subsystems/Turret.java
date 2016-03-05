@@ -38,13 +38,17 @@ public class Turret {
         	Definitions.turretaimpid.setEnabled(false, 0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
         	if(!Definitions.turretcenterpid.getEnabled()) Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.getDistance());
-        	Definitions.turret.set(Definitions.turretcenterpid.compute(-Definitions.turretenc.getDistance(), null));
+        	Definitions.turretcenterpid.setTarget(2.47);
+        	Definitions.turret.set(-Definitions.turretcenterpid.compute(Definitions.turretpot.getVoltage(), null));
+//        	System.out.println(Definitions.turret.get());
+        	
         }
         else {
         	Definitions.turretaimpid.setEnabled(false, 0);
         	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
         	Definitions.turret.set(Definitions.xbox2.getRawAxis(4)*0.4);
+//        	System.out.println(Definitions.turretpot.getVoltage());
         }
 	}
 }

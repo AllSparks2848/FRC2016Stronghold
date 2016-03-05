@@ -15,6 +15,7 @@ public class States {
 	private static boolean loaderfinished = false;
 	public static int ptoposition = 0;
 	private static int lastptoposition;
+	private static boolean limitcancelled = false;
 	
 	public static void stateRoutine(){
 		if (!Definitions.upperarmlimit.get()){
@@ -118,5 +119,26 @@ public class States {
 		else if (Definitions.buttonbox.getRawButton(4) && robotstate.equals("nothing")){
 			robotstate = "shooting";
 		}
+		if (Definitions.buttonbox.getRawButton(9) ){
+			Arm.armstate = 0;
+			Definitions.ptomotor1.set(0);
+			Definitions.ptomotor2.set(0);
+			Definitions.armpid.setEnabled(false, ptoposition);
+			Definitions.armbrake.set(Value.kForward);
+			robotstate = "nothing";
+		}
+		if (!limitcancelled && robotstate.equals("nothing") && (ptoposition > 680 || ptoposition < -150)){
+			Arm.armstate = 0;
+			Definitions.ptomotor1.set(0);
+			Definitions.ptomotor2.set(0);
+			Definitions.armpid.setEnabled(false, ptoposition);
+			Definitions.armbrake.set(Value.kForward);
+			robotstate = "nothing";
+			limitcancelled = true;
+		}
+		if (ptoposition < 680 && ptoposition > -150){
+			limitcancelled = false;
+		}
+		
 	}
 }
