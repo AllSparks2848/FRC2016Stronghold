@@ -84,7 +84,7 @@ public class Definitions {
 	public static final double TURN_P = 0;
 	public static final double TURN_I = 0;
 	public static final double TURN_D = 0;
-	public static final double SHOOTER_P = 0.001;
+	public static final double SHOOTER_P = 0.0008;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
 	public static final double TURRETAIM_P = 0.013;

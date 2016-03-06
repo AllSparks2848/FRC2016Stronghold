@@ -18,6 +18,7 @@ public class States {
 	private static boolean limitcancelled = false;
 	private static int target;
 	private static boolean statestarted = false;
+	private static boolean portstarted = false;
 	
 	public static void stateRoutine(){
 		if (!Definitions.upperarmlimit.get()){
@@ -71,7 +72,7 @@ public class States {
 				if (!armstarted){
 					Definitions.armbrake.set(Value.kReverse);
 					Definitions.armpid.setEnabled(true, ptoposition);
-					Definitions.armpid.setTarget(460);
+					Definitions.armpid.setTarget(490);
 					armstarted = true;
 				}
 				if (Definitions.armpid.getEnabled()){
@@ -79,7 +80,7 @@ public class States {
 					Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
 				}
 			}
-			if (ptoposition < 465 && ptoposition > 455 && SparkyIntakeBar.lastintakeposition == 1){
+			if (ptoposition < 495 && ptoposition > 485 && SparkyIntakeBar.lastintakeposition == 1){
 				robotstate = "nothing";
 				lastrobotstate = "intake";
 				Definitions.armpid.setEnabled(false, ptoposition);
@@ -131,7 +132,9 @@ public class States {
 			}
 		}
 		if (robotstate.equals("portcullis")){
-		
+			if (!portstarted){
+				
+			}
 		}
 		if (robotstate.equals("adjusting")){
 			if (!Definitions.armpid.getEnabled()){
