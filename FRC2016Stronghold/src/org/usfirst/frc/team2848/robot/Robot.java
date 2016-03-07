@@ -1,11 +1,13 @@
 
 package org.usfirst.frc.team2848.robot;
 
+import org.usfirst.frc.team2848.robot.navigation.AutoRoutine;
 import org.usfirst.frc.team2848.robot.subsystems.Arm;
 import org.usfirst.frc.team2848.robot.subsystems.DriveShifter;
 import org.usfirst.frc.team2848.robot.subsystems.Shooter;
 import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
 import org.usfirst.frc.team2848.robot.subsystems.Turret;
+import org.usfirst.frc.team2848.util.ArduinoComm;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -31,7 +33,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousInit() {
-    	
+    	AutoRoutine.auto(1, 1, 5);
     }
     public void autonomousPeriodic() {
     	
@@ -51,13 +53,14 @@ public class Robot extends IterativeRobot {
     	Turret.turretRoutine(turretmode);
     	//ArduinoComm.communicate();
     	States.stateRoutine();
-    	Timer.delay(0.01);
-    	System.out.println(States.robotstate);
     	System.out.println(States.ptoposition);
+    	Timer.delay(0.01);
+    	ArduinoComm.communicate();
+    	//System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
     }
     
     public void testPeriodic() {
-    	
+    
     }
     
 }

@@ -78,18 +78,18 @@ public class Definitions {
 	public static final int AUTO_SELECT_ADDRESS = 0x70;
 	public static final int ARDUINO_ADDRESS = 0x08;
 	
-	public static final double DRIVE_P = 0;
-	public static final double DRIVE_I = 0;
+	public static final double DRIVE_P = 0.004;
+	public static final double DRIVE_I = 0.003;
 	public static final double DRIVE_D = 0;
-	public static final double TURN_P = 0;
+	public static final double TURN_P = 4;
 	public static final double TURN_I = 0;
 	public static final double TURN_D = 0;
-	public static final double SHOOTER_P = 0.001;
+	public static final double SHOOTER_P = 0.0008;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = 0.013;
+	public static final double TURRETAIM_P = 0.025;
 	public static final double TURRETAIM_I = 0.000;
-	public static final double TURRETAIM_D = 0.012;
+	public static final double TURRETAIM_D = 0.015;
 	public static final double TURRETCENTER_P = 0.002;
 	public static final double TURRETCENTER_I = 0.0005;
 	public static final double TURRETCENTER_D = 0;
@@ -159,8 +159,7 @@ public class Definitions {
 	public static PID turretcenterpid;
 	public static PID leftdrivepid;
 	public static PID rightdrivepid;
-	public static PID leftturnpid;
-	public static PID rightturnpid;
+	public static PID turnpid;
 	public static PID armpid;
 	
 	public static ImageProcessing processing;
@@ -244,9 +243,14 @@ public class Definitions {
 		turretaimpid.setBounds(-0.27, 0.27);
 		turretaimpid.setITermBounds(-0.14, 0.14);
 		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, leftdriveenc.getDistance());
+		leftdrivepid.setBounds(-1, 1);
+		leftdrivepid.setITermBounds(-1, 1);
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, rightdriveenc.getDistance());
-		leftturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, leftdriveenc.getDistance());
-		rightturnpid = new PID(TURN_P, TURN_I, TURN_D, 0, rightdriveenc.getDistance());
+		rightdrivepid.setBounds(-1, 1);
+		rightdrivepid.setITermBounds(-1, 1);
+		turnpid = new PID(TURN_P, TURN_I, TURN_D, 0, leftdriveenc.getDistance());
+		turnpid.setBounds(-1, 1);
+		turnpid.setITermBounds(-1, 1);
 		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 0, turretenc.getDistance());
 		turretcenterpid.setBounds(-0.4, 0.4);
 		turretcenterpid.setITermBounds(-0.15, 0.15);

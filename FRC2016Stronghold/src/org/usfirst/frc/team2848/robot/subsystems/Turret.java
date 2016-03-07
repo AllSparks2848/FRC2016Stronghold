@@ -8,7 +8,8 @@ import org.usfirst.frc.team2848.robot.Definitions;
 
 
 public class Turret {
-	public static final double TICKS_PER_PIXEL = 2;
+	public static final double TICKS_PER_PIXEL = 1;
+	private static double xpos = 0;
 	public static void turretRoutine(int mode) {
         if(mode == 1) {
         	Definitions.turretcenterpid.setEnabled(false,0);
@@ -22,9 +23,9 @@ public class Turret {
 	        	Point leftbound = bounding.toArray()[1];
 	        	Point rightbound = bounding.toArray()[2];
 	        	Point pos = new Point((leftbound.x+rightbound.x)/2.0, (leftbound.y+rightbound.y)/2.0);
-	        	double xpos = pos.x;
+	        	xpos = pos.x;
 	        	System.out.println(xpos);
-	        	double tickdifferential = (175-xpos)*TICKS_PER_PIXEL;
+	        	double tickdifferential = (173-xpos)*TICKS_PER_PIXEL;
 	        	//System.out.println(pos.x + " " + tickdifferential);
 	        	Definitions.turretaimpid.setTarget(Definitions.turretenc.getDistance() - tickdifferential);
 	        	//turretencoder.reset();
@@ -53,5 +54,9 @@ public class Turret {
         	else Definitions.turret.set(0);
 //        	System.out.println(Definitions.turretpot.getVoltage());
         }
+	}
+	
+	public static double getPixelTarget() {
+		return xpos;
 	}
 }
