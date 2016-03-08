@@ -76,7 +76,7 @@ public class States {
 				}
 				if (Definitions.armpid.getEnabled()){
 					Definitions.ptomotor1.set(Definitions.armpid.compute(ptoposition, null));
-					Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
+					//Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
 				}
 			}
 			if (ptoposition < 505 && ptoposition > 495 && SparkyIntakeBar.lastintakeposition == 1){
@@ -118,7 +118,7 @@ public class States {
 				}
 				if (Definitions.armpid.getEnabled()){
 					Definitions.ptomotor1.set(Definitions.armpid.compute(ptoposition, null));
-					Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
+					//Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
 				}
 			}
 			if (ptoposition < 305 && ptoposition >295 && SparkyIntakeBar.lastintakeposition == 1){
@@ -142,7 +142,7 @@ public class States {
 			}
 			if (Definitions.upperarmlimit.get()){
 				Definitions.ptomotor1.set(Definitions.armpid.compute(ptoposition, null));
-				Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
+				//Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
 			}
 			else {
 				Definitions.armpid.setEnabled(false, ptoposition);

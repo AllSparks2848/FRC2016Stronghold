@@ -56,7 +56,8 @@ public class Robot extends IterativeRobot {
 //    	System.out.println(Definitions.upperarmlimit.get());
     	Timer.delay(0.01);
     	ArduinoComm.communicate();
-    	System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
+    	System.out.println(Definitions.turretenc.get());
+    	//System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
     }
     
     public void testPeriodic() {

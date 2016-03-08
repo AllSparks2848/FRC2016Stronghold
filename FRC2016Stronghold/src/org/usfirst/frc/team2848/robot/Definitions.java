@@ -90,8 +90,8 @@ public class Definitions {
 	public static final double TURRETAIM_P = 0.03;
 	public static final double TURRETAIM_I = 0.000;
 	public static final double TURRETAIM_D = 0.015;
-	public static final double TURRETCENTER_P = 0.002;
-	public static final double TURRETCENTER_I = 0.0005;
+	public static final double TURRETCENTER_P = 0.03;
+	public static final double TURRETCENTER_I = 0.000;
 	public static final double TURRETCENTER_D = 0;
 	public static final double ARM_P = 0.012;
 	public static final double ARM_I = 0.001;
