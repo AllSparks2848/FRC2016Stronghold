@@ -18,6 +18,7 @@ public class States {
 	private static boolean limitcancelled = false;
 	private static int target;
 	private static boolean statestarted = false;
+	private static boolean portstarted = false;
 	
 	public static void stateRoutine(){
 		if (!Definitions.upperarmlimit.get()){
@@ -131,7 +132,9 @@ public class States {
 			}
 		}
 		if (robotstate.equals("portcullis")){
-		
+			if (!portstarted){
+				
+			}
 		}
 		if (robotstate.equals("adjusting")){
 			if (!Definitions.armpid.getEnabled()){

@@ -45,7 +45,7 @@ public class Robot extends IterativeRobot {
     	Definitions.drivetrain.arcadeDrive(Definitions.xbox1.getRawAxis(1), Definitions.xbox1.getRawAxis(4), false);
     	DriveShifter.checkGearShift();
     	SparkyIntakeBar.loadingRoutine();
-    	Shooter.firingRoutine(4700);
+    	Shooter.firingRoutine(5000);
     	Arm.armRoutine();
     	int turretmode = 0;
     	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
