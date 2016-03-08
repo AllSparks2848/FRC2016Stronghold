@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousInit() {
-    	AutoRoutine.auto(1, 1, 5);
+    	AutoRoutine.auto(0, 0, 0);
     }
     public void autonomousPeriodic() {
     	
@@ -49,14 +49,14 @@ public class Robot extends IterativeRobot {
     	Arm.armRoutine();
     	int turretmode = 0;
     	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
-    	else if(Definitions.buttonbox.getRawButton(7)) turretmode = 2;
+    	else if(Definitions.buttonbox.getRawButton(16)) turretmode = 2;
     	Turret.turretRoutine(turretmode);
     	//ArduinoComm.communicate();
     	States.stateRoutine();
-    	System.out.println(States.ptoposition);
+//    	System.out.println(Definitions.upperarmlimit.get());
     	Timer.delay(0.01);
     	ArduinoComm.communicate();
-    	//System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
+    	System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
     }
     
     public void testPeriodic() {

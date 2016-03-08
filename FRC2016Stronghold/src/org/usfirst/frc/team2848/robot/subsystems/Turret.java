@@ -48,8 +48,11 @@ public class Turret {
         	Definitions.turretaimpid.setEnabled(false, 0);
         	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
-        	if(Definitions.joystick.getRawButton(6) || Definitions.joystick.getRawButton(7)){
-        		Definitions.turret.set(Definitions.joystick.getRawButton(6) ? -0.4 : 0.4);
+        	if(Definitions.buttonbox.getRawButton(14)){
+        		Definitions.turret.set(-0.4);
+        	}
+        	else if (Definitions.buttonbox.getRawButton(11)){
+        		Definitions.turret.set(0.4);
         	}
         	else Definitions.turret.set(0);
 //        	System.out.println(Definitions.turretpot.getVoltage());

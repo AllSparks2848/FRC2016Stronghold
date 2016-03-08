@@ -81,21 +81,21 @@ public class Definitions {
 	public static final double DRIVE_P = 0.004;
 	public static final double DRIVE_I = 0.003;
 	public static final double DRIVE_D = 0;
-	public static final double TURN_P = 4;
-	public static final double TURN_I = 0;
+	public static final double TURN_P = 0.2;
+	public static final double TURN_I = 0.05;
 	public static final double TURN_D = 0;
 	public static final double SHOOTER_P = 0.0008;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = 0.025;
+	public static final double TURRETAIM_P = 0.03;
 	public static final double TURRETAIM_I = 0.000;
 	public static final double TURRETAIM_D = 0.015;
 	public static final double TURRETCENTER_P = 0.002;
 	public static final double TURRETCENTER_I = 0.0005;
 	public static final double TURRETCENTER_D = 0;
-	public static final double ARM_P = 0.008;
-	public static final double ARM_I = 0.005;
-	public static final double ARM_D = -0.006;
+	public static final double ARM_P = 0.012;
+	public static final double ARM_I = 0.001;
+	public static final double ARM_D = -0.002;
 	
 	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
@@ -255,7 +255,7 @@ public class Definitions {
 		turretcenterpid.setBounds(-0.4, 0.4);
 		turretcenterpid.setITermBounds(-0.15, 0.15);
 		armpid = new PID(ARM_P, ARM_I, ARM_D, 0, States.ptoposition);
-		armpid.setBounds(-0.5, 0.5);
+		armpid.setBounds(-0.6, 0.6);
 		armpid.setITermBounds(-0.2, 0.2);
 		
 		processing = new ImageProcessing();

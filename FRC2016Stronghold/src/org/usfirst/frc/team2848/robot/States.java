@@ -71,7 +71,7 @@ public class States {
 				if (!armstarted){
 					Definitions.armbrake.set(Value.kReverse);
 					Definitions.armpid.setEnabled(true, ptoposition);
-					Definitions.armpid.setTarget(460);
+					Definitions.armpid.setTarget(500);
 					armstarted = true;
 				}
 				if (Definitions.armpid.getEnabled()){
@@ -79,7 +79,7 @@ public class States {
 					Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
 				}
 			}
-			if (ptoposition < 465 && ptoposition > 455 && SparkyIntakeBar.lastintakeposition == 1){
+			if (ptoposition < 505 && ptoposition > 495 && SparkyIntakeBar.lastintakeposition == 1){
 				robotstate = "nothing";
 				lastrobotstate = "intake";
 				Definitions.armpid.setEnabled(false, ptoposition);
@@ -190,25 +190,25 @@ public class States {
 			statestarted = false;
 			armstarted = false;
 		}
-		if (Definitions.buttonbox.getRawButton(1) && robotstate.equals("nothing")){
+		if (Definitions.buttonbox.getRawButton(15) && robotstate.equals("nothing")){
 			robotstate = "start";
 		}
-		else if (Definitions.buttonbox.getRawButton(2) && robotstate.equals("nothing")){
+		else if (Definitions.buttonbox.getRawButton(13) && robotstate.equals("nothing")){
 			robotstate = "tuck";
 		}
-		else if (Definitions.buttonbox.getRawButton(3) && robotstate.equals("nothing")){
+		else if (Definitions.buttonbox.getRawButton(5) && robotstate.equals("nothing")){
 			robotstate = "intake";
 		}
-		else if (Definitions.buttonbox.getRawButton(4) && robotstate.equals("nothing")){
+		else if (Definitions.buttonbox.getRawButton(6) && robotstate.equals("nothing")){
 			robotstate = "shooting";
 		}
-		else if (Definitions.buttonbox.getRawButton(8) && robotstate.equals("nothing")){
+		else if (Definitions.buttonbox.getRawButton(12) && robotstate.equals("nothing")){
 			robotstate = "defense";
 		}
-		else if (Definitions.buttonbox.getRawButton(6) && robotstate.equals("nothing")){
+		else if (Definitions.buttonbox.getRawButton(3) && robotstate.equals("nothing")){
 			robotstate = "adjusting";
 		}
-		if (Definitions.buttonbox.getRawButton(9) ){
+		if (Definitions.buttonbox.getRawButton(4) ){
 			Arm.armstate = 0;
 			Definitions.ptomotor1.set(0);
 			Definitions.ptomotor2.set(0);

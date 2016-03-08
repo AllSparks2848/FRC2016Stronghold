@@ -47,13 +47,13 @@ public class Shooter {
 			Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
 			
 		}
-		if (Definitions.buttonbox.getRawButton(5) && !lastbutton5){
+		if (Definitions.buttonbox.getRawButton(10) && !lastbutton5){
 			startposition = startposition ? false : true;
 			lastbutton5 = true;
 		}
-		lastbutton5 = Definitions.buttonbox.getRawButton(5);
+		lastbutton5 = Definitions.buttonbox.getRawButton(10);
 		
-		Definitions.ballholder.setAngle(startposition ? 90 : 180);
+		Definitions.ballholder.setAngle(startposition ? 90 : 170);
 		
 		if (Definitions.leftshooterpid.getEnabled()){
 			//double[] leftval = new double[5];
