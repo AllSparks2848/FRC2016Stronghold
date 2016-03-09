@@ -23,6 +23,7 @@ public class States {
 	private static boolean portsecondstage = false;
 	private static boolean portthirdstage = false;
 	private static boolean portfinished = false;
+	private static boolean turretstarted = false;
 	
 	public static void stateRoutine(){
 		if (!Definitions.upperarmlimit.get()){
@@ -202,7 +203,30 @@ public class States {
 					lastrobotstate = "defense";
 				}
 		}
-		if (System.currentTimeMillis() > start + 5000 && !robotstate.equals("nothing") && !robotstate.equals("portcullis")){
+		if (robotstate.equals("battershot")){
+			Arm.armstate = 2;
+			if (ptoposition < 300){
+				SparkyIntakeBar.position = 1;
+			}
+			if (SparkyIntakeBar.lastintakeposition == 1 && !Definitions.upperarmlimit.get()){
+				if (!turretstarted){
+					Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.get());
+					Definitions.turretcenterpid.setTarget(3000);
+					turretstarted = true;
+				}
+				Definitions.turret.set(-Definitions.turretcenterpid.compute(Definitions.turretenc.get(), null));
+			}
+			if (!Definitions.buttonbox.getRawButton(7)){
+				Definitions.armpid.setEnabled(false, Definitions.turretenc.get());
+				Definitions.armbrake.set(Value.kForward);
+				Definitions.ptomotor1.set(0);
+				Definitions.turretcenterpid.setEnabled(false, Definitions.turretenc.get());
+				Definitions.turret.set(0);
+				turretstarted = false;
+				robotstate = "nothing";
+			}
+		}
+		if (System.currentTimeMillis() > start + 5000 && !robotstate.equals("nothing") && !robotstate.equals("portcullis") && !robotstate.equals("battershot")){
 			Definitions.armpid.setEnabled(false, ptoposition);
 			Definitions.armbrake.set(Value.kForward);
 			Definitions.ptomotor1.set(0);
@@ -275,6 +299,9 @@ public class States {
 					}
 				}
 			}
+		}
+		if (Definitions.buttonbox.getRawButton(7) && robotstate.equals("nothing")){
+			robotstate = "battershot";
 		}
 		if (Definitions.buttonbox.getRawButton(3) && robotstate.equals("nothing")){
 			robotstate = "adjusting";

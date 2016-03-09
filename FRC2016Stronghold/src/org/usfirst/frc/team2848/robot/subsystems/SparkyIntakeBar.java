@@ -61,7 +61,7 @@ public class SparkyIntakeBar {
 		if (position != 2){
 			bottomstarted = false;
 		}
-		if (Definitions.joystick.getRawButton(4)){
+		if (Definitions.buttonbox.getRawButton(14)){
 			if (Definitions.leftshooterpid.getEnabled()){
 				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
 				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
@@ -70,7 +70,7 @@ public class SparkyIntakeBar {
 			Definitions.rightshooter.set(-0.6);	
 			Definitions.intakewheel.set(-1);
 		}
-		else if (Definitions.joystick.getRawButton(5)){
+		else if (Definitions.buttonbox.getRawButton(11)){
 			if (Definitions.leftshooterpid.getEnabled()){
 				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
 				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());

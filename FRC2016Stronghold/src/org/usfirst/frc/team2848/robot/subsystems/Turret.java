@@ -118,10 +118,10 @@ public class Turret {
         	Definitions.turretaimpid.setEnabled(false, 0);
         	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
-        	if(Definitions.buttonbox.getRawButton(14)){
+        	if(Definitions.joystick.getRawButton(4)){
         		Definitions.turret.set(-0.4);
         	}
-        	else if (Definitions.buttonbox.getRawButton(11)){
+        	else if (Definitions.joystick.getRawButton(5)){
         		Definitions.turret.set(0.4);
         	}
         	else Definitions.turret.set(0);
