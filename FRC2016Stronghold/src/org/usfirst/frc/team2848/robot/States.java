@@ -204,18 +204,21 @@ public class States {
 				}
 		}
 		if (robotstate.equals("battershot")){
-			Arm.armstate = 2;
+			if (!armstarted){
+				Definitions.armpid.setEnabled(true, ptoposition);
+				Definitions.armpid.setTarget(180);
+				armstarted = true;
+			}
+			Definitions.ptomotor1.set(Definitions.armpid.compute(ptoposition, null));
 			if (ptoposition < 300){
 				SparkyIntakeBar.position = 1;
-			}
-			if (SparkyIntakeBar.lastintakeposition == 1 && !Definitions.upperarmlimit.get()){
 				if (!turretstarted){
 					Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.get());
 					Definitions.turretcenterpid.setTarget(2731);
 					turretstarted = true;
 				}
-				Definitions.turret.set(-Definitions.turretcenterpid.compute(Definitions.turretenc.get(), null));
 			}
+			Definitions.turret.set(Definitions.turretcenterpid.compute(Definitions.turretenc.get(), null));
 			if (!Definitions.buttonbox.getRawButton(7)){
 				Definitions.armpid.setEnabled(false, Definitions.turretenc.get());
 				Definitions.armbrake.set(Value.kForward);
@@ -223,6 +226,7 @@ public class States {
 				Definitions.turretcenterpid.setEnabled(false, Definitions.turretenc.get());
 				Definitions.turret.set(0);
 				turretstarted = false;
+				armstarted = false;
 				robotstate = "nothing";
 			}
 		}
