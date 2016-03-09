@@ -211,7 +211,7 @@ public class States {
 			if (SparkyIntakeBar.lastintakeposition == 1 && !Definitions.upperarmlimit.get()){
 				if (!turretstarted){
 					Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.get());
-					Definitions.turretcenterpid.setTarget(3000);
+					Definitions.turretcenterpid.setTarget(2731);
 					turretstarted = true;
 				}
 				Definitions.turret.set(-Definitions.turretcenterpid.compute(Definitions.turretenc.get(), null));
