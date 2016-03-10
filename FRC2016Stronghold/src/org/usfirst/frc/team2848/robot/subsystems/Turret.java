@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.usfirst.frc.team2848.robot.Definitions;
+import org.usfirst.frc.team2848.robot.States;
 
 
 public class Turret {
@@ -45,7 +46,7 @@ public class Turret {
 		        	double tickdifferential = (173-xpos)*TICKS_PER_PIXEL;
 		        	//System.out.println(pos.x + " " + tickdifferential);
 		        	target = Definitions.turretenc.getDistance() - tickdifferential;
-		        	if(Math.abs(tickdifferential) > 50) {
+		        	if(Math.abs(tickdifferential) > 75) {
 			        	Definitions.turretcenterpid.setTarget(target);
 			        	finecontrol = false;
 		        	}
@@ -62,7 +63,7 @@ public class Turret {
 		        	if(!Definitions.turretaimpid.getEnabled()) Definitions.turretaimpid.setEnabled(true, Definitions.turretenc.getDistance());
 		        	double output = Definitions.turretaimpid.compute(Definitions.turretenc.getDistance(), null);
 		        	//System.out.println(output + " " + turretencoder.getDistance() + " " + target);
-		        	Definitions.turret.set(output);
+		        	Definitions.turret.set(-output);
 		        	if(Math.abs(target-Definitions.turretenc.get()) < 5) {
 		        		targetstate = 0;
 		        		Definitions.turret.set(0);
@@ -73,8 +74,8 @@ public class Turret {
 		        	if(!Definitions.turretcenterpid.getEnabled()) Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.getDistance());
 		        	double output = Definitions.turretcenterpid.compute(Definitions.turretenc.getDistance(), null);
 		        	//System.out.println(output + " " + turretencoder.getDistance() + " " + target);
-		        	Definitions.turret.set(output);
-		        	if(Math.abs(target-Definitions.turretenc.get()) < 20) {
+		        	Definitions.turret.set(-output);
+		        	if(Math.abs(target-Definitions.turretenc.get()) < 50) {
 		        		targetstate = 0;
 		        		Definitions.turret.set(0);
 		        		Definitions.turretcenterpid.setEnabled(false, 0);
@@ -118,13 +119,15 @@ public class Turret {
         	Definitions.turretaimpid.setEnabled(false, 0);
         	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
-        	if(Definitions.buttonbox.getRawButton(14)){
-        		Definitions.turret.set(-0.4);
+        	if (!States.robotstate.equals("battershot")){
+        		if(Definitions.joystick.getRawButton(4)){
+            		Definitions.turret.set(-0.4);
+            	}
+            	else if (Definitions.joystick.getRawButton(5)){
+            		Definitions.turret.set(0.4);
+            	}
+            	else Definitions.turret.set(0);
         	}
-        	else if (Definitions.buttonbox.getRawButton(11)){
-        		Definitions.turret.set(0.4);
-        	}
-        	else Definitions.turret.set(0);
 //        	System.out.println(Definitions.turretpot.getVoltage());
         }
         if (Definitions.buttonbox.getRawButton(8)){

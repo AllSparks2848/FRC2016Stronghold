@@ -3,6 +3,7 @@ package org.usfirst.frc.team2848.robot.subsystems;
 import org.usfirst.frc.team2848.robot.Definitions;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
 	private static double start;
@@ -61,5 +62,7 @@ public class Shooter {
 			//System.out.println(leftval[0] + " " + leftval[1] + " " + leftval[2] + " " + leftval[3] + " " + leftval[4]);
 			Definitions.rightshooter.set(Definitions.rightshooterpid.compute(Definitions.rightshooterenc.getRate(), null));
 		}
+		SmartDashboard.putBoolean("Servo Engaged", startposition);
+		SmartDashboard.putBoolean("Shooter Ready", Definitions.leftshooterenc.getRate() >= 4200 && Definitions.rightshooterenc.getRate() >= 4200);
 	}
 } 

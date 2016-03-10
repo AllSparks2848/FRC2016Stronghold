@@ -19,6 +19,11 @@ public class States {
 	private static int target;
 	private static boolean statestarted = false;
 	private static boolean portstarted = false;
+	private static boolean portfirststage = true;
+	private static boolean portsecondstage = false;
+	private static boolean portthirdstage = false;
+	private static boolean portfinished = false;
+	private static boolean turretstarted = false;
 	
 	public static void stateRoutine(){
 		if (!Definitions.upperarmlimit.get()){
@@ -132,8 +137,22 @@ public class States {
 			}
 		}
 		if (robotstate.equals("portcullis")){
-			if (!portstarted){
-				
+			if (portfirststage){
+				Arm.armstate = 1;
+				SparkyIntakeBar.position = 2;
+				if (!Definitions.lowerarmlimit.get() && SparkyIntakeBar.lastintakeposition == 2){
+					portfirststage = false;
+				}
+			}
+			if (portsecondstage){
+				SparkyIntakeBar.position = 0;
+				portsecondstage = false;
+				portfinished = true;
+			}
+			if (portthirdstage){
+				SparkyIntakeBar.position = 2;
+				portfirststage = true;
+				portfinished = false;
 			}
 		}
 		if (robotstate.equals("adjusting")){
@@ -184,7 +203,35 @@ public class States {
 					lastrobotstate = "defense";
 				}
 		}
-		if (System.currentTimeMillis() > start + 5000 && !robotstate.equals("nothing")){
+		if (robotstate.equals("battershot")){
+			if (!armstarted){
+				Definitions.armbrake.set(Value.kReverse);
+				Definitions.armpid.setEnabled(true, ptoposition);
+				Definitions.armpid.setTarget(180);
+				armstarted = true;
+			}
+			Definitions.ptomotor1.set(Definitions.armpid.compute(ptoposition, null));
+			if (ptoposition < 300){
+				SparkyIntakeBar.position = 1;
+				if (!turretstarted){
+					Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.get());
+					Definitions.turretcenterpid.setTarget(2731);
+					turretstarted = true;
+				}
+			}
+			Definitions.turret.set(Definitions.turretcenterpid.compute(Definitions.turretenc.get(), null));
+			if (!Definitions.buttonbox.getRawButton(7)){
+				Definitions.armpid.setEnabled(false, Definitions.turretenc.get());
+				Definitions.armbrake.set(Value.kForward);
+				Definitions.ptomotor1.set(0);
+				Definitions.turretcenterpid.setEnabled(false, Definitions.turretenc.get());
+				Definitions.turret.set(0);
+				turretstarted = false;
+				armstarted = false;
+				robotstate = "nothing";
+			}
+		}
+		if (System.currentTimeMillis() > start + 5000 && !robotstate.equals("nothing") && !robotstate.equals("portcullis") && !robotstate.equals("battershot")){
 			Definitions.armpid.setEnabled(false, ptoposition);
 			Definitions.armbrake.set(Value.kForward);
 			Definitions.ptomotor1.set(0);
@@ -193,22 +240,75 @@ public class States {
 			statestarted = false;
 			armstarted = false;
 		}
-		if (Definitions.buttonbox.getRawButton(15) && robotstate.equals("nothing")){
-			robotstate = "start";
+		if (Definitions.buttonbox.getRawButton(15)){
+			if (robotstate.equals("nothing")){
+				robotstate = "start";
+			}
+			else if (robotstate.equals("portcullis")){
+				if (portfinished){
+					portthirdstage = true;
+				}
+			}
 		}
-		else if (Definitions.buttonbox.getRawButton(13) && robotstate.equals("nothing")){
-			robotstate = "tuck";
+		if (Definitions.buttonbox.getRawButton(13)){
+			if (robotstate.equals("nothing")){
+				robotstate = "tuck";
+			}
+			else if (robotstate.equals("portcullis")){
+				if (portfinished){
+					portthirdstage = true;
+				}
+			}
 		}
-		else if (Definitions.buttonbox.getRawButton(5) && robotstate.equals("nothing")){
-			robotstate = "intake";
+		if (Definitions.buttonbox.getRawButton(5)){
+			if (robotstate.equals("nothing")){
+				robotstate = "intake";
+			}
+			else if (robotstate.equals("portcullis")){
+				if (portfinished){
+					portthirdstage = true;
+				}
+			}
 		}
-		else if (Definitions.buttonbox.getRawButton(6) && robotstate.equals("nothing")){
-			robotstate = "shooting";
+		if (Definitions.buttonbox.getRawButton(6)){
+			if (robotstate.equals("nothing")){
+				robotstate = "shooting";
+			}
+			else if (robotstate.equals("portcullis")){
+				if (portfinished){
+					portthirdstage = true;
+				}
+			}
 		}
-		else if (Definitions.buttonbox.getRawButton(12) && robotstate.equals("nothing")){
-			robotstate = "defense";
+		if (Definitions.buttonbox.getRawButton(12)){
+			if (robotstate.equals("nothing")){
+				robotstate = "defense";
+			}
+			else if (robotstate.equals("portcullis")){
+				if (portfinished){
+					portthirdstage = true;
+				}
+			}
 		}
-		else if (Definitions.buttonbox.getRawButton(3) && robotstate.equals("nothing")){
+		if (Definitions.buttonbox.getRawButton(2)){
+			if (robotstate.equals("nothing")){
+				robotstate = "portcullis";
+			}
+			else if (robotstate.equals("portcullis")){
+				if (!portfirststage){
+					if (!portfinished){
+						portsecondstage = true;
+					}
+					else {
+						portthirdstage = true;
+					}
+				}
+			}
+		}
+		if (Definitions.buttonbox.getRawButton(7) && robotstate.equals("nothing")){
+			robotstate = "battershot";
+		}
+		if (Definitions.buttonbox.getRawButton(3) && robotstate.equals("nothing")){
 			robotstate = "adjusting";
 		}
 		if (Definitions.buttonbox.getRawButton(4) ){
@@ -236,3 +336,4 @@ public class States {
 		
 	}
 }
+

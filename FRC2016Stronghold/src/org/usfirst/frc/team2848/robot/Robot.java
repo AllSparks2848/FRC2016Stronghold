@@ -8,6 +8,7 @@ import org.usfirst.frc.team2848.robot.subsystems.Shooter;
 import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
 import org.usfirst.frc.team2848.robot.subsystems.Turret;
 import org.usfirst.frc.team2848.util.ArduinoComm;
+import org.usfirst.frc.team2848.util.DigitDriver;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -28,7 +29,6 @@ public class Robot extends IterativeRobot {
     	CameraServer camera = CameraServer.getInstance();
     	camera.setQuality(50);
     	camera.startAutomaticCapture("cam0");
-    	
     	
     }
     
@@ -56,7 +56,8 @@ public class Robot extends IterativeRobot {
 //    	System.out.println(Definitions.upperarmlimit.get());
     	Timer.delay(0.01);
     	ArduinoComm.communicate();
-    	System.out.println(Definitions.turretenc.get());
+//    	System.out.println(Definitions.turretenc.get());
+    	System.out.println(States.ptoposition);
     	//System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
     }
     

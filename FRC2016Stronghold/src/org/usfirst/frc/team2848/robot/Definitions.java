@@ -2,6 +2,7 @@ package org.usfirst.frc.team2848.robot;
 
 import org.usfirst.frc.team2848.robot.navigation.ImageProcessing;
 import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
+import org.usfirst.frc.team2848.util.DigitDriver;
 import org.usfirst.frc.team2848.util.PID;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -87,10 +88,10 @@ public class Definitions {
 	public static final double SHOOTER_P = 0.0008;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = 0.03;
+	public static final double TURRETAIM_P = -0.02;
 	public static final double TURRETAIM_I = 0.000;
-	public static final double TURRETAIM_D = 0.015;
-	public static final double TURRETCENTER_P = 0.03;
+	public static final double TURRETAIM_D = -0.01;
+	public static final double TURRETCENTER_P = -0.02;
 	public static final double TURRETCENTER_I = 0.000;
 	public static final double TURRETCENTER_D = 0;
 	public static final double ARM_P = 0.012;
@@ -147,7 +148,6 @@ public class Definitions {
 	public static DigitalInput lowerarmlimit;
 	
 	public static I2C lidar;
-	public static I2C autoselect;
 	public static I2C arduino;
 	
 	public static PowerDistributionPanel pdp;
@@ -207,7 +207,7 @@ public class Definitions {
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, true, EncodingType.k4X);
 		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
-		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
+		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, true, EncodingType.k4X);
 		ptoenc = new Encoder(PTO_ENC_A, PTO_ENC_B, true, EncodingType.k4X);
 		
 		leftdriveenc.reset();
@@ -225,7 +225,6 @@ public class Definitions {
 		lowerarmlimit = new DigitalInput(LOWER_ARM_LIMIT_PORT);
 		
 		lidar = new I2C(Port.kMXP, LIDAR_ADDRESS);
-		autoselect = new I2C(Port.kMXP, AUTO_SELECT_ADDRESS);
 		arduino = new I2C(Port.kOnboard, ARDUINO_ADDRESS);
 		
 		pdp = new PowerDistributionPanel();
@@ -260,5 +259,7 @@ public class Definitions {
 		
 		processing = new ImageProcessing();
 		processing.start();
+    	DigitDriver digit = new DigitDriver();
+    	digit.start();
 	}
 }
