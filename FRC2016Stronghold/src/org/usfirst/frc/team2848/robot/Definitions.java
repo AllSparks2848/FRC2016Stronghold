@@ -72,7 +72,7 @@ public class Definitions {
 	public static final int LOWER_ARM_LIMIT_PORT = 10;
 	public static final int TURRET_POT_PORT = 2;
 	
-	public static final int PRESSURE_TRANSDUCER_PORT = 0;
+	public static final int PRESSURE_TRANSDUCER_PORT = 3;
 	
 	public static final int LIDAR_ADDRESS = 0x62;
 	public static final int AUTO_SELECT_ADDRESS = 0x70;
