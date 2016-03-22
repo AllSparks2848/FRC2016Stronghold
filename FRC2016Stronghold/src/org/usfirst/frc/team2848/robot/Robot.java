@@ -32,9 +32,12 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
     	Definitions.initPeripherals();
-    	CameraServer camera = CameraServer.getInstance();
-    	camera.setQuality(50);
-    	camera.startAutomaticCapture("cam0");
+    	frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+    	
+    	front = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+    	back = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+    	currsession = front;
+    	NIVision.IMAQdxConfigureGrab(currsession);
     	
     }
     
