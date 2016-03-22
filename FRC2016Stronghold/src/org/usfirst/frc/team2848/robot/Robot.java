@@ -14,6 +14,7 @@ import org.usfirst.frc.team2848.util.ArduinoComm;
 import org.usfirst.frc.team2848.util.DigitDriver;
 
 import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Image;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -28,6 +29,12 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	CameraServer server;
+	int currsession;
+	int front;
+	int back;
+	static Image frame;
+	static boolean lastbutton4 = false;
 	
     public void robotInit() {
     	System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
