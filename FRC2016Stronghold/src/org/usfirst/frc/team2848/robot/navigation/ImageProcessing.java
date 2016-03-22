@@ -40,7 +40,7 @@ public class ImageProcessing extends Thread {
 	public void run() {
 		
 		while(true) {
-		try {
+		try { 
 			Thread.sleep(150);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -85,12 +85,12 @@ public class ImageProcessing extends Thread {
    		Core.min(huemin, huemax, hue);
    		huemin.release();
    		huemax.release();
-    	Imgproc.threshold(channels.get(2), valuemin, 50, 255, Imgproc.THRESH_BINARY);
-    	Imgproc.threshold(channels.get(2), valuemax, 220, 255, Imgproc.THRESH_BINARY_INV);
+    	Imgproc.threshold(channels.get(2), valuemin, 30, 255, Imgproc.THRESH_BINARY);
+    	Imgproc.threshold(channels.get(2), valuemax, 240, 255, Imgproc.THRESH_BINARY_INV);
     	Core.min(valuemin, valuemax, value);
     	valuemin.release();
     	valuemax.release();
-    	Imgproc.threshold(channels.get(1), satmin, 150, 255, Imgproc.THRESH_BINARY);
+    	Imgproc.threshold(channels.get(1), satmin, 100, 255, Imgproc.THRESH_BINARY);
     	Imgproc.threshold(channels.get(1), satmax, 256, 255, Imgproc.THRESH_BINARY_INV);
     	Core.min(satmin, satmax, sat);
     	satmin.release();
@@ -255,7 +255,7 @@ public class ImageProcessing extends Thread {
 		   		
 	        	detectedpoints = new MatOfPoint2f(leftmax, leftmin, rightmin, rightmax);
 	        	newpoints.set(true);
-	        	//Highgui.imwrite("/home/lvuser/image.png", image);
+	        	Highgui.imwrite("/home/lvuser/image.png", image);
 	        	nonzeroes.release();
 	
         	}

@@ -11,9 +11,12 @@ import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class FrameGrabber extends Thread {
 	public Mat recentimage;
 	VideoCapture video;
+	String path = "rtsp://10.28.48.100/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp";
 	public FrameGrabber() {
 		recentimage = new Mat();
 	}
@@ -28,7 +31,7 @@ public class FrameGrabber extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		opened = video.open("rtsp://10.28.49.40/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp");
+		opened = video.open(path);
 		}
 		System.out.println("Capturing");
 		while(true) {
@@ -49,7 +52,7 @@ public class FrameGrabber extends Thread {
 			}
 			else {
 				video.release();
-				video.open("rtsp://10.28.49.40/user=admin&password>&channel=1&stream=1.sdp?real_stream--rtp-caching=1?tcp");
+				video.open(path);
 			}
 			
 		}

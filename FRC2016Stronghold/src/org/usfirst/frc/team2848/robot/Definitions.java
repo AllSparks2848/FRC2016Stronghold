@@ -88,12 +88,12 @@ public class Definitions {
 	public static final double SHOOTER_P = 0.0008;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = -0.02;
-	public static final double TURRETAIM_I = 0.000;
-	public static final double TURRETAIM_D = -0.01;
-	public static final double TURRETCENTER_P = -0.02;
+	public static final double TURRETAIM_P = -0.03;
+	public static final double TURRETAIM_I = -0.001;
+	public static final double TURRETAIM_D = 0.005;
+	public static final double TURRETCENTER_P = -0.01;
 	public static final double TURRETCENTER_I = 0.000;
-	public static final double TURRETCENTER_D = 0;
+	public static final double TURRETCENTER_D = 0.000;
 	public static final double ARM_P = 0.012;
 	public static final double ARM_I = 0.001;
 	public static final double ARM_D = -0.002;
@@ -152,6 +152,8 @@ public class Definitions {
 	
 	public static PowerDistributionPanel pdp;
 	
+	public static DigitDriver digit;
+	
 	//utility
 	public static PID leftshooterpid;
 	public static PID rightshooterpid;
@@ -207,7 +209,7 @@ public class Definitions {
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, true, EncodingType.k4X);
 		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
-		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, true, EncodingType.k4X);
+		turretenc = new Encoder(TURRET_ENC_A, TURRET_ENC_B, false, EncodingType.k4X);
 		ptoenc = new Encoder(PTO_ENC_A, PTO_ENC_B, true, EncodingType.k4X);
 		
 		leftdriveenc.reset();
@@ -259,7 +261,7 @@ public class Definitions {
 		
 		processing = new ImageProcessing();
 		processing.start();
-    	DigitDriver digit = new DigitDriver();
+    	digit = new DigitDriver();
     	digit.start();
 	}
 }

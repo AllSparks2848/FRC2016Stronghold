@@ -77,7 +77,7 @@ public class States {
 				if (!armstarted){
 					Definitions.armbrake.set(Value.kReverse);
 					Definitions.armpid.setEnabled(true, ptoposition);
-					Definitions.armpid.setTarget(500);
+					Definitions.armpid.setTarget(515);
 					armstarted = true;
 				}
 				if (Definitions.armpid.getEnabled()){
@@ -85,7 +85,7 @@ public class States {
 					//Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
 				}
 			}
-			if (ptoposition < 505 && ptoposition > 495 && SparkyIntakeBar.lastintakeposition == 1){
+			if (ptoposition < 520 && ptoposition > 510 && SparkyIntakeBar.lastintakeposition == 1){
 				robotstate = "nothing";
 				lastrobotstate = "intake";
 				Definitions.armpid.setEnabled(false, ptoposition);
@@ -119,7 +119,7 @@ public class States {
 				if (!armstarted){
 					Definitions.armbrake.set(Value.kReverse);
 					Definitions.armpid.setEnabled(true, ptoposition);
-					Definitions.armpid.setTarget(300);
+					Definitions.armpid.setTarget(100);
 					armstarted = true;
 				}
 				if (Definitions.armpid.getEnabled()){
@@ -127,9 +127,36 @@ public class States {
 					//Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
 				}
 			}
-			if (ptoposition < 305 && ptoposition >295 && SparkyIntakeBar.lastintakeposition == 1){
+			if (ptoposition < 105 && ptoposition >95 && SparkyIntakeBar.lastintakeposition == 1){
 				robotstate = "nothing";
 				lastrobotstate = "intake";
+				Definitions.armpid.setEnabled(false, ptoposition);
+				armstarted = false;
+				Definitions.armbrake.set(Value.kForward);
+				statestarted = false;
+			}
+		}
+		if (robotstate .equals("lowshot")){
+			if (!statestarted){
+				start = System.currentTimeMillis();
+				statestarted = true;
+			}
+			SparkyIntakeBar.position = 1;
+			if (SparkyIntakeBar.lastintakeposition == 1){
+				if (!armstarted){
+					Definitions.armbrake.set(Value.kReverse);
+					Definitions.armpid.setEnabled(true, ptoposition);
+					Definitions.armpid.setTarget(350);
+					armstarted = true;
+				}
+				if (Definitions.armpid.getEnabled()){
+					Definitions.ptomotor1.set(Definitions.armpid.compute(ptoposition, null));
+					//Definitions.ptomotor2.set(Definitions.armpid.compute(ptoposition, null));
+				}
+			}
+			if (ptoposition < 355 && ptoposition >345 && SparkyIntakeBar.lastintakeposition == 1){
+				robotstate = "nothing";
+				lastrobotstate = "lowshot";
 				Definitions.armpid.setEnabled(false, ptoposition);
 				armstarted = false;
 				Definitions.armbrake.set(Value.kForward);
@@ -182,27 +209,27 @@ public class States {
 			}
 			
 		}
-		if (robotstate.equals("nothing")){
-				if (!Definitions.upperarmlimit.get()){
-					if (SparkyIntakeBar.lastintakeposition == 0){
-						lastrobotstate = "start";
-					}
-					else if (SparkyIntakeBar.lastintakeposition == 1){
-						lastrobotstate = "shooting";
-					}
-				}
-				else if (!Definitions.lowerarmlimit.get()){
-					if (SparkyIntakeBar.lastintakeposition == 2){
-						lastrobotstate = "tuck";
-					}
-					else if (SparkyIntakeBar.lastintakeposition == 1){
-						lastrobotstate = "intake";
-					}
-				}
-				else {
-					lastrobotstate = "defense";
-				}
-		}
+//		if (robotstate.equals("nothing")){
+//				if (!Definitions.upperarmlimit.get()){
+//					if (SparkyIntakeBar.lastintakeposition == 0){
+//						lastrobotstate = "start";
+//					}
+//					else if (SparkyIntakeBar.lastintakeposition == 1){
+//						lastrobotstate = "shooting";
+//					}
+//				}
+//				else if (!Definitions.lowerarmlimit.get()){
+//					if (SparkyIntakeBar.lastintakeposition == 2){
+//						lastrobotstate = "tuck";
+//					}
+//					else if (SparkyIntakeBar.lastintakeposition == 1){
+//						lastrobotstate = "intake";
+//					}
+//				}
+//				else {
+//					lastrobotstate = "defense";
+//				}
+//		}
 		if (robotstate.equals("battershot")){
 			if (!armstarted){
 				Definitions.armbrake.set(Value.kReverse);
@@ -290,19 +317,24 @@ public class States {
 				}
 			}
 		}
+//		if (Definitions.buttonbox.getRawButton(2)){
+//			if (robotstate.equals("nothing")){
+//				robotstate = "portcullis";
+//			}
+//			else if (robotstate.equals("portcullis")){
+//				if (!portfirststage){
+//					if (!portfinished){
+//						portsecondstage = true;
+//					}
+//					else {
+//						portthirdstage = true;
+//					}
+//				}
+//			}
+//		}
 		if (Definitions.buttonbox.getRawButton(2)){
 			if (robotstate.equals("nothing")){
-				robotstate = "portcullis";
-			}
-			else if (robotstate.equals("portcullis")){
-				if (!portfirststage){
-					if (!portfinished){
-						portsecondstage = true;
-					}
-					else {
-						portthirdstage = true;
-					}
-				}
+				robotstate =  "lowshot";
 			}
 		}
 		if (Definitions.buttonbox.getRawButton(7) && robotstate.equals("nothing")){
@@ -311,7 +343,7 @@ public class States {
 		if (Definitions.buttonbox.getRawButton(3) && robotstate.equals("nothing")){
 			robotstate = "adjusting";
 		}
-		if (Definitions.buttonbox.getRawButton(4) ){
+		if (!robotstate.equals("nothing") && (Definitions.buttonbox.getRawButton(4) || (Math.abs(Definitions.joystick.getRawAxis(1)) > 0.25))){
 			Arm.armstate = 0;
 			Definitions.ptomotor1.set(0);
 			Definitions.ptomotor2.set(0);

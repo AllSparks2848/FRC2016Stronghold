@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team2848.robot;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.usfirst.frc.team2848.robot.navigation.AutoRoutine;
 import org.usfirst.frc.team2848.robot.subsystems.Arm;
 import org.usfirst.frc.team2848.robot.subsystems.DriveShifter;
@@ -14,6 +17,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	
@@ -33,7 +37,15 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousInit() {
-    	AutoRoutine.auto(0, 0, 0);
+    	AtomicInteger positionget = new AtomicInteger(0);
+    	Definitions.digit.getPosition(positionget);
+    	AtomicInteger defenseget = new AtomicInteger(0);
+    	Definitions.digit.getDefense(defenseget);
+    	AtomicBoolean doingauto = new AtomicBoolean(false);
+    	Definitions.digit.getAuto(doingauto);
+    	AtomicBoolean shooting = new AtomicBoolean(false);
+    	Definitions.digit.getShooting(shooting);
+    	AutoRoutine.auto(doingauto.get(), shooting.get(), positionget.get(), defenseget.get(), 0);
     }
     public void autonomousPeriodic() {
     	
@@ -47,17 +59,21 @@ public class Robot extends IterativeRobot {
     	SparkyIntakeBar.loadingRoutine();
     	Shooter.firingRoutine(5000);
     	Arm.armRoutine();
-    	int turretmode = 0;
+    	int turretmode = 2;
     	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
-    	else if(Definitions.buttonbox.getRawButton(16)) turretmode = 2;
+    	else if(Definitions.joystick.getRawButton(4) || Definitions.joystick.getRawButton(5) || Definitions.buttonbox.getRawButton(16)) turretmode = 0;
     	Turret.turretRoutine(turretmode);
     	//ArduinoComm.communicate();
     	States.stateRoutine();
 //    	System.out.println(Definitions.upperarmlimit.get());
     	Timer.delay(0.01);
     	ArduinoComm.communicate();
+    	SmartDashboard.putBoolean("Gear", Definitions.driveshifter.get());
+    	SmartDashboard.putNumber("Pressure", Definitions.pressuretrans.getVoltage());
+    	//System.out.println(Definitions.turretenc.get());
+//    	System.out.println(ArduinoComm.getYaw());
 //    	System.out.println(Definitions.turretenc.get());
-    	System.out.println(States.ptoposition);
+    	//System.out.println(States.ptoposition);
     	//System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
     }
     
