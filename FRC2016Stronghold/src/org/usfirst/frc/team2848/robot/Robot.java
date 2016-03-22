@@ -13,6 +13,8 @@ import org.usfirst.frc.team2848.robot.subsystems.Turret;
 import org.usfirst.frc.team2848.util.ArduinoComm;
 import org.usfirst.frc.team2848.util.DigitDriver;
 
+import com.ni.vision.NIVision;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -57,24 +59,53 @@ public class Robot extends IterativeRobot {
     	Definitions.drivetrain.arcadeDrive(Definitions.xbox1.getRawAxis(1), Definitions.xbox1.getRawAxis(4), false);
     	DriveShifter.checkGearShift();
     	SparkyIntakeBar.loadingRoutine();
-    	Shooter.firingRoutine(5000);
-    	Arm.armRoutine();
-    	int turretmode = 2;
-    	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
-    	else if(Definitions.joystick.getRawButton(4) || Definitions.joystick.getRawButton(5) || Definitions.buttonbox.getRawButton(16)) turretmode = 0;
-    	Turret.turretRoutine(turretmode);
-    	//ArduinoComm.communicate();
-    	States.stateRoutine();
-//    	System.out.println(Definitions.upperarmlimit.get());
+//    	Definitions.turret.set(Definitions.joystick.getRawAxis(1) * 0.35);
+//    	Shooter.firingRoutine(5000);
+//    	Arm.armRoutine();
+//    	int turretmode = 0;
+//    	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
+//    	else if(Definitions.buttonbox.getRawButton(16)) turretmode = 2;
+//    	Turret.turretRoutine(turretmode);
+//    	ArduinoComm.communicate();
+//    	States.stateRoutine();
+
     	Timer.delay(0.01);
-    	ArduinoComm.communicate();
-    	SmartDashboard.putBoolean("Gear", Definitions.driveshifter.get());
-    	SmartDashboard.putNumber("Pressure", Definitions.pressuretrans.getVoltage());
-    	//System.out.println(Definitions.turretenc.get());
-//    	System.out.println(ArduinoComm.getYaw());
-//    	System.out.println(Definitions.turretenc.get());
-    	//System.out.println(States.ptoposition);
-    	//System.out.println(ArduinoComm.getYaw()  + " " + Definitions.leftdriveenc.getRate() + " " + Definitions.rightdriveenc.getRate());
+//    	if (Definitions.joystick.getRawButton(1)){
+//    		if (!lastbutton1){
+//    			Definitions.armbrake.set(Definitions.armbrake.get() == Value.kReverse ? Value.kForward : Value.kReverse);
+//    		}
+//    		
+//    	}
+    	if (Definitions.joystick.getRawButton(1)){
+    		Definitions.armbrake.set(Value.kReverse);
+    		Definitions.ptoshifter.set(Value.kForward);
+    	}
+    	else if (Definitions.joystick.getRawButton(2)){
+    		Definitions.armbrake.set(Value.kForward);
+    		Definitions.ptoshifter.set(Value.kReverse);
+    	}
+    	if (Definitions.joystick.getRawButton(4)){
+    		Definitions.shootertrigger.set(true);
+    	}
+    	else if (Definitions.joystick.getRawButton(5)){
+    		Definitions.shootertrigger.set(false);
+    	}
+    	if(Definitions.buttonbox.getRawButton(4) && !lastbutton4){
+    	    if(currsession == front){
+    	        NIVision.IMAQdxStopAcquisition(currsession);
+    	        currsession = back;
+    	        NIVision.IMAQdxConfigureGrab(currsession);
+    	    } else if(currsession == back){
+    	        NIVision.IMAQdxStopAcquisition(currsession);
+    	        currsession = front;
+    	        NIVision.IMAQdxConfigureGrab(currsession);
+    	    }
+    	}
+    	lastbutton4 = Definitions.buttonbox.getRawButton(4);
+    	NIVision.IMAQdxGrab(currsession, frame, 1);
+    	CameraServer.getInstance().setImage(frame);
+    	System.out.println(250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25);
+    	SmartDashboard.putNumber("Pressure", 250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25);
     }
     
     public void testPeriodic() {
