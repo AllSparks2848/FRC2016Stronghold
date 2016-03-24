@@ -53,7 +53,7 @@ public class DriveShifter {
 	else {
 		danger = false;
 	}
-		Definitions.driveshifter.set(!high);
+		Definitions.driveshifter.set(high);
 		SmartDashboard.putString("Drive Gear", high ? "high" : "low");
 	}
 }
