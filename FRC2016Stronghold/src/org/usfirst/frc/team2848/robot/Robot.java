@@ -35,16 +35,38 @@ public class Robot extends IterativeRobot {
 	int back;
 	static Image frame;
 	static boolean lastbutton4 = false;
+	static boolean frontfailed = false;
+	static boolean backfailed = false;
 	
     public void robotInit() {
     	System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
     	Definitions.initPeripherals();
     	frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
     	
-//    	front = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-//    	back = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-//    	currsession = front;
-//    	NIVision.IMAQdxConfigureGrab(currsession);
+    	try {
+    		front = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+    	}
+    	catch (Exception e){
+    		frontfailed = true;
+    	}
+    	try {
+    	back = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+    	}
+    	catch (Exception e){
+    		backfailed = true;
+    	}
+    	if (!backfailed){
+    		currsession = back;
+    		NIVision.IMAQdxConfigureGrab(currsession);
+    	}
+    	else if (!frontfailed){
+    		currsession = front;
+    		NIVision.IMAQdxConfigureGrab(currsession);
+    	}
+    	else {
+    		System.out.println("No cameras");
+    	}
+    	
     	
     }
     
@@ -76,7 +98,7 @@ public class Robot extends IterativeRobot {
 //    	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
 //    	else if(Definitions.buttonbox.getRawButton(16)) turretmode = 2;
 //    	Turret.turretRoutine(turretmode);
-//    	ArduinoComm.communicate();
+    	ArduinoComm.communicate();
 //    	States.stateRoutine();
 
     	
@@ -94,25 +116,33 @@ public class Robot extends IterativeRobot {
     	else if (Definitions.joystick.getRawButton(5)){
     		Definitions.shootertrigger.set(false);
     	}
-//    	if(Definitions.buttonbox.getRawButton(4) && !lastbutton4){
-//    	    if(currsession == front){
-//    	        NIVision.IMAQdxStopAcquisition(currsession);
-//    	        currsession = back;
-//    	        NIVision.IMAQdxConfigureGrab(currsession);
-//    	    } else if(currsession == back){
-//    	        NIVision.IMAQdxStopAcquisition(currsession);
-//    	        currsession = front;
-//    	        NIVision.IMAQdxConfigureGrab(currsession);
-//    	    }
-//    	}
-    	lastbutton4 = Definitions.buttonbox.getRawButton(4);
-//    	NIVision.IMAQdxGrab(currsession, frame, 1);
-//    	CameraServer.getInstance().setImage(frame);
-    	System.out.println(250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25);
+    	try {
+	    	if (!backfailed && !frontfailed){
+	        	if(Definitions.buttonbox.getRawButton(2) && !lastbutton4){
+	        	    if(currsession == front){
+	        	        NIVision.IMAQdxStopAcquisition(currsession);
+	        	        currsession = back;
+	        	        NIVision.IMAQdxConfigureGrab(currsession);
+	        	    } else if(currsession == back){
+	        	        NIVision.IMAQdxStopAcquisition(currsession);
+	        	        currsession = front;
+	        	        NIVision.IMAQdxConfigureGrab(currsession);
+	        	    }
+	        	}
+	    	}
+	    	lastbutton4 = Definitions.buttonbox.getRawButton(2);
+	    	NIVision.IMAQdxGrab(currsession, frame, 1);
+	    	CameraServer.getInstance().setImage(frame);
+    	}
+    	catch(Exception e) {
+    		System.out.println("Camera problem");
+    	}
+//    	System.out.println(250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25);
     	SmartDashboard.putNumber("Pressure", 250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25);
     	SmartDashboard.putNumber("ballSeater", Definitions.shootertrigger.get() ? 1 : 0);
     	SmartDashboard.putBoolean("catapultReady", (250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25) > 40);
     	Timer.delay(0.01);
+//    	System.out.println(ArduinoComm.getYaw());
     }
     
     public void testPeriodic() {

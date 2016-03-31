@@ -9,13 +9,22 @@ import org.usfirst.frc.team2848.robot.subsystems.Turret;
 import org.usfirst.frc.team2848.util.ArduinoComm;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class AutoRoutine {
+	private static long startdelaytime = 0;
 	public static void auto(boolean doingauto, boolean shooting, int position, int obstacle, int delay) {
 		if(doingauto) {
+			Definitions.leftdriveenc.reset();
+			Definitions.rightdriveenc.reset();
 //			Definitions.ballholder.set(170);
-			long startdelaytime = System.currentTimeMillis();
-//			setArmState(obstacle);
+			startdelaytime = System.currentTimeMillis();
+    		Definitions.armbrake.set(Value.kForward);
+    		Definitions.ptoshifter.set(Value.kReverse);
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
+			setArmState(obstacle);
+			Timer.delay(0.25);
 //			while(!States.robotstate.equals("nothing")) {
 //				Arm.armRoutine();
 //				States.stateRoutine();
@@ -27,6 +36,15 @@ public class AutoRoutine {
 			if(statedelay < delay*1000) Timer.delay(delay-((double)statedelay/1000.0));
 			
 			driveForward(position, obstacle);
+			
+			if(obstacle == 9) {
+				Definitions.shootertrigger.set(true);
+	    		SparkyIntakeBar.position = 2;
+	    		SparkyIntakeBar.loadingRoutine();
+				Timer.delay(2);
+				Definitions.armbrake.set(Value.kReverse);
+	    		Definitions.ptoshifter.set(Value.kForward);
+			}
 //			if(shooting) {
 //				States.robotstate = "shooting";
 //				s
@@ -121,8 +139,11 @@ public class AutoRoutine {
 				ArduinoComm.communicate();
 				Timer.delay(0.01);
 				System.out.println(Definitions.leftdriveenc.getRate()*DriveForward.encoderratio + " " + Definitions.rightdriveenc.getRate()*DriveForward.encoderratio);
+				if(System.currentTimeMillis()-startdelaytime > 10000) {
+					break;
+				}
 			}
-			while(!DriveForward.driveForward(200, 40, yaw));
+			while(!DriveForward.driveForward(-200, 40, yaw));
 		}
 		else if(position == 1) { // left of center
 			double speed = 0;
@@ -138,8 +159,11 @@ public class AutoRoutine {
 			do {
 				ArduinoComm.communicate();
 				Timer.delay(0.01);
+				if(System.currentTimeMillis()-startdelaytime > 10000) {
+					break;
+				}
 			}
-			while(!DriveForward.driveForward(160, speed, yaw));
+			while(!DriveForward.driveForward(-160, speed, yaw));
 		}
 		else if(position == 2) { //center
 			double speed = 0;
@@ -155,8 +179,11 @@ public class AutoRoutine {
 			do {
 				ArduinoComm.communicate();
 				Timer.delay(0.01);
+				if(System.currentTimeMillis()-startdelaytime > 10000) {
+					break;
+				}
 			}
-			while(!DriveForward.driveForward(160, speed, yaw));
+			while(!DriveForward.driveForward(-160, speed, yaw));
 		}
 		else if(position == 3) { // right of center
 			double speed = 0;
@@ -172,8 +199,11 @@ public class AutoRoutine {
 			do {
 				ArduinoComm.communicate();
 				Timer.delay(0.01);
+				if(System.currentTimeMillis()-startdelaytime > 10000) {
+					break;
+				}
 			}
-			while(!DriveForward.driveForward(160, speed, yaw));
+			while(!DriveForward.driveForward(-160, speed, yaw));
 		}
 		else if(position == 4) { //rightmost
 			double speed = 0;
@@ -189,45 +219,78 @@ public class AutoRoutine {
 			do {
 				ArduinoComm.communicate();
 				Timer.delay(0.01);
+				if(System.currentTimeMillis()-startdelaytime > 10000) {
+					break;
+				}
 			}
-			while(!DriveForward.driveForward(160, speed, yaw));
+			while(!DriveForward.driveForward(-160, speed, yaw));
+		}
+		else if(position == 5) {
+			do {
+				ArduinoComm.communicate();
+				Timer.delay(0.01);
+				if(System.currentTimeMillis()-startdelaytime > 10000) {
+					break;
+				}
+			}
+			while(!DriveForward.driveForward(-75, 15, yaw));
 		}
 		Definitions.leftdrivepid.setEnabled(false, 0);
 		Definitions.rightdrivepid.setEnabled(false, 0);
 		Definitions.turnpid.setEnabled(false, 0);
-		Definitions.drivetrain.tankDrive(-0.1, -0.1);
-		Timer.delay(0.5);
+		for(int i = 0; i < 50; i++){
+		if(obstacle == 9) {
+		Definitions.drivetrain.tankDrive(0.3, 0.29);
+		}
+		else {
+			Definitions.drivetrain.tankDrive(0.35, 0.35);
+		}
+		Timer.delay(0.01);
+		}
 		Definitions.drivetrain.tankDrive(0, 0);
 		
 	}
 
 	private static void setArmState(int obstacle) {
 		if(obstacle == 0) { //low bar
-			States.robotstate = "tuck";
+    		SparkyIntakeBar.position = 2;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 		else if(obstacle == 1) { //rough terrain
-			States.robotstate = "defense";
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 		else if(obstacle == 2) { //rock wall
-			States.robotstate = "defense";
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
 		}
-		else if(obstacle == 3) { //moat
-			States.robotstate = "defense";
+		else if(obstacle == 3 ) { //moat
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 		else if(obstacle == 4) { //rampart
-			States.robotstate = "defense";
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 		else if(obstacle == 5) { //portcullis (do not use)
-			States.robotstate = "tuck";
+    		SparkyIntakeBar.position = 2;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 		else if(obstacle == 6) { //CdF (do not use)
-			return;
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 		else if(obstacle == 7) { //Sally Port (do not use)
-			return;
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 		else if(obstacle == 8) { //drawbridge (do not use)
-			return;
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
+		}
+		else if(obstacle == 9) { //spybox
+    		SparkyIntakeBar.position = 0;
+    		SparkyIntakeBar.loadingRoutine();
 		}
 	}
-}
+} 

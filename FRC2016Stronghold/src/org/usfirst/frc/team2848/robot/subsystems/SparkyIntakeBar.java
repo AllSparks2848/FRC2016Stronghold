@@ -21,13 +21,13 @@ public class SparkyIntakeBar {
 	private static boolean pulsing = false;
 	
 	public static void loadingRoutine(){
-		if (Definitions.xbox1.getRawButton(5) || Definitions.buttonbox.getRawButton(16)){
+		if (Definitions.xbox1.getRawButton(5) || Definitions.buttonbox.getRawButton(15)){
 			position = 1;
 		}
-		else if (Definitions.xbox1.getRawAxis(2) > 0.75 || Definitions.buttonbox.getRawButton(5)){
+		else if (Definitions.xbox1.getRawAxis(2) > 0.75 || Definitions.buttonbox.getRawButton(6)){
 			position = 2;
 		}
-		else if (Definitions.xbox1.getRawButton(2) || Definitions.buttonbox.getRawButton(13)){
+		else if (Definitions.xbox1.getRawButton(2) || Definitions.buttonbox.getRawButton(12)){
 			position = 0;
 		}
 		if (position == 0){
@@ -109,7 +109,7 @@ public class SparkyIntakeBar {
 ////			Definitions.ptomotor2.set(1);
 //			Definitions.ptomotor1.set(1);
 //		}
-		if (Definitions.buttonbox.getRawButton(11) || Definitions.xbox1.getRawButton(3)){
+		if (Definitions.buttonbox.getRawButton(13) || Definitions.xbox1.getRawButton(3)){
 			Definitions.leftshooter.set(0);
 			Definitions.rightshooter.set(0);	
 			Definitions.intakewheel.set(0.75);
@@ -117,34 +117,16 @@ public class SparkyIntakeBar {
 			Definitions.ptomotor1.set(0.75);
 			
 		}
-		else if (Definitions.buttonbox.getRawButton(14) || Definitions.xbox1.getRawButton(1)){
+		else if (Definitions.buttonbox.getRawButton(16) || Definitions.xbox1.getRawButton(1)){
 			Definitions.leftshooter.set(0);
 			Definitions.rightshooter.set(0);	
 			Definitions.intakewheel.set(-0.6);
 //			Definitions.ptomotor2.set(1);
 			Definitions.ptomotor1.set(-0.6);
 		}
-		else if (Definitions.buttonbox.getRawButton(7)){
-			if (!lastbutton9){
-				start = System.currentTimeMillis();
-				pulsing = true;
-			}
-			if (pulsing){
-				Definitions.ptomotor1.set(-1);
-				Definitions.intakewheel.set(-1);
-				if (System.currentTimeMillis() - start > 250){
-					pulsing = false;
-					start = System.currentTimeMillis();
-				}
-			}
-			else {
-				Definitions.ptomotor1.set(0);
-				Definitions.intakewheel.set(0);
-				if (System.currentTimeMillis() - start > 250){
-					pulsing = true;
-					start = System.currentTimeMillis();
-				}
-			}
+		else if (Definitions.buttonbox.getRawButton(5) || Definitions.xbox1.getRawButton(4)){
+			Definitions.ptomotor1.set(-1);
+			Definitions.intakewheel.set(-1);
 		}
 		else {
 			Definitions.intakewheel.set(0);

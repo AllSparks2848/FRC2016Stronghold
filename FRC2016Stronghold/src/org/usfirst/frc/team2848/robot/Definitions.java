@@ -79,9 +79,9 @@ public class Definitions {
 	public static final int AUTO_SELECT_ADDRESS = 0x70;
 	public static final int ARDUINO_ADDRESS = 0x08;
 	
-	public static final double DRIVE_P = 0.004;
-	public static final double DRIVE_I = 0.003;
-	public static final double DRIVE_D = 0;
+	public static final double DRIVE_P = 0.015;
+	public static final double DRIVE_I = 0.001;
+	public static final double DRIVE_D = -0.001;
 	public static final double TURN_P = 0.2;
 	public static final double TURN_I = 0.05;
 	public static final double TURN_D = 0;
@@ -259,8 +259,8 @@ public class Definitions {
 		armpid.setBounds(-0.6, 0.6);
 		armpid.setITermBounds(-0.2, 0.2);
 		
-		processing = new ImageProcessing();
-		processing.start();
+//		processing = new ImageProcessing();
+//		processing.start();
     	digit = new DigitDriver();
     	digit.start();
 	}

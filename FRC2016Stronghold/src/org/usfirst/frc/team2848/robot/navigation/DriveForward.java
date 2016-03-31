@@ -14,12 +14,13 @@ public class DriveForward {
 		
 		Definitions.turnpid.setTarget(targetyaw);		
 		double turnmod = Definitions.turnpid.compute(ArduinoComm.getYaw(), null);
-		Definitions.leftdrivepid.setTarget(maxspeed);
-		Definitions.rightdrivepid.setTarget(maxspeed);
+		Definitions.leftdrivepid.setTarget(maxspeed*Math.signum(distance));
+		Definitions.rightdrivepid.setTarget(maxspeed*Math.signum(distance));
 		
 		Definitions.drivetrain.tankDrive(-Definitions.leftdrivepid.compute(Definitions.leftdriveenc.getRate()*encoderratio+turnmod, null), -Definitions.rightdrivepid.compute(Definitions.rightdriveenc.getRate()*encoderratio-turnmod, null));
 		
-		if(Math.abs(Math.min(Definitions.leftdriveenc.getDistance()*encoderratio, Definitions.rightdriveenc.getDistance()*encoderratio)) > Math.abs(distance)) return true;
+		if(Math.abs(Math.min(Definitions.leftdriveenc.getDistance()*encoderratio, Definitions.rightdriveenc.getDistance()*encoderratio)) > Math.abs(distance) || Math.abs(Math.max(Definitions.leftdriveenc.getDistance()*encoderratio, Definitions.rightdriveenc.getDistance()*encoderratio)) > Math.abs(Math.abs(distance) + 50)) return true;
+		
 		return false;
 	}
 }
