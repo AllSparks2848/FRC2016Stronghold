@@ -15,10 +15,9 @@ public class SparkyIntakeBar {
 	private static boolean bottomstarted = false;
 	private static boolean middlestarted = false;
 	public static int lastintakeposition = 17;
-	private static boolean pulsestarted = false;
-	private static double pulsestart;
-	private static boolean lastbutton9 = false;
-	private static boolean pulsing = false;
+	private static int intakethreshold = 7;
+	private static boolean lastbutton16 = false;
+	private static int intakechannel = 4;
 	
 	public static void loadingRoutine(){
 		if (Definitions.xbox1.getRawButton(5) || Definitions.buttonbox.getRawButton(15)){
@@ -65,78 +64,32 @@ public class SparkyIntakeBar {
 		if (position != 2){
 			bottomstarted = false;
 		}
-//		if (Definitions.buttonbox.getRawButton(14)){
-//			if (Definitions.leftshooterpid.getEnabled()){
-//				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-//				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-//			}
-//			Definitions.leftshooter.set(-0.6);
-//			Definitions.rightshooter.set(-0.6);	
-//			Definitions.intakewheel.set(-1);
-////			Definitions.ptomotor2.set(-1);
-//			Definitions.ptomotor1.set(-1);
-//		}
-//		else if (Definitions.buttonbox.getRawButton(11)){
-//			if (Definitions.leftshooterpid.getEnabled()){
-//				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-//				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-//			}
-//			Definitions.leftshooter.set(0.6);
-//			Definitions.rightshooter.set(0.6);	
-//			Definitions.intakewheel.set(1);
-////			Definitions.ptomotor2.set(1);
-//			Definitions.ptomotor1.set(1);
-//		}
-//		else if (Definitions.xbox1.getRawButton(3)){
-//			if (Definitions.leftshooterpid.getEnabled()){
-//				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-//				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-//			}
-//			Definitions.leftshooter.set(-0.6);
-//			Definitions.rightshooter.set(-0.6);	
-//			Definitions.intakewheel.set(-1);
-////			Definitions.ptomotor2.set(-1);
-//			Definitions.ptomotor1.set(-1);
-//		}
-//		else if (Definitions.xbox1.getRawButton(1)){
-//			if (Definitions.leftshooterpid.getEnabled()){
-//				Definitions.leftshooterpid.setEnabled(false, Definitions.leftshooterenc.getRate());
-//				Definitions.rightshooterpid.setEnabled(false, Definitions.rightshooterenc.getRate());
-//			}
-//			Definitions.leftshooter.set(0.6);
-//			Definitions.rightshooter.set(0.6);	
-//			Definitions.intakewheel.set(1);
-////			Definitions.ptomotor2.set(1);
-//			Definitions.ptomotor1.set(1);
-//		}
-		if (Definitions.buttonbox.getRawButton(13) || Definitions.xbox1.getRawButton(3)){
-			Definitions.leftshooter.set(0);
-			Definitions.rightshooter.set(0);	
+		
+		//spit out
+		if (Definitions.buttonbox.getRawButton(13) || Definitions.xbox1.getRawButton(3)){	
 			Definitions.intakewheel.set(0.75);
-//			Definitions.ptomotor2.set(1);
-			Definitions.ptomotor1.set(0.75);
 			
 		}
+		
+		//intake in with current checks
 		else if (Definitions.buttonbox.getRawButton(16) || Definitions.xbox1.getRawButton(1)){
-			Definitions.leftshooter.set(0);
-			Definitions.rightshooter.set(0);	
-			Definitions.intakewheel.set(-0.6);
-//			Definitions.ptomotor2.set(1);
-			Definitions.ptomotor1.set(-0.6);
+			if (!lastbutton16){	
+				Definitions.intakewheel.set(-0.5);
+				
+			}
+			if (Definitions.pdp.getCurrent(intakechannel) > intakethreshold){
+				Definitions.intakewheel.set(0);
+			}
 		}
+		
+		//transfer
 		else if (Definitions.buttonbox.getRawButton(5) || Definitions.xbox1.getRawButton(4)){
-			Definitions.ptomotor1.set(-1);
 			Definitions.intakewheel.set(-1);
 		}
 		else {
 			Definitions.intakewheel.set(0);
-			Definitions.leftshooter.set(0);
-			Definitions.rightshooter.set(0);
-			Definitions.ptomotor1.set(0);
-			pulsing = false;
 		}
-		lastbutton9 = Definitions.buttonbox.getRawButton(9);
-
+		lastbutton16 = Definitions.buttonbox.getRawButton(16) || Definitions.xbox1.getRawButton(1);
 	}
 
 }

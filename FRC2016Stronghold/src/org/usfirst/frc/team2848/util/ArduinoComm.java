@@ -21,11 +21,15 @@ public class ArduinoComm {
 		pitch = recievedbuffer.getFloat();
 		yaw = recievedbuffer.getFloat();
 		roll = recievedbuffer.getFloat();
+		
 		//System.out.println(pitch + " " + yaw + " " + roll + " " + x + " " + y + " " + z);
 	}
 	
 	public static float getPitch() { return pitch; }
 	public static float getYaw() { return yaw; }
+	public static void rezeroYaw() {
+		
+	}
 	public static float getRoll() { return roll; }
 	public static float getXAccel() { return x; }
 	public static float getYAccel() { return y; }

@@ -75,7 +75,7 @@ public class States {
 			SparkyIntakeBar.position = 1;
 			if (SparkyIntakeBar.lastintakeposition == 1){
 				if (!armstarted){
-					Definitions.armbrake.set(Value.kReverse);
+					Definitions.catapultone.set(Value.kReverse);
 					Definitions.armpid.setEnabled(true, ptoposition);
 					Definitions.armpid.setTarget(515);
 					armstarted = true;
@@ -90,7 +90,7 @@ public class States {
 				lastrobotstate = "intake";
 				Definitions.armpid.setEnabled(false, ptoposition);
 				armstarted = false;
-				Definitions.armbrake.set(Value.kForward);
+				Definitions.catapultone.set(Value.kForward);
 				statestarted = false;
 			}
 		}
@@ -117,7 +117,7 @@ public class States {
 			SparkyIntakeBar.position = 1;
 			if (SparkyIntakeBar.lastintakeposition == 1){
 				if (!armstarted){
-					Definitions.armbrake.set(Value.kReverse);
+					Definitions.catapultone.set(Value.kReverse);
 					Definitions.armpid.setEnabled(true, ptoposition);
 					Definitions.armpid.setTarget(100);
 					armstarted = true;
@@ -132,7 +132,7 @@ public class States {
 				lastrobotstate = "intake";
 				Definitions.armpid.setEnabled(false, ptoposition);
 				armstarted = false;
-				Definitions.armbrake.set(Value.kForward);
+				Definitions.catapultone.set(Value.kForward);
 				statestarted = false;
 			}
 		}
@@ -144,7 +144,7 @@ public class States {
 			SparkyIntakeBar.position = 1;
 			if (SparkyIntakeBar.lastintakeposition == 1){
 				if (!armstarted){
-					Definitions.armbrake.set(Value.kReverse);
+					Definitions.catapultone.set(Value.kReverse);
 					Definitions.armpid.setEnabled(true, ptoposition);
 					Definitions.armpid.setTarget(350);
 					armstarted = true;
@@ -159,7 +159,7 @@ public class States {
 				lastrobotstate = "lowshot";
 				Definitions.armpid.setEnabled(false, ptoposition);
 				armstarted = false;
-				Definitions.armbrake.set(Value.kForward);
+				Definitions.catapultone.set(Value.kForward);
 				statestarted = false;
 			}
 		}
@@ -187,7 +187,7 @@ public class States {
 				Definitions.armpid.setEnabled(true, ptoposition);
 				target = ptoposition + 10;
 				Definitions.armpid.setTarget(target);
-				Definitions.armbrake.set(Value.kReverse);
+				Definitions.catapultone.set(Value.kReverse);
 			}
 			if (Definitions.upperarmlimit.get()){
 				Definitions.ptomotor1.set(Definitions.armpid.compute(ptoposition, null));
@@ -195,14 +195,14 @@ public class States {
 			}
 			else {
 				Definitions.armpid.setEnabled(false, ptoposition);
-				Definitions.armbrake.set(Value.kForward);
+				Definitions.catapultone.set(Value.kForward);
 				Definitions.ptomotor1.set(0);
 				Definitions.ptomotor2.set(0);
 				robotstate = "nothing";
 			}
 			if (ptoposition > target - 2 && ptoposition < target + 2){
 				Definitions.armpid.setEnabled(false, ptoposition);
-				Definitions.armbrake.set(Value.kForward);
+				Definitions.catapultone.set(Value.kForward);
 				Definitions.ptomotor1.set(0);
 				Definitions.ptomotor2.set(0);
 				robotstate = "nothing";
@@ -232,7 +232,7 @@ public class States {
 //		}
 		if (robotstate.equals("battershot")){
 			if (!armstarted){
-				Definitions.armbrake.set(Value.kReverse);
+				Definitions.catapultone.set(Value.kReverse);
 				Definitions.armpid.setEnabled(true, ptoposition);
 				Definitions.armpid.setTarget(180);
 				armstarted = true;
@@ -249,7 +249,7 @@ public class States {
 			Definitions.turret.set(Definitions.turretcenterpid.compute(Definitions.turretenc.get(), null));
 			if (!Definitions.buttonbox.getRawButton(7)){
 				Definitions.armpid.setEnabled(false, Definitions.turretenc.get());
-				Definitions.armbrake.set(Value.kForward);
+				Definitions.catapultone.set(Value.kForward);
 				Definitions.ptomotor1.set(0);
 				Definitions.turretcenterpid.setEnabled(false, Definitions.turretenc.get());
 				Definitions.turret.set(0);
@@ -260,7 +260,7 @@ public class States {
 		}
 		if (System.currentTimeMillis() > start + 5000 && !robotstate.equals("nothing") && !robotstate.equals("portcullis") && !robotstate.equals("battershot")){
 			Definitions.armpid.setEnabled(false, ptoposition);
-			Definitions.armbrake.set(Value.kForward);
+			Definitions.catapultone.set(Value.kForward);
 			Definitions.ptomotor1.set(0);
 			Definitions.ptomotor2.set(0);
 			robotstate = "nothing";
@@ -348,7 +348,7 @@ public class States {
 			Definitions.ptomotor1.set(0);
 			Definitions.ptomotor2.set(0);
 			Definitions.armpid.setEnabled(false, ptoposition);
-			Definitions.armbrake.set(Value.kForward);
+			Definitions.catapultone.set(Value.kForward);
 			robotstate = "nothing";
 			armstarted = false;
 		}
@@ -357,7 +357,7 @@ public class States {
 			Definitions.ptomotor1.set(0);
 			Definitions.ptomotor2.set(0);
 			Definitions.armpid.setEnabled(false, ptoposition);
-			Definitions.armbrake.set(Value.kForward);
+			Definitions.catapultone.set(Value.kForward);
 			robotstate = "nothing";
 			limitcancelled = true;
 			armstarted = false;

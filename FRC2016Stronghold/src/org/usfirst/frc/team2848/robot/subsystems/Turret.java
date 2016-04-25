@@ -28,7 +28,7 @@ public class Turret {
         	
         	if(targetstate == 0) {
         		Definitions.turret.set(0); 
-        		Definitions.turretaimpid.setEnabled(false, 0);
+        		Definitions.driveaimpid.setEnabled(false, 0);
         		delaytime = System.currentTimeMillis();
         		targetstate = 1;
         	}
@@ -57,7 +57,7 @@ public class Turret {
 			        	finecontrol = false;
 		        	}
 		        	else {
-			        	Definitions.turretaimpid.setTarget(target);
+			        	Definitions.driveaimpid.setTarget(target);
 			        	finecontrol = true;
 		        	}
 	        	}	        	
@@ -66,14 +66,14 @@ public class Turret {
         	}
         	if(targetstate == 2) {
         		if(finecontrol) {
-		        	if(!Definitions.turretaimpid.getEnabled()) Definitions.turretaimpid.setEnabled(true, Definitions.turretenc.getDistance());
-		        	double output = Definitions.turretaimpid.compute(Definitions.turretenc.getDistance(), null);
+		        	if(!Definitions.driveaimpid.getEnabled()) Definitions.driveaimpid.setEnabled(true, Definitions.turretenc.getDistance());
+		        	double output = Definitions.driveaimpid.compute(Definitions.turretenc.getDistance(), null);
 		        	//System.out.println(output + " " + turretencoder.getDistance() + " " + target);
 		        	Definitions.turret.set(-output);
 		        	if(Math.abs(target-Definitions.turretenc.get()) < 3) {
 		        		targetstate = 0;
 		        		Definitions.turret.set(0);
-		        		Definitions.turretaimpid.setEnabled(false, 0);
+		        		Definitions.driveaimpid.setEnabled(false, 0);
 		        	}
         		}
         		else {
@@ -114,7 +114,7 @@ public class Turret {
 //        	Definitions.turret.set(-output);
         }
         else if(mode == 2) {
-        	Definitions.turretaimpid.setEnabled(false, 0);
+        	Definitions.driveaimpid.setEnabled(false, 0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
         	if(!Definitions.turretcenterpid.getEnabled()) Definitions.turretcenterpid.setEnabled(true, Definitions.turretenc.getDistance());
         	Definitions.turretcenterpid.setTarget(0);
@@ -123,7 +123,7 @@ public class Turret {
         	
         }
         else {
-        	Definitions.turretaimpid.setEnabled(false, 0);
+        	Definitions.driveaimpid.setEnabled(false, 0);
         	Definitions.turretcenterpid.setEnabled(false,0);
         	if(Definitions.processing.queue.size() == 0) Definitions.processing.queue.add(false);
         	if (!States.robotstate.equals("battershot")){

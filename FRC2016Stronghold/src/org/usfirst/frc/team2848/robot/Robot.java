@@ -4,6 +4,8 @@ package org.usfirst.frc.team2848.robot;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
 import org.usfirst.frc.team2848.robot.navigation.AutoRoutine;
 import org.usfirst.frc.team2848.robot.subsystems.Arm;
 import org.usfirst.frc.team2848.robot.subsystems.DriveShifter;
@@ -19,6 +21,7 @@ import com.ni.vision.NIVision.Image;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -37,35 +40,36 @@ public class Robot extends IterativeRobot {
 	static boolean lastbutton4 = false;
 	static boolean frontfailed = false;
 	static boolean backfailed = false;
+	static boolean lastbutton3 = false;
 	
     public void robotInit() {
     	System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
     	Definitions.initPeripherals();
-    	frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-    	
-    	try {
-    		front = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-    	}
-    	catch (Exception e){
-    		frontfailed = true;
-    	}
-    	try {
-    	back = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-    	}
-    	catch (Exception e){
-    		backfailed = true;
-    	}
-    	if (!backfailed){
-    		currsession = back;
-    		NIVision.IMAQdxConfigureGrab(currsession);
-    	}
-    	else if (!frontfailed){
-    		currsession = front;
-    		NIVision.IMAQdxConfigureGrab(currsession);
-    	}
-    	else {
-    		System.out.println("No cameras");
-    	}
+//    	frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+//    	
+//    	try {
+//    		front = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+//    	}
+//    	catch (Exception e){
+//    		frontfailed = true;
+//    	}
+//    	try {
+//    	back = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+//    	}
+//    	catch (Exception e){
+//    		backfailed = true;
+//    	}
+//    	if (!backfailed){
+//    		currsession = back;
+//    		NIVision.IMAQdxConfigureGrab(currsession);
+//    	}
+//    	else if (!frontfailed){
+//    		currsession = front;
+//    		NIVision.IMAQdxConfigureGrab(currsession);
+//    	}
+//    	else {
+//    		System.out.println("No cameras");
+//    	}
     	
     	
     }
@@ -82,7 +86,10 @@ public class Robot extends IterativeRobot {
     	AutoRoutine.auto(doingauto.get(), shooting.get(), positionget.get(), defenseget.get(), 0);
     }
     public void autonomousPeriodic() {
-    	
+    	Definitions.drivetrain.drive(0, 0);
+    	ArduinoComm.communicate();
+    	System.out.println(ArduinoComm.getYaw());
+    	Timer.delay(0.4);
     }
     public void teleopInit() {
     	
@@ -91,31 +98,9 @@ public class Robot extends IterativeRobot {
     	Definitions.drivetrain.arcadeDrive(Definitions.xbox1.getRawAxis(1), Definitions.xbox1.getRawAxis(4), false);
     	DriveShifter.checkGearShift();
     	SparkyIntakeBar.loadingRoutine();
-//    	Definitions.turret.set(Definitions.joystick.getRawAxis(1) * 0.35);
-//    	Shooter.firingRoutine(5000);
-//    	Arm.armRoutine();
-//    	int turretmode = 0;
-//    	if(Definitions.joystick.getRawButton(2)) turretmode = 1;
-//    	else if(Definitions.buttonbox.getRawButton(16)) turretmode = 2;
-//    	Turret.turretRoutine(turretmode);
+    	Shooter.firingRoutine(5000);
     	ArduinoComm.communicate();
-//    	States.stateRoutine();
 
-    	
-    	if (Definitions.joystick.getRawButton(1)){
-    		Definitions.armbrake.set(Value.kReverse);
-    		Definitions.ptoshifter.set(Value.kForward);
-    	}
-    	else if (Definitions.joystick.getRawButton(2)){
-    		Definitions.armbrake.set(Value.kForward);
-    		Definitions.ptoshifter.set(Value.kReverse);
-    	}
-    	if (Definitions.joystick.getRawButton(4)){
-    		Definitions.shootertrigger.set(true);
-    	}
-    	else if (Definitions.joystick.getRawButton(5)){
-    		Definitions.shootertrigger.set(false);
-    	}
     	try {
 	    	if (!backfailed && !frontfailed){
 	        	if(Definitions.buttonbox.getRawButton(2) && !lastbutton4){
@@ -135,14 +120,20 @@ public class Robot extends IterativeRobot {
 	    	CameraServer.getInstance().setImage(frame);
     	}
     	catch(Exception e) {
-    		System.out.println("Camera problem");
+//    		System.out.println("Camera problem");
     	}
-//    	System.out.println(250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25);
     	SmartDashboard.putNumber("Pressure", 250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25);
-    	SmartDashboard.putNumber("ballSeater", Definitions.shootertrigger.get() ? 1 : 0);
+    	SmartDashboard.putNumber("ballSeater", Definitions.ballholder.get() ? 1 : 0);
     	SmartDashboard.putBoolean("catapultReady", (250 * (Definitions.pressuretrans.getVoltage() / 5.0) - 25) > 40);
+    	
+    	if (Definitions.joystick.getRawButton(3) && !lastbutton3){
+    		Definitions.flashlightrelay.set(Definitions.flashlightrelay.get() == Relay.Value.kOff ? Relay.Value.kForward : Relay.Value.kOff);
+    	}
+//    	System.out.println(Definitions.flashlightrelay.get());
+    	lastbutton3 = Definitions.joystick.getRawButton(3);
+    	System.out.println(Definitions.pdp.getCurrent(4));
+    	
     	Timer.delay(0.01);
-//    	System.out.println(ArduinoComm.getYaw());
     }
     
     public void testPeriodic() {

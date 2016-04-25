@@ -14,34 +14,55 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.core.Core.MinMaxLocResult;
 import org.opencv.imgproc.Imgproc;
+
+import com.ni.vision.NIVision;
+
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import edu.wpi.first.wpilibj.Timer;
 
 public class ImageProcessing extends Thread {
-	FrameGrabber frame;
+//	FrameGrabber frame;
 	AtomicBoolean newpoints = new AtomicBoolean(false);
 	AtomicBoolean newboundingbox = new AtomicBoolean(false);
 	public BlockingQueue<Boolean> queue = new LinkedBlockingQueue<Boolean>();
 	public BlockingQueue<Mat> frames = new LinkedBlockingQueue<Mat>();
 	VideoCapture video;
+	private int m_id;
+	private NIVision.Image i;
+	NIVision.RawData imdata;
 	public ImageProcessing() {
-		frame = new FrameGrabber();
-		frame.start();
+//		frame = new FrameGrabber();
+//		frame.start();
 	}
 	
 	MatOfPoint2f detectedpoints;
 	MatOfPoint2f boundingbox;
 	public void run() {
 		
+        m_id = NIVision.IMAQdxOpenCamera("cam2",NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        NIVision.IMAQdxConfigureGrab(m_id);
+        NIVision.IMAQdxSetAttributeF64(m_id, "CameraAttributes::AcquisitionControl::AutoExposureTimeLowerLimit", 200);
+        NIVision.IMAQdxSetAttributeF64(m_id, "CameraAttributes::AcquisitionControl::AutoExposureTimeUpperLimit", 210);
+        NIVision.IMAQdxSetAttributeString(m_id, "CameraAttributes::AnalogControl::GainAuto", "Off");
+//        NIVision.IMAQdxSetAttributeF64(m_id, "CameraAttributes::AnalogControl::AutoGainUpperLimit", 50);
+        NIVision.IMAQdxSetAttributeF64(m_id, "CameraAttributes::AnalogControl::Gain", 23);
+//        NIVision.IMAQdxSetAttributeBool(m_id, "CameraAttributes::AnalogControl::SaturationEnabled", 1);
+//        NIVision.IMAQdxSetAttributeString(m_id, "CameraAttributes::AnalogControl::SaturationAuto", "Off");
+//        NIVision.IMAQdxSetAttributeF64(m_id, "CameraAttributes::AnalogControl::Saturation", 100);
+        NIVision.IMAQdxSetAttributeString(m_id, "CameraAttributes::AcquisitionControl::AcquisitionFrameRateAuto", "Off");
+        NIVision.IMAQdxSetAttributeF64(m_id, "CameraAttributes::AcquisitionControl::AcquisitionFrameRate", 20);
+        System.out.println("Capturing");
+        i = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 		while(true) {
 		try { 
-			Thread.sleep(150);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,10 +80,26 @@ public class ImageProcessing extends Thread {
 		}
 	}
 	
-	
+	int number = 0;
 	private void compute() {
-		Mat image = new Mat();
-		frame.getImage(image);
+		Mat image = new Mat(480, 640, CvType.CV_8UC4);
+		
+    	NIVision.IMAQdxGrab(m_id, i, 0);
+    	imdata = NIVision.imaqFlatten(i, NIVision.FlattenType.FLATTEN_IMAGE, NIVision.CompressionType.COMPRESSION_NONE, 0);
+    	imdata.getBuffer().clear();
+    	imdata.getBuffer().position(172);
+    	byte[] imbuffer = new byte[640*480*4];
+
+    	imdata.getBuffer().get(imbuffer, 0, 640*480*4);
+    	image.put(0, 0, imbuffer);
+    	Imgproc.cvtColor(image, image, Imgproc.COLOR_BGRA2BGR);
+    	Imgproc.resize(image, image, new Size(320,240), 0, 0, Imgproc.INTER_NEAREST);
+    	Core.transpose(image, image);
+    	Core.flip(image, image, 1);
+    	image = image.submat(0, 260, 0, 240);
+//    	Highgui.imwrite("/home/lvuser/test" + number +".png", image);
+    	System.out.println("image wrote");
+    	imdata.free();
 		if(image.empty()) return;
 		//Highgui.imwrite("/home/lvuser/imagefilter.png", image);
     	long time = System.currentTimeMillis();
@@ -81,16 +118,16 @@ public class ImageProcessing extends Thread {
    		Mat satmax = new Mat();
    		Mat sat = new Mat();
    		Imgproc.threshold(channels.get(0), huemin, 50, 255, Imgproc.THRESH_BINARY);
-   		Imgproc.threshold(channels.get(0), huemax, 70, 255, Imgproc.THRESH_BINARY_INV);
+   		Imgproc.threshold(channels.get(0), huemax, 100, 255, Imgproc.THRESH_BINARY_INV);
    		Core.min(huemin, huemax, hue);
    		huemin.release();
    		huemax.release();
-    	Imgproc.threshold(channels.get(2), valuemin, 30, 255, Imgproc.THRESH_BINARY);
+    	Imgproc.threshold(channels.get(2), valuemin, 60, 255, Imgproc.THRESH_BINARY);
     	Imgproc.threshold(channels.get(2), valuemax, 240, 255, Imgproc.THRESH_BINARY_INV);
     	Core.min(valuemin, valuemax, value);
     	valuemin.release();
     	valuemax.release();
-    	Imgproc.threshold(channels.get(1), satmin, 100, 255, Imgproc.THRESH_BINARY);
+    	Imgproc.threshold(channels.get(1), satmin, 60, 255, Imgproc.THRESH_BINARY);
     	Imgproc.threshold(channels.get(1), satmax, 256, 255, Imgproc.THRESH_BINARY_INV);
     	Core.min(satmin, satmax, sat);
     	satmin.release();
@@ -217,7 +254,7 @@ public class ImageProcessing extends Thread {
 	        			sregression.addData(south.get(i).x, south.get(i).y);
 	        		}
 	        	}
-	        	Highgui.imwrite("/home/lvuser/image.png", image);
+//	        	Highgui.imwrite("/home/lvuser/image.png", image);
 	        	if(lregression.getN() <= 2 || rregression.getN() <= 2 || sregression.getN() <= 2) {
 		        	System.out.println("End Test");
 	        		return;
@@ -267,7 +304,8 @@ public class ImageProcessing extends Thread {
 			}
 	    	filtered.release();
 	    	hierarchy.release();
-	   		image.release();    
+	   		image.release();  
+	   		number++;
 	}
 	public synchronized void getPoints(MatOfPoint2f points, AtomicBoolean pointschanged, MatOfPoint2f bounding, AtomicBoolean boundingboxchanged) {
 		if(detectedpoints != null) {

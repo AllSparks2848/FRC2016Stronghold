@@ -2,7 +2,9 @@ package org.usfirst.frc.team2848.robot;
 
 import org.usfirst.frc.team2848.robot.navigation.ImageProcessing;
 import org.usfirst.frc.team2848.robot.subsystems.SparkyIntakeBar;
+import org.usfirst.frc.team2848.util.ArduinoComm;
 import org.usfirst.frc.team2848.util.DigitDriver;
+import org.usfirst.frc.team2848.util.LidarLiteSensor;
 import org.usfirst.frc.team2848.util.PID;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -16,6 +18,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -36,12 +39,11 @@ public class Definitions {
 	public static final int INTAKE_PANCAKE_B = 2;
 //	public static final int DRIVE_SHIFTER_A = 0;
 	public static final int DRIVE_SHIFTER = 7;
-	public static final int PTO_SHIFTER_A = 1;
-	public static final int PTO_SHIFTER_B = 6;
-	public static final int SHOOTER_TRIGGER = 4;
-//	public static final int SHOOTER_TRIGGER_B = 3;
-	public static final int ARM_BRAKE_A = 2;
-	public static final int ARM_BRAKE_B = 5;
+	public static final int CATAPULT_TWO_A = 1;
+	public static final int CATAPULT_TWO_B = 6;
+	public static final int BALL_HOLDER = 4;
+	public static final int CATAPULT_ONE_A = 2;
+	public static final int CATAPULT_ONE_B = 5;
 	
 	public static final int LEFT_DRIVE_PORT_1 = 0;
 	public static final int LEFT_DRIVE_PORT_2 = 1;
@@ -79,24 +81,32 @@ public class Definitions {
 	public static final int AUTO_SELECT_ADDRESS = 0x70;
 	public static final int ARDUINO_ADDRESS = 0x08;
 	
-	public static final double DRIVE_P = 0.015;
-	public static final double DRIVE_I = 0.001;
-	public static final double DRIVE_D = -0.001;
-	public static final double TURN_P = 0.2;
+	public static final int FLASHLIGHT_RELAY_PORT = 1;
+	
+	public static final double DRIVE_P = 0.008;
+	public static final double DRIVE_I = 0.008;
+	public static final double DRIVE_D = -0.0005;
+	public static final double TURNDRIVE_P = 10;
+	public static final double TURNDRIVE_I = 2;
+	public static final double TURNDRIVE_D = 0;
+	public static final double TURN_P = 0.06;
 	public static final double TURN_I = 0.05;
-	public static final double TURN_D = 0;
+	public static final double TURN_D = -0.005;
 	public static final double SHOOTER_P = 0.0008;
 	public static final double SHOOTER_I = 0.001;
 	public static final double SHOOTER_D = 0;
-	public static final double TURRETAIM_P = -0.03;
-	public static final double TURRETAIM_I = -0.001;
-	public static final double TURRETAIM_D = 0.005;
+	public static final double DRIVEAIM_P = 0.03;
+	public static final double DRIVEAIM_I = 0.02;
+	public static final double DRIVEAIM_D = 0.000;
 	public static final double TURRETCENTER_P = -0.01;
 	public static final double TURRETCENTER_I = 0.000;
 	public static final double TURRETCENTER_D = 0.000;
 	public static final double ARM_P = 0.012;
 	public static final double ARM_I = 0.001;
 	public static final double ARM_D = -0.002;
+	public static final double LIDAR_DRIVE_P = 0.05;
+	public static final double LIDAR_DRIVE_I = 0;
+	public static final double LIDAR_DRIVE_D = 0;
 	
 	public static final double SHOOTER_GEAR_RATIO = (1/3.0);
 	
@@ -109,9 +119,9 @@ public class Definitions {
     public static DoubleSolenoid intakesolenoid;
 	public static DoubleSolenoid intakepancake;	
 	public static Solenoid driveshifter;
-	public static DoubleSolenoid ptoshifter;	
-	public static Solenoid shootertrigger;
-	public static DoubleSolenoid armbrake;
+	public static DoubleSolenoid catapulttwo;	
+	public static Solenoid ballholder;
+	public static DoubleSolenoid catapultone;
 	
 	
 	public static Spark leftdrive1;
@@ -127,7 +137,7 @@ public class Definitions {
 	
 	public static RobotDrive drivetrain;
 	
-	public static Servo ballholder;
+
 	
 	public static Compressor compressor;
 	
@@ -147,24 +157,29 @@ public class Definitions {
 	public static DigitalInput upperarmlimit;
 	public static DigitalInput lowerarmlimit;
 	
-	public static I2C lidar;
 	public static I2C arduino;
 	
 	public static PowerDistributionPanel pdp;
 	
 	public static DigitDriver digit;
 	
+	public static LidarLiteSensor lidar;
+	
 	//utility
 	public static PID leftshooterpid;
 	public static PID rightshooterpid;
-	public static PID turretaimpid;
+	public static PID driveaimpid;
 	public static PID turretcenterpid;
 	public static PID leftdrivepid;
 	public static PID rightdrivepid;
+	public static PID turndrivepid;
 	public static PID turnpid;
 	public static PID armpid;
+	public static PID lidardrivepid;
 	
 	public static ImageProcessing processing;
+	
+	public static Relay flashlightrelay;
 	
 	public static void initPeripherals() {
 		xbox1 = new Joystick(XBOX1_PORT);
@@ -173,9 +188,9 @@ public class Definitions {
 		intakesolenoid = new DoubleSolenoid(PCM_1, INTAKE_SOLENOID_A, INTAKE_SOLENOID_B);
 		intakepancake = new DoubleSolenoid(PCM_1, INTAKE_PANCAKE_A, INTAKE_PANCAKE_B);
 		driveshifter = new Solenoid(PCM_0, DRIVE_SHIFTER);
-		ptoshifter = new DoubleSolenoid(PCM_0, PTO_SHIFTER_A, PTO_SHIFTER_B);
-		shootertrigger = new Solenoid(PCM_0, SHOOTER_TRIGGER);
-		armbrake = new DoubleSolenoid(PCM_0, ARM_BRAKE_A, ARM_BRAKE_B);
+		catapulttwo = new DoubleSolenoid(PCM_0, CATAPULT_TWO_A, CATAPULT_TWO_B);
+		ballholder = new Solenoid(PCM_0, BALL_HOLDER);
+		catapultone = new DoubleSolenoid(PCM_0, CATAPULT_ONE_A, CATAPULT_ONE_B);
 		
 		leftdrive1 = new Spark(LEFT_DRIVE_PORT_1);
 		leftdrive2 = new Spark(LEFT_DRIVE_PORT_2);
@@ -201,11 +216,11 @@ public class Definitions {
 		
 		drivetrain = new RobotDrive(leftdrive1, leftdrive2, rightdrive1, rightdrive2);
 		
-		ballholder = new Servo(BALL_HOLDER_PORT);
 		
 		compressor = new Compressor();
 		
 		leftdriveenc = new Encoder(LEFT_DRIVE_ENC_A, LEFT_DRIVE_ENC_B, true, EncodingType.k4X);
+		leftdriveenc.setDistancePerPulse(4);
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
 		leftshooterenc = new Encoder(LEFT_SHOOTER_ENC_A, LEFT_SHOOTER_ENC_B, true, EncodingType.k4X);
 		rightshooterenc = new Encoder(RIGHT_SHOOTER_ENC_A, RIGHT_SHOOTER_ENC_B, false, EncodingType.k4X);
@@ -226,7 +241,7 @@ public class Definitions {
 		upperarmlimit = new DigitalInput(UPPER_ARM_LIMIT_PORT);
 		lowerarmlimit = new DigitalInput(LOWER_ARM_LIMIT_PORT);
 		
-		lidar = new I2C(Port.kMXP, LIDAR_ADDRESS);
+		
 		arduino = new I2C(Port.kOnboard, ARDUINO_ADDRESS);
 		
 		pdp = new PowerDistributionPanel();
@@ -240,16 +255,19 @@ public class Definitions {
 		rightshooterpid = new PID(SHOOTER_P, SHOOTER_I, SHOOTER_D, 0, rightshooterenc.getRate());
 		rightshooterpid.setBounds(-1, 1);
 		rightshooterpid.setITermBounds(-1, 1);
-		turretaimpid = new PID(TURRETAIM_P, TURRETAIM_I, TURRETAIM_D, turretenc.getDistance(), turretenc.getDistance());
-		turretaimpid.setBounds(-0.27, 0.27);
-		turretaimpid.setITermBounds(-0.14, 0.14);
+		driveaimpid = new PID(DRIVEAIM_P, DRIVEAIM_I, DRIVEAIM_D, turretenc.getDistance(), turretenc.getDistance());
+		driveaimpid.setBounds(-0.65, 0.65);
+		driveaimpid.setITermBounds(-0.65, 0.65);
 		leftdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, leftdriveenc.getDistance());
 		leftdrivepid.setBounds(-1, 1);
 		leftdrivepid.setITermBounds(-1, 1);
 		rightdrivepid = new PID(DRIVE_P, DRIVE_I, DRIVE_D, 0, rightdriveenc.getDistance());
 		rightdrivepid.setBounds(-1, 1);
 		rightdrivepid.setITermBounds(-1, 1);
-		turnpid = new PID(TURN_P, TURN_I, TURN_D, 0, leftdriveenc.getDistance());
+		turndrivepid = new PID(TURNDRIVE_P, TURNDRIVE_I, TURNDRIVE_D, 0, ArduinoComm.getYaw());
+		turndrivepid.setBounds(-10, 10);
+		turndrivepid.setITermBounds(-10, 10);
+		turnpid = new PID(TURN_P, TURN_I, TURN_D, 0, ArduinoComm.getYaw());
 		turnpid.setBounds(-1, 1);
 		turnpid.setITermBounds(-1, 1);
 		turretcenterpid = new PID(TURRETCENTER_P, TURRETCENTER_I, TURRETCENTER_D, 0, turretenc.getDistance());
@@ -258,9 +276,16 @@ public class Definitions {
 		armpid = new PID(ARM_P, ARM_I, ARM_D, 0, States.ptoposition);
 		armpid.setBounds(-0.6, 0.6);
 		armpid.setITermBounds(-0.2, 0.2);
+		lidardrivepid = new PID(LIDAR_DRIVE_P, LIDAR_DRIVE_I, LIDAR_DRIVE_D, 0, 0);
+		lidardrivepid.setBounds(-0.7, 0.7);
+		lidardrivepid.setITermBounds(0, 0);
 		
-//		processing = new ImageProcessing();
-//		processing.start();
+		processing = new ImageProcessing();
+		processing.start();
+		
+		lidar = new LidarLiteSensor(Port.kMXP);
+//		lidar.start(20);
+		
     	digit = new DigitDriver();
     	digit.start();
 	}
