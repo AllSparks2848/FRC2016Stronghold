@@ -137,7 +137,7 @@ public class Definitions {
 	
 	public static RobotDrive drivetrain;
 	
-
+	
 	
 	public static Compressor compressor;
 	
@@ -219,6 +219,8 @@ public class Definitions {
 		
 		compressor = new Compressor();
 		
+		flashlightrelay = new Relay(FLASHLIGHT_RELAY_PORT);
+		
 		leftdriveenc = new Encoder(LEFT_DRIVE_ENC_A, LEFT_DRIVE_ENC_B, true, EncodingType.k4X);
 		leftdriveenc.setDistancePerPulse(4);
 		rightdriveenc = new Encoder(RIGHT_DRIVE_ENC_A, RIGHT_DRIVE_ENC_B, false, EncodingType.k4X);
@@ -280,8 +282,15 @@ public class Definitions {
 		lidardrivepid.setBounds(-0.7, 0.7);
 		lidardrivepid.setITermBounds(0, 0);
 		
+		
+		
+		
+		
 		processing = new ImageProcessing();
 		processing.start();
+		
+		
+		
 		
 		lidar = new LidarLiteSensor(Port.kMXP);
 //		lidar.start(20);
