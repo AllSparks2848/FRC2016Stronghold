@@ -10,3 +10,22 @@ This year's codebase can be opened and browsed in the Eclipse IDE. Code lives in
 ### org.usfirst.frc.team2848
  * **Definitions.java** contains constants correspondong to ports, PID values, and shooter speed. These can be accessed, but not modified, by the rest of the codebase.
  * **Robot.java** is the IterativeRobot template in order to inherit periodic and disabled states. It handles logic for disabled, autonomous, and tele-operated states.
+ 
+### org.usfirst.frc.team2848.subsystems
+Representations of different systems of the robot with methods for checking / setting the state of the subsystem.
+
+### org.usfirst.frc.team2848.navigation
+Contains actions used during auton
+
+
+### org.usfirst.frc.team2848.util
+Miscellaneous utility classes.
+
+* **ArduinoComm.java** Utility class, used to communicate between the roborio and the arduino-which was used to transmit data from the ADIS16448
+
+* **DigitDriver.java** Utility class for our auton selector. This year we decided to use the Rev Robotics Digit MXP Display as our auton selector. We were very happy with the results, as we had no delay in seleting our auton mode.
+
+
+
+
+
