@@ -21,7 +21,7 @@ Contains actions used during auton
 ### org.usfirst.frc.team2848.util
 Miscellaneous utility classes.
 
-* **ArduinoComm.java** Utility class, used to communicate between the roborio and the arduino-which was used to transmit data from the ADIS16448
+* **ArduinoComm.java** Utility class, used to communicate between the roborio and the arduino-which was used to transmit data from the ADIS16448.The IMU is corrected using a Kalman Filter on the Arduino, and the corrected data is sent the the RoboRIO using I2C.
 
 * **DigitDriver.java** Utility class for our auton selector. This year we decided to use the Rev Robotics Digit MXP Display as our auton selector. We were very happy with the results, as we had no delay in seleting our auton mode.
 
